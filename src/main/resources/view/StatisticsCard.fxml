@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="100.0" minWidth="136.0" prefHeight="100.0" prefWidth="136.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.StatisticsCard">
+   <children>
+      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="25.0" />
+      <Label layoutX="68.0" layoutY="17.0" prefHeight="17.0" prefWidth="60.0" text="Title" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="25.0" />
+      <Label layoutX="60.0" layoutY="42.0" text="Data" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="45.0" />
+   </children>
+</AnchorPane>
