@@ -62,6 +62,11 @@
                           <rowConstraints>
                             <RowConstraints fillHeight="true" />
                           </rowConstraints>
+                           <children>
+                              <StackPane fx:id="weekNumberCardPlaceholder" prefHeight="150.0" prefWidth="200.0" />
+                              <StackPane fx:id="nextEventCardPlaceholder" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                              <StackPane fx:id="taskCompletionCardPlaceholder" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                           </children>
                         </GridPane>
 
                     <StackPane fx:id="resultDisplayPlaceholder" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0" />
