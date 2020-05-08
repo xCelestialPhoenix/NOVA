@@ -2,14 +2,10 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputControl;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
@@ -33,10 +29,16 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
+    private StatisticCard weekNumberCard;
+    private StatisticCard nextEventCard;
+    private StatisticCard taskCompletionCard;
     private HelpWindow helpWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private StackPane nextEventCardPlaceholder;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -46,6 +48,12 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane taskCompletionCardPlaceholder;
+
+    @FXML
+    private StackPane weekNumberCardPlaceholder;
 
     public MainWindow(Stage primaryStage, Logic logic) {
         super(FXML, primaryStage);
@@ -65,36 +73,6 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Sets the accelerator of a MenuItem.
-     * @param keyCombination the KeyCombination value of the accelerator
-     */
-    private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
-        menuItem.setAccelerator(keyCombination);
-
-        /*
-         * TODO: the code below can be removed once the bug reported here
-         * https://bugs.openjdk.java.net/browse/JDK-8131666
-         * is fixed in later version of SDK.
-         *
-         * According to the bug report, TextInputControl (TextField, TextArea) will
-         * consume function-key events. Because CommandBox contains a TextField, and
-         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key event is consumed by
-         * the TextInputControl(s).
-         *
-         * For now, we add following event filter to capture such key events and open
-         * help window purposely so to support accelerators even when focus is
-         * in CommandBox or ResultDisplay.
-         */
-        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-                menuItem.getOnAction().handle(new ActionEvent());
-                event.consume();
-            }
-        });
-    }
-
-    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
@@ -106,6 +84,16 @@ public class MainWindow extends UiPart<Stage> {
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+
+        weekNumberCard = new StatisticCard(StatisticCard.WEEK_NUM_TITLE, "Break");
+        weekNumberCardPlaceholder.getChildren().add(weekNumberCard.getRoot());
+
+        nextEventCard = new StatisticCard(StatisticCard.NEXT_EVENT_TITLE, "08-06-2020 12:00pm");
+        nextEventCardPlaceholder.getChildren().add(nextEventCard.getRoot());
+
+        taskCompletionCard = new StatisticCard(StatisticCard.TASK_COMPLETION_TITLE, "0%");
+        taskCompletionCardPlaceholder.getChildren().add(taskCompletionCard.getRoot());
+
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
