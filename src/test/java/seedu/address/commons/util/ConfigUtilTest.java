@@ -7,6 +7,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -65,6 +66,8 @@ public class ConfigUtilTest {
         Config config = new Config();
         config.setLogLevel(Level.INFO);
         config.setUserPrefsFilePath(Paths.get("preferences.json"));
+        config.setStartDate(LocalDate.of(2020, 1, 13));
+        config.setEndDate(LocalDate.of(2020, 5, 10));
         return config;
     }
 

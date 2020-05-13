@@ -157,12 +157,6 @@
     -fx-text-fill: black !important;
 }
 
-.statistic-card .label {
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 14pt;
-    -fx-text-fill: white;
-}
-
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
@@ -311,6 +305,21 @@
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
     -fx-padding: 8 1 8 1;
+}
+
+#statisticCardRoot {
+    -fx-background-color: transparent;
+    -fx-font-family: "Segoe UI Light";
+}
+
+#statisticCardRoot .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: white;
+}
+
+#statisticCardRoot #cardDateLabel {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
 }
 
 #cardPane {
