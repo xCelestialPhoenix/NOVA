@@ -314,6 +314,21 @@
     -fx-padding: 8 1 8 1;
 }
 
+#statisticCardRoot {
+    -fx-background-color: transparent;
+    -fx-font-family: "Segoe UI Light";
+}
+
+#statisticCardRoot .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: white;
+}
+
+#statisticCardRoot #cardDateLabel {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
@@ -25,6 +26,7 @@ public class MainWindow extends UiPart<Stage> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Config config;
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
@@ -55,12 +57,13 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane weekNumberCardPlaceholder;
 
-    public MainWindow(Stage primaryStage, Logic logic) {
+    public MainWindow(Stage primaryStage, Logic logic, Config config) {
         super(FXML, primaryStage);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.config = config;
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -82,18 +85,14 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
-
-        weekNumberCard = new StatisticCard(StatisticCard.WEEK_NUM_TITLE, "Break");
+        weekNumberCard = new StatisticCard(StatisticCard.WEEK_NUM_TITLE, config);
         weekNumberCardPlaceholder.getChildren().add(weekNumberCard.getRoot());
 
-        nextEventCard = new StatisticCard(StatisticCard.NEXT_EVENT_TITLE, "08-06-2020 12:00pm");
+        nextEventCard = new StatisticCard(StatisticCard.NEXT_EVENT_TITLE, config);
         nextEventCardPlaceholder.getChildren().add(nextEventCard.getRoot());
 
-        taskCompletionCard = new StatisticCard(StatisticCard.TASK_COMPLETION_TITLE, "0%");
+        taskCompletionCard = new StatisticCard(StatisticCard.TASK_COMPLETION_TITLE, config);
         taskCompletionCardPlaceholder.getChildren().add(taskCompletionCard.getRoot());
-
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
