@@ -9,7 +9,7 @@
 
 <fx:root minHeight="600.0" minWidth="800.0" onCloseRequest="#handleExit" title="NOVA" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
     <icons>
-        <Image url="@/images/NOVA.png"/>
+        <Image url="@/images/NOVA.png" />
     </icons>
     <scene>
         <Scene>
@@ -47,21 +47,21 @@
                         </opaqueInsets>
                     </AnchorPane>
                     <AnchorPane styleClass="pane-with-border" GridPane.columnIndex="1">
-                        <GridPane gridLinesVisible="true" prefHeight="120.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane gridLinesVisible="true" maxHeight="100.0" prefHeight="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columnConstraints>
-                                <ColumnConstraints percentWidth="33" />
-                                <ColumnConstraints percentWidth="33" />
-                                <ColumnConstraints percentWidth="34" />
+                                <ColumnConstraints percentWidth="31.5" />
+                                <ColumnConstraints percentWidth="33.5" />
+                                <ColumnConstraints percentWidth="35" />
                             </columnConstraints>
-                            <StackPane fx:id="weekNumberCardPlaceholder" prefHeight="200.0" prefWidth="200.0" />
-                            <StackPane fx:id="nextEventCardPlaceholder" prefHeight="120.0" prefWidth="181.0" GridPane.columnIndex="1" />
-                            <StackPane fx:id="taskCompletionCardPlaceholder" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                            <StackPane fx:id="weekNumberCardPlaceholder" />
+                            <StackPane fx:id="nextEventCardPlaceholder" GridPane.columnIndex="1" />
+                            <StackPane fx:id="taskCompletionCardPlaceholder" GridPane.columnIndex="2" />
                      <rowConstraints>
                         <RowConstraints />
                      </rowConstraints>
                         </GridPane>
 
-                        <StackPane fx:id="resultDisplayPlaceholder" layoutX="18.0" layoutY="137.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0" />
+                        <StackPane fx:id="resultDisplayPlaceholder" layoutX="18.0" layoutY="137.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0" />
                         <padding>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </padding>

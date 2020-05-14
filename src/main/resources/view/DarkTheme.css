@@ -318,13 +318,13 @@
 }
 
 #statisticCardRoot #cardDateLabel {
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-text-fill: black;
     -fx-font-weight: bold;
 }
 
 #statisticCardRoot .label-gold {
-    -fx-font-size: 13.5pt;
+    -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: #ffef00;
     -fx-opacity: 1;

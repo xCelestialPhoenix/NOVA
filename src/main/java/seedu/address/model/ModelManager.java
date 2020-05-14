@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
@@ -17,6 +18,7 @@ import seedu.address.model.person.Person;
  * Represents the in-memory model of the address book data.
  */
 public class ModelManager implements Model {
+
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
@@ -27,6 +29,7 @@ public class ModelManager implements Model {
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
+
         super();
         requireAllNonNull(addressBook, userPrefs);
 
@@ -38,6 +41,7 @@ public class ModelManager implements Model {
     }
 
     public ModelManager() {
+
         this(new AddressBook(), new UserPrefs());
     }
 
@@ -45,33 +49,39 @@ public class ModelManager implements Model {
 
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+
         requireNonNull(userPrefs);
         this.userPrefs.resetData(userPrefs);
     }
 
     @Override
     public ReadOnlyUserPrefs getUserPrefs() {
+
         return userPrefs;
     }
 
     @Override
     public GuiSettings getGuiSettings() {
+
         return userPrefs.getGuiSettings();
     }
 
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
+
         requireNonNull(guiSettings);
         userPrefs.setGuiSettings(guiSettings);
     }
 
     @Override
     public Path getAddressBookFilePath() {
+
         return userPrefs.getAddressBookFilePath();
     }
 
     @Override
     public void setAddressBookFilePath(Path addressBookFilePath) {
+
         requireNonNull(addressBookFilePath);
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
@@ -80,33 +90,39 @@ public class ModelManager implements Model {
 
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
+
         this.addressBook.resetData(addressBook);
     }
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
+
         return addressBook;
     }
 
     @Override
     public boolean hasPerson(Person person) {
+
         requireNonNull(person);
         return addressBook.hasPerson(person);
     }
 
     @Override
     public void deletePerson(Person target) {
+
         addressBook.removePerson(target);
     }
 
     @Override
     public void addPerson(Person person) {
+
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
     public void setPerson(Person target, Person editedPerson) {
+
         requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
@@ -120,11 +136,13 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
+
         return filteredPersons;
     }
 
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
+
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }

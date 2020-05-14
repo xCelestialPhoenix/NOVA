@@ -58,6 +58,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane weekNumberCardPlaceholder;
 
     public MainWindow(Stage primaryStage, Logic logic, Config config) {
+
         super(FXML, primaryStage);
 
         // Set dependencies
@@ -72,6 +73,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     public Stage getPrimaryStage() {
+
         return primaryStage;
     }
 
@@ -79,6 +81,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -102,6 +105,7 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
+
         primaryStage.setHeight(guiSettings.getWindowHeight());
         primaryStage.setWidth(guiSettings.getWindowWidth());
         if (guiSettings.getWindowCoordinates() != null) {
@@ -115,6 +119,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHelp() {
+
         if (!helpWindow.isShowing()) {
             helpWindow.show();
         } else {
@@ -123,6 +128,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void show() {
+
         primaryStage.show();
     }
 
@@ -131,6 +137,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleExit() {
+
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
@@ -139,6 +146,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     public PersonListPanel getPersonListPanel() {
+
         return personListPanel;
     }
 
@@ -148,6 +156,7 @@ public class MainWindow extends UiPart<Stage> {
      * @see seedu.address.logic.Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
+
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
@@ -168,4 +177,5 @@ public class MainWindow extends UiPart<Stage> {
             throw e;
         }
     }
+
 }

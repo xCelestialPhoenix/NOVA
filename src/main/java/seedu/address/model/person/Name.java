@@ -26,6 +26,7 @@ public class Name {
      * @param name A valid name.
      */
     public Name(String name) {
+
         requireNonNull(name);
         checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
         fullName = name;
@@ -35,17 +36,20 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
+
         return test.matches(VALIDATION_REGEX);
     }
 
 
     @Override
     public String toString() {
+
         return fullName;
     }
 
     @Override
     public boolean equals(Object other) {
+
         return other == this // short circuit if same object
                 || (other instanceof Name // instanceof handles nulls
                 && fullName.equals(((Name) other).fullName)); // state check
@@ -53,6 +57,7 @@ public class Name {
 
     @Override
     public int hashCode() {
+
         return fullName.hashCode();
     }
 

@@ -15,7 +15,9 @@ import java.util.Optional;
  */
 public class ArgumentMultimap {
 
-    /** Prefixes mapped to their respective arguments**/
+    /**
+     * Prefixes mapped to their respective arguments
+     **/
     private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
 
     /**
@@ -26,6 +28,7 @@ public class ArgumentMultimap {
      * @param argValue Argument value to be associated with the specified prefix key
      */
     public void put(Prefix prefix, String argValue) {
+
         List<String> argValues = getAllValues(prefix);
         argValues.add(argValue);
         argMultimap.put(prefix, argValues);
@@ -35,6 +38,7 @@ public class ArgumentMultimap {
      * Returns the last value of {@code prefix}.
      */
     public Optional<String> getValue(Prefix prefix) {
+
         List<String> values = getAllValues(prefix);
         return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
@@ -45,6 +49,7 @@ public class ArgumentMultimap {
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */
     public List<String> getAllValues(Prefix prefix) {
+
         if (!argMultimap.containsKey(prefix)) {
             return new ArrayList<>();
         }
@@ -55,6 +60,8 @@ public class ArgumentMultimap {
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
     public String getPreamble() {
+
         return getValue(new Prefix("")).orElse("");
     }
+
 }

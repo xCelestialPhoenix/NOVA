@@ -28,6 +28,7 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -37,18 +38,22 @@ public class Person {
     }
 
     public Name getName() {
+
         return name;
     }
 
     public Phone getPhone() {
+
         return phone;
     }
 
     public Email getEmail() {
+
         return email;
     }
 
     public Address getAddress() {
+
         return address;
     }
 
@@ -57,6 +62,7 @@ public class Person {
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
+
         return Collections.unmodifiableSet(tags);
     }
 
@@ -65,6 +71,7 @@ public class Person {
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
+
         if (otherPerson == this) {
             return true;
         }
@@ -80,6 +87,7 @@ public class Person {
      */
     @Override
     public boolean equals(Object other) {
+
         if (other == this) {
             return true;
         }
@@ -104,6 +112,7 @@ public class Person {
 
     @Override
     public String toString() {
+
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
                 .append(" Phone: ")

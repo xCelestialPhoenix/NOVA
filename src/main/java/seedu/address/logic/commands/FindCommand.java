@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.core.Messages;
+import seedu.address.commons.contants.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
@@ -22,11 +22,13 @@ public class FindCommand extends Command {
     private final NameContainsKeywordsPredicate predicate;
 
     public FindCommand(NameContainsKeywordsPredicate predicate) {
+
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
+
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         return new CommandResult(
@@ -35,8 +37,10 @@ public class FindCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
+
         return other == this // short circuit if same object
                 || (other instanceof FindCommand // instanceof handles nulls
                 && predicate.equals(((FindCommand) other).predicate)); // state check
     }
+
 }

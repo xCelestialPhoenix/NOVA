@@ -23,6 +23,7 @@ public class Version implements Comparable<Version> {
     private final boolean isEarlyAccess;
 
     public Version(int major, int minor, int patch, boolean isEarlyAccess) {
+
         this.major = major;
         this.minor = minor;
         this.patch = patch;
@@ -30,28 +31,34 @@ public class Version implements Comparable<Version> {
     }
 
     public int getMajor() {
+
         return major;
     }
 
     public int getMinor() {
+
         return minor;
     }
 
     public int getPatch() {
+
         return patch;
     }
 
     public boolean isEarlyAccess() {
+
         return isEarlyAccess;
     }
 
     /**
      * Parses a version number string in the format V1.2.3.
+     *
      * @param versionString version number string
      * @return a Version object
      */
     @JsonCreator
     public static Version fromString(String versionString) throws IllegalArgumentException {
+
         Matcher versionMatcher = VERSION_PATTERN.matcher(versionString);
 
         if (!versionMatcher.find()) {
@@ -64,13 +71,19 @@ public class Version implements Comparable<Version> {
                 versionMatcher.group(4) == null ? false : true);
     }
 
+    /**
+     * Formats the version number to string
+     * @return
+     */
     @JsonValue
     public String toString() {
+
         return String.format("V%d.%d.%d%s", major, minor, patch, isEarlyAccess ? "ea" : "");
     }
 
     @Override
     public int compareTo(Version other) {
+
         if (major != other.major) {
             return major - other.major;
         }
@@ -91,6 +104,7 @@ public class Version implements Comparable<Version> {
 
     @Override
     public boolean equals(Object obj) {
+
         if (obj == null) {
             return false;
         }
@@ -104,10 +118,12 @@ public class Version implements Comparable<Version> {
 
     @Override
     public int hashCode() {
+
         String hash = String.format("%03d%03d%03d", major, minor, patch);
         if (!isEarlyAccess) {
             hash = "1" + hash;
         }
         return Integer.parseInt(hash);
     }
+
 }

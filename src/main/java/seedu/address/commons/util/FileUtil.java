@@ -13,16 +13,26 @@ public class FileUtil {
 
     private static final String CHARSET = "UTF-8";
 
+    /**
+     * Checks if file exists.
+     *
+     * @param file the file
+     * @return the boolean
+     */
     public static boolean isFileExists(Path file) {
+
         return Files.exists(file) && Files.isRegularFile(file);
     }
 
     /**
-     * Returns true if {@code path} can be converted into a {@code Path} via {@link Paths#get(String)},
+     * Returns true if {@code path} can be converted into a {@code Path} via {@link Paths #get(String)},
      * otherwise returns false.
+     *
      * @param path A string representing the file path. Cannot be null.
+     * @return the boolean
      */
     public static boolean isValidPath(String path) {
+
         try {
             Paths.get(path);
         } catch (InvalidPathException ipe) {
@@ -33,9 +43,12 @@ public class FileUtil {
 
     /**
      * Creates a file if it does not exist along with its missing parent directories.
+     *
+     * @param file the file
      * @throws IOException if the file or directory cannot be created.
      */
     public static void createIfMissing(Path file) throws IOException {
+
         if (!isFileExists(file)) {
             createFile(file);
         }
@@ -43,8 +56,12 @@ public class FileUtil {
 
     /**
      * Creates a file if it does not exist along with its missing parent directories.
+     *
+     * @param file the file
+     * @throws IOException the io exception
      */
     public static void createFile(Path file) throws IOException {
+
         if (Files.exists(file)) {
             return;
         }
@@ -56,8 +73,12 @@ public class FileUtil {
 
     /**
      * Creates parent directories of file if it has a parent directory
+     *
+     * @param file the file
+     * @throws IOException the io exception
      */
     public static void createParentDirsOfFile(Path file) throws IOException {
+
         Path parentDir = file.getParent();
 
         if (parentDir != null) {
@@ -67,16 +88,26 @@ public class FileUtil {
 
     /**
      * Assumes file exists
+     *
+     * @param file the file
+     * @return the string
+     * @throws IOException the io exception
      */
     public static String readFromFile(Path file) throws IOException {
+
         return new String(Files.readAllBytes(file), CHARSET);
     }
 
     /**
      * Writes given string to a file.
      * Will create the file if it does not exist yet.
+     *
+     * @param file    the file
+     * @param content the content
+     * @throws IOException the io exception
      */
     public static void writeToFile(Path file, String content) throws IOException {
+
         Files.write(file, content.getBytes(CHARSET));
     }
 

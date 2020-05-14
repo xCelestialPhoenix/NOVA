@@ -3,6 +3,7 @@ package seedu.address.commons.util;
 import static java.util.Objects.requireNonNull;
 
 import javafx.scene.image.Image;
+
 import seedu.address.MainApp;
 
 /**
@@ -11,6 +12,7 @@ import seedu.address.MainApp;
 public class AppUtil {
 
     public static Image getImage(String imagePath) {
+
         requireNonNull(imagePath);
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
@@ -21,6 +23,7 @@ public class AppUtil {
      * @throws IllegalArgumentException if {@code condition} is false.
      */
     public static void checkArgument(Boolean condition) {
+
         if (!condition) {
             throw new IllegalArgumentException();
         }
@@ -32,8 +35,10 @@ public class AppUtil {
      * @throws IllegalArgumentException with {@code errorMessage} if {@code condition} is false.
      */
     public static void checkArgument(Boolean condition, String errorMessage) {
+
         if (!condition) {
             throw new IllegalArgumentException(errorMessage);
         }
     }
+
 }

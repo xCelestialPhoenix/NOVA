@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
@@ -48,6 +49,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
+
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
@@ -74,6 +76,7 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
+
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         try {
@@ -94,6 +97,7 @@ public class MainApp extends Application {
     }
 
     private void initLogging(Config config) {
+
         LogsCenter.init(config);
     }
 
@@ -103,6 +107,7 @@ public class MainApp extends Application {
      * if {@code configFilePath} is null.
      */
     protected Config initConfig(Path configFilePath) {
+
         Config initializedConfig;
         Path configFilePathUsed;
 
@@ -139,6 +144,7 @@ public class MainApp extends Application {
      * reading from the file.
      */
     protected UserPrefs initPrefs(UserPrefsStorage storage) {
+
         Path prefsFilePath = storage.getUserPrefsFilePath();
         logger.info("Using prefs file : " + prefsFilePath);
 
@@ -167,12 +173,14 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
+
         logger.info("============================ [ Stopping Address Book ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
@@ -180,4 +188,5 @@ public class MainApp extends Application {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
     }
+
 }

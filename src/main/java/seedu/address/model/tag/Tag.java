@@ -20,6 +20,7 @@ public class Tag {
      * @param tagName A valid tag name.
      */
     public Tag(String tagName) {
+
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
         this.tagName = tagName;
@@ -29,11 +30,13 @@ public class Tag {
      * Returns true if a given string is a valid tag name.
      */
     public static boolean isValidTagName(String test) {
+
         return test.matches(VALIDATION_REGEX);
     }
 
     @Override
     public boolean equals(Object other) {
+
         return other == this // short circuit if same object
                 || (other instanceof Tag // instanceof handles nulls
                 && tagName.equals(((Tag) other).tagName)); // state check
@@ -41,6 +44,7 @@ public class Tag {
 
     @Override
     public int hashCode() {
+
         return tagName.hashCode();
     }
 
@@ -48,6 +52,7 @@ public class Tag {
      * Format state as text for viewing.
      */
     public String toString() {
+
         return '[' + tagName + ']';
     }
 

@@ -20,39 +20,48 @@ public class Config {
     private LocalDate endDate = LocalDate.of(2020, 5, 10);
 
     public Level getLogLevel() {
+
         return logLevel;
     }
 
     public void setLogLevel(Level logLevel) {
+
         this.logLevel = logLevel;
     }
 
     public Path getUserPrefsFilePath() {
+
         return userPrefsFilePath;
     }
 
     public void setUserPrefsFilePath(Path userPrefsFilePath) {
+
         this.userPrefsFilePath = userPrefsFilePath;
     }
 
     public LocalDate getStartDate() {
+
         return startDate;
     }
 
     public void setStartDate(LocalDate date) {
+
         startDate = date;
     }
 
     public LocalDate getEndDate() {
+
         return endDate;
     }
 
     public void setEndDate(LocalDate date) {
+
         endDate = date;
     }
 
     @Override
     public boolean equals(Object other) {
+
         if (other == this) {
             return true;
         }
@@ -68,11 +77,13 @@ public class Config {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(logLevel, userPrefsFilePath);
     }
 
     @Override
     public String toString() {
+
         StringBuilder sb = new StringBuilder();
         sb.append("Current log level : " + logLevel);
         sb.append("\nPreference file Location : " + userPrefsFilePath);

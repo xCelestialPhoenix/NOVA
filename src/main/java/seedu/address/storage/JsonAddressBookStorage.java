@@ -24,15 +24,18 @@ public class JsonAddressBookStorage implements AddressBookStorage {
     private Path filePath;
 
     public JsonAddressBookStorage(Path filePath) {
+
         this.filePath = filePath;
     }
 
     public Path getAddressBookFilePath() {
+
         return filePath;
     }
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException {
+
         return readAddressBook(filePath);
     }
 
@@ -43,11 +46,12 @@ public class JsonAddressBookStorage implements AddressBookStorage {
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException {
+
         requireNonNull(filePath);
 
         Optional<JsonSerializableAddressBook> jsonAddressBook = JsonUtil.readJsonFile(
                 filePath, JsonSerializableAddressBook.class);
-        if (!jsonAddressBook.isPresent()) {
+        if (jsonAddressBook.isEmpty()) {
             return Optional.empty();
         }
 
@@ -61,6 +65,7 @@ public class JsonAddressBookStorage implements AddressBookStorage {
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+
         saveAddressBook(addressBook, filePath);
     }
 
@@ -70,6 +75,7 @@ public class JsonAddressBookStorage implements AddressBookStorage {
      * @param filePath location of the data. Cannot be null.
      */
     public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
+
         requireNonNull(addressBook);
         requireNonNull(filePath);
 

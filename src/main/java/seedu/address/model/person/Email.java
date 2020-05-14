@@ -35,6 +35,7 @@ public class Email {
      * @param email A valid email address.
      */
     public Email(String email) {
+
         requireNonNull(email);
         checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
         value = email;
@@ -44,16 +45,19 @@ public class Email {
      * Returns if a given string is a valid email.
      */
     public static boolean isValidEmail(String test) {
+
         return test.matches(VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
+
         return value;
     }
 
     @Override
     public boolean equals(Object other) {
+
         return other == this // short circuit if same object
                 || (other instanceof Email // instanceof handles nulls
                 && value.equals(((Email) other).value)); // state check
@@ -61,6 +65,7 @@ public class Email {
 
     @Override
     public int hashCode() {
+
         return value.hashCode();
     }
 

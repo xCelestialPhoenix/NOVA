@@ -42,12 +42,14 @@ public class AddCommand extends Command {
      * Creates an AddCommand to add the specified {@code Person}
      */
     public AddCommand(Person person) {
+
         requireNonNull(person);
         toAdd = person;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
@@ -60,8 +62,10 @@ public class AddCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
+
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
+
 }

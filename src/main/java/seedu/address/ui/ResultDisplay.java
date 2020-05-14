@@ -17,10 +17,12 @@ public class ResultDisplay extends UiPart<Region> {
     private TextArea resultDisplay;
 
     public ResultDisplay() {
+
         super(FXML);
     }
 
     public void setFeedbackToUser(String feedbackToUser) {
+
         requireNonNull(feedbackToUser);
         resultDisplay.setText(feedbackToUser);
     }

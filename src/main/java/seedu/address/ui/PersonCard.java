@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+
 import seedu.address.model.person.Person;
 
 /**
@@ -42,6 +43,7 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
+
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
@@ -71,4 +73,5 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
+
 }
