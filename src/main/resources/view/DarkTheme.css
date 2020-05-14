@@ -10,13 +10,6 @@
     -fx-opacity: 0.9;
 }
 
-.label-gold {
-    -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #ffef00;
-    -fx-opacity: 1;
-}
-
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -325,9 +318,17 @@
 }
 
 #statisticCardRoot #cardDateLabel {
+    -fx-font-size: 14pt;
     -fx-text-fill: black;
     -fx-font-weight: bold;
 }
+
+#statisticCardRoot .label-gold {
+    -fx-font-size: 13.5pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #ffef00;
+    -fx-opacity: 1;
+}}
 
 #cardPane {
     -fx-background-color: transparent;

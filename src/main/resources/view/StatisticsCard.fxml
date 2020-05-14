@@ -9,10 +9,10 @@
 <AnchorPane fx:id="statisticCardRoot" minHeight="100.0" minWidth="136.0" prefHeight="160.0" prefWidth="136.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="50.0" styleClass="statistic-card" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
        <ImageView fx:id="cardLogoImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <Label fx:id="cardDateLabel" alignment="CENTER" contentDisplay="CENTER" text="date" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+        <Label fx:id="cardDateLabel" alignment="CENTER" contentDisplay="CENTER" text="date" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0" />
     </AnchorPane>
 
-    <Label fx:id="cardTitleLabel" layoutX="68.0" layoutY="17.0" text="Title" wrapText="true" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0" />
+    <Label fx:id="cardTitleLabel" alignment="BOTTOM_LEFT" layoutX="68.0" layoutY="17.0" styleClass="label-gold" text="Title" wrapText="true" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0" />
     <TextFlow fx:id="textFlow" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="45.0" />
    <stylesheets>
       <URL value="@DarkTheme.css" />

@@ -1,8 +1,7 @@
 package seedu.address.ui;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,7 +13,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+
 import seedu.address.commons.core.Config;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class StatisticCard extends UiPart<Node> {
 
@@ -28,7 +30,7 @@ public class StatisticCard extends UiPart<Node> {
     private static final String TICK_FILEPATH = "/images/tick.png";
 
     // Default data to display
-    private static final String DEFAULT_NEXT_EVENT = "";
+    private static final String DEFAULT_NEXT_EVENT = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     private static final String DEFAULT_TASK_COMPLETION = "0";
 
     // Week number statistic card constants
