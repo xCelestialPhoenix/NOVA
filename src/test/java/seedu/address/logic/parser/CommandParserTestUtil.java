@@ -15,6 +15,7 @@ public class CommandParserTestUtil {
      * equals to {@code expectedCommand}.
      */
     public static void assertParseSuccess(Parser parser, String userInput, Command expectedCommand) {
+
         try {
             Command command = parser.parse(userInput);
             assertEquals(expectedCommand, command);
@@ -28,6 +29,7 @@ public class CommandParserTestUtil {
      * equals to {@code expectedMessage}.
      */
     public static void assertParseFailure(Parser parser, String userInput, String expectedMessage) {
+
         try {
             parser.parse(userInput);
             throw new AssertionError("The expected ParseException was not thrown.");
@@ -35,4 +37,5 @@ public class CommandParserTestUtil {
             assertEquals(expectedMessage, pe.getMessage());
         }
     }
+
 }

@@ -19,6 +19,7 @@ public class JsonUtilTest {
 
     @Test
     public void serializeObjectToJsonFile_noExceptionThrown() throws IOException {
+
         SerializableTestClass serializableTestClass = new SerializableTestClass();
         serializableTestClass.setTestValues();
 
@@ -29,6 +30,7 @@ public class JsonUtilTest {
 
     @Test
     public void deserializeObjectFromJsonFile_noExceptionThrown() throws IOException {
+
         FileUtil.writeToFile(SERIALIZATION_FILE, SerializableTestClass.JSON_STRING_REPRESENTATION);
 
         SerializableTestClass serializableTestClass = JsonUtil

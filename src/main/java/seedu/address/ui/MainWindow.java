@@ -1,5 +1,11 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.StatisticCard.NEXT_ACTIVITY_TITLE;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
@@ -13,6 +19,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.calendar.activity.Activity;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -29,10 +36,10 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
 
     // Independent Ui parts residing in this Ui container
-    private PersonListPanel personListPanel;
+    private ActivityListPanel activityListPanel;
     private ResultDisplay resultDisplay;
     private StatisticCard weekNumberCard;
-    private StatisticCard nextEventCard;
+    private StatisticCard nextActivityCard;
     private StatisticCard taskCompletionCard;
     private HelpWindow helpWindow;
 
@@ -40,7 +47,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private StackPane nextEventCardPlaceholder;
+    private StackPane nextActivityCardPlaceholder;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -57,6 +64,13 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane weekNumberCardPlaceholder;
 
+    /**
+     * Instantiates a new Main window.
+     *
+     * @param primaryStage the primary stage
+     * @param logic        the logic
+     * @param config       the config
+     */
     public MainWindow(Stage primaryStage, Logic logic, Config config) {
 
         super(FXML, primaryStage);
@@ -72,6 +86,11 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow = new HelpWindow();
     }
 
+    /**
+     * Gets primary stage.
+     *
+     * @return the primary stage
+     */
     public Stage getPrimaryStage() {
 
         return primaryStage;
@@ -82,8 +101,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        activityListPanel = new ActivityListPanel(logic.getFilteredActivityList());
+        personListPanelPlaceholder.getChildren().add(activityListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -91,8 +110,8 @@ public class MainWindow extends UiPart<Stage> {
         weekNumberCard = new StatisticCard(StatisticCard.WEEK_NUM_TITLE, config);
         weekNumberCardPlaceholder.getChildren().add(weekNumberCard.getRoot());
 
-        nextEventCard = new StatisticCard(StatisticCard.NEXT_EVENT_TITLE, config);
-        nextEventCardPlaceholder.getChildren().add(nextEventCard.getRoot());
+        nextActivityCard = new StatisticCard(NEXT_ACTIVITY_TITLE, config);
+        nextActivityCardPlaceholder.getChildren().add(nextActivityCard.getRoot());
 
         taskCompletionCard = new StatisticCard(StatisticCard.TASK_COMPLETION_TITLE, config);
         taskCompletionCardPlaceholder.getChildren().add(taskCompletionCard.getRoot());
@@ -127,6 +146,9 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Show.
+     */
     void show() {
 
         primaryStage.show();
@@ -145,9 +167,14 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public PersonListPanel getPersonListPanel() {
+    /**
+     * Gets activity list panel.
+     *
+     * @return the activity list panel
+     */
+    public ActivityListPanel getActivityListPanel() {
 
-        return personListPanel;
+        return activityListPanel;
     }
 
     /**
@@ -161,6 +188,7 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            updateStatistic();
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -176,6 +204,23 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * Updates the statistic cards
+     */
+    private void updateStatistic() {
+
+        String newData = "";
+        nextActivityCardPlaceholder.getChildren().remove(nextActivityCard.getRoot());
+        // Optional<Activity> activity = logic.getNextActivity(LocalDate.now(), LocalTime.now());
+        Optional<Activity> activity = logic.getNextActivity(LocalDate.of(2020, 1, 15), LocalTime.now());
+        if (activity.isPresent()) {
+            newData = activity.get().getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n"
+                    + activity.get().getStartTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
+        }
+        nextActivityCard = new StatisticCard(NEXT_ACTIVITY_TITLE, newData);
+        nextActivityCardPlaceholder.getChildren().add(nextActivityCard.getRoot());
     }
 
 }

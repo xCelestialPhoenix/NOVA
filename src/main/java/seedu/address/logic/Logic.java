@@ -1,6 +1,9 @@
 package seedu.address.logic;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 
@@ -9,6 +12,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.person.Person;
 
 /**
@@ -37,6 +41,12 @@ public interface Logic {
      * Returns an unmodifiable view of the filtered list of persons
      */
     ObservableList<Person> getFilteredPersonList();
+
+    //=========== Calendar =============================================================
+
+    ObservableList<Activity> getFilteredActivityList();
+
+    Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow);
 
     /**
      * Returns the user prefs' address book file path.

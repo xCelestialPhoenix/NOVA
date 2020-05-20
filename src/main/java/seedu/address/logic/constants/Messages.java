@@ -1,4 +1,4 @@
-package seedu.address.commons.contants;
+package seedu.address.logic.constants;
 
 /**
  * Container for user visible messages.

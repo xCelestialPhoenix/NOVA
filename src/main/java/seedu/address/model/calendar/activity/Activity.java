@@ -2,6 +2,7 @@ package seedu.address.model.calendar.activity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * The type Activity.
@@ -94,6 +95,16 @@ public abstract class Activity {
     }
 
     /**
+     * Is valid boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isValid() {
+
+        return startTime.isBefore(endTime);
+    }
+
+    /**
      * Start before boolean.
      *
      * @param activity the activity
@@ -105,6 +116,17 @@ public abstract class Activity {
     }
 
     /**
+     * Start during boolean.
+     *
+     * @param activity the activity
+     * @return the boolean
+     */
+    public boolean startDuring(Activity activity) {
+
+        return startTime.isAfter(activity.startTime) && startTime.isBefore(activity.endTime);
+    }
+
+    /**
      * Ends before boolean.
      *
      * @param activity the activity
@@ -112,7 +134,78 @@ public abstract class Activity {
      */
     public boolean endsBefore(Activity activity) {
 
-        return endTime.isBefore(activity.startTime);
+        return !endTime.isAfter(activity.startTime);
+    }
+
+    /**
+     * Ends with boolean.
+     *
+     * @param activity the activity
+     * @return the boolean
+     */
+    public boolean endsWith(Activity activity) {
+
+        return endTime.equals(activity.endTime);
+    }
+
+    /**
+     * On same date boolean.
+     *
+     * @param date the date
+     * @return the boolean
+     */
+    public boolean onSameDate(LocalDate date) {
+
+        return this.date.equals(date);
+    }
+
+    /**
+     * At same time boolean.
+     *
+     * @param start the start
+     * @param end   the end
+     * @return the boolean
+     */
+    public boolean atSameTime(LocalTime start, LocalTime end) {
+
+        return startTime.equals(start) && endTime.equals(end);
+    }
+
+    /**
+     * At same venue boolean.
+     *
+     * @param venue the venue
+     * @return the boolean
+     */
+    public boolean atSameVenue(String venue) {
+
+        return this.venue.equals(venue);
+    }
+
+    /**
+     * Has same description boolean.
+     *
+     * @param description the description
+     * @return the boolean
+     */
+    public boolean hasSameDescription(String description) {
+
+        return this.description.equals(description);
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Description: " + description + "\n");
+        sb.append("Date: " + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n");
+        sb.append("Time: " + startTime + " - " + endTime + "\n");
+        sb.append("Venue: " + venue + "\n");
+
+        if (!notes.equals("")) {
+            sb.append("Notes: " + notes + "\n");
+        }
+        return sb.toString();
     }
 
 }

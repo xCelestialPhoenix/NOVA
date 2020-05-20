@@ -1,11 +1,11 @@
 package seedu.address.ui;
 
 import static java.time.temporal.ChronoUnit.DAYS;
-import static seedu.address.commons.contants.CalendarConstants.DAYS_PER_WEEK;
-import static seedu.address.commons.contants.CalendarConstants.EXAM_WEEK_1;
-import static seedu.address.commons.contants.CalendarConstants.EXAM_WEEK_2;
-import static seedu.address.commons.contants.CalendarConstants.READING_WEEK;
-import static seedu.address.commons.contants.CalendarConstants.RECESS_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.EXAM_WEEK_1;
+import static seedu.address.logic.constants.CalendarConstants.EXAM_WEEK_2;
+import static seedu.address.logic.constants.CalendarConstants.READING_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.RECESS_WEEK;
 
 import java.time.LocalDate;
 
@@ -28,7 +28,7 @@ import seedu.address.commons.core.Config;
 public class StatisticCard extends UiPart<Node> {
 
     public static final String WEEK_NUM_TITLE = "Week:";
-    public static final String NEXT_EVENT_TITLE = "Next event at:";
+    public static final String NEXT_ACTIVITY_TITLE = "Next activity at:";
     public static final String TASK_COMPLETION_TITLE = "Task completed:";
 
     private static final String FXML = "StatisticsCard.fxml";
@@ -37,8 +37,8 @@ public class StatisticCard extends UiPart<Node> {
     private static final String TICK_FILEPATH = "/images/tick.png";
 
     // Default data to display
-    private static final String DEFAULT_NEXT_EVENT = "";
-    private static final String DEFAULT_TASK_COMPLETION = "0";
+    private static final String DEFAULT_NEXT_ACTIVITY = "";
+    private static final String DEFAULT_TASK_COMPLETION = "100";
 
     @FXML
     private AnchorPane statisticCardRoot;
@@ -83,7 +83,7 @@ public class StatisticCard extends UiPart<Node> {
             cardDateLabel.setVisible(false);
         } else { //Is week number statistic card
 
-            // Set the date number to today
+            // Set the calendar date number to today
             cardDateLabel.setText(String.valueOf(LocalDate.now().getDayOfMonth()));
 
             //Align week number with academic calendar
@@ -106,7 +106,7 @@ public class StatisticCard extends UiPart<Node> {
         // Set up the display for data
         Text text = new Text(data);
         text.setFill(Color.WHITE);
-        if (title.equals(NEXT_EVENT_TITLE)) {
+        if (title.equals(NEXT_ACTIVITY_TITLE)) {
             text.setFont(Font.font("Segoe UI Bold", 20));
         } else {
             text.setFont(Font.font("Segoe UI Bold", 26));
@@ -129,8 +129,8 @@ public class StatisticCard extends UiPart<Node> {
         case WEEK_NUM_TITLE:
             data = getWeekNumber(config);
             break;
-        case NEXT_EVENT_TITLE:
-            data = DEFAULT_NEXT_EVENT;
+        case NEXT_ACTIVITY_TITLE:
+            data = DEFAULT_NEXT_ACTIVITY;
             break;
         case TASK_COMPLETION_TITLE:
             data = DEFAULT_TASK_COMPLETION + "%";
@@ -198,7 +198,7 @@ public class StatisticCard extends UiPart<Node> {
         case WEEK_NUM_TITLE:
             img = new Image(this.getClass().getResourceAsStream(CALENDAR_FILEPATH));
             break;
-        case NEXT_EVENT_TITLE:
+        case NEXT_ACTIVITY_TITLE:
             img = new Image(this.getClass().getResourceAsStream(CLOCK_FILEPATH));
             break;
         case TASK_COMPLETION_TITLE:

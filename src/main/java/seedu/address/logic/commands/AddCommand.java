@@ -1,15 +1,18 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_DESCRIPTION;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_END_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_NOTES;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_START_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_TYPE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_VENUE;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.Lesson;
 
 /**
  * Adds a person to the address book.
@@ -18,33 +21,39 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an activity to the calendar. \n"
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + PREFIX_ACTIVITY_TYPE + "TYPE "
+            + PREFIX_ACTIVITY_DESCRIPTION + "DESC "
+            + PREFIX_ACTIVITY_VENUE + "VENUE "
+            + PREFIX_ACTIVITY_DATE + "DATE "
+            + PREFIX_ACTIVITY_START_TIME + "START "
+            + PREFIX_ACTIVITY_END_TIME + "END "
+            + PREFIX_ACTIVITY_NOTES + "NOTES \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_ACTIVITY_TYPE + "meeting "
+            + PREFIX_ACTIVITY_DESCRIPTION + "Project Meeting "
+            + PREFIX_ACTIVITY_VENUE + "School "
+            + PREFIX_ACTIVITY_DATE + "19/04/2020 "
+            + PREFIX_ACTIVITY_START_TIME + "10:00 "
+            + PREFIX_ACTIVITY_END_TIME + "11:00 "
+            + PREFIX_ACTIVITY_NOTES + "Prepare findings \n";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New activity added: \n%1$s";
+    public static final String MESSAGE_DUPLICATE_ACTIVITY = "This activity already exists in the calendar";
+    public static final String MESSAGE_DATE_OUT_OF_BOUND = "The date is outside of the range of the calendar";
+    public static final String MESSAGE_ACTIVITY_OVERLAP = "This activity overlaps with another activity";
+    public static final String MESSAGE_INVALID_ACTIVITY = "This activity is not valid";
 
-    private final Person toAdd;
+    private final Activity toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public AddCommand(Person person) {
+    public AddCommand(Activity activity) {
 
-        requireNonNull(person);
-        toAdd = person;
+        requireNonNull(activity);
+        toAdd = activity;
     }
 
     @Override
@@ -52,12 +61,25 @@ public class AddCommand extends Command {
 
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!toAdd.isValid()) {
+            throw new CommandException(MESSAGE_INVALID_ACTIVITY);
         }
 
-        model.addPerson(toAdd);
+        if (!(toAdd instanceof Lesson) && !model.isWithinCalendarTime(toAdd)) {
+            throw new CommandException(MESSAGE_DATE_OUT_OF_BOUND);
+        }
+
+        if (model.hasActivity(toAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_ACTIVITY);
+        }
+
+        if (!model.isAddable(toAdd)) {
+            throw new CommandException(MESSAGE_ACTIVITY_OVERLAP);
+        }
+
+        model.addActivity(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+
     }
 
     @Override

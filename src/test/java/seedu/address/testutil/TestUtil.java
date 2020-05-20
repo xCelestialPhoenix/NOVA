@@ -24,6 +24,7 @@ public class TestUtil {
      * Creates the sandbox folder if it doesn't exist.
      */
     public static Path getFilePathInSandboxFolder(String fileName) {
+
         try {
             Files.createDirectories(SANDBOX_FOLDER);
         } catch (IOException e) {
@@ -36,6 +37,7 @@ public class TestUtil {
      * Returns the middle index of the person in the {@code model}'s person list.
      */
     public static Index getMidIndex(Model model) {
+
         return Index.fromOneBased(model.getFilteredPersonList().size() / 2);
     }
 
@@ -43,6 +45,7 @@ public class TestUtil {
      * Returns the last index of the person in the {@code model}'s person list.
      */
     public static Index getLastIndex(Model model) {
+
         return Index.fromOneBased(model.getFilteredPersonList().size());
     }
 
@@ -50,6 +53,8 @@ public class TestUtil {
      * Returns the person in the {@code model}'s person list at {@code index}.
      */
     public static Person getPerson(Model model, Index index) {
+
         return model.getFilteredPersonList().get(index.getZeroBased());
     }
+
 }

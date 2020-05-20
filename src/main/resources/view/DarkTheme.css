@@ -335,6 +335,23 @@
     -fx-border-width: 0;
 }
 
+#cardPane .label {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-opacity: 1;
+}
+
+#cardPane .label-header {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-opacity: 1;
+}
+
+#cardPane .label-light {
+    -fx-font-size: 5pt;
+    -fx-background-color: white;
+}
+
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;

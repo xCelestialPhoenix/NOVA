@@ -9,6 +9,7 @@ import java.util.List;
  * A class used to test serialization and deserialization
  */
 public class SerializableTestClass {
+
     public static final String JSON_STRING_REPRESENTATION = String.format("{%n"
             + "  \"name\" : \"This is a test class\",%n"
             + "  \"listOfLocalDateTimes\" : "
@@ -29,10 +30,12 @@ public class SerializableTestClass {
     private HashMap<Integer, String> mapOfIntegerToString;
 
     public static String getNameTestValue() {
+
         return NAME_TEST_VALUE;
     }
 
     public static List<LocalDateTime> getListTestValues() {
+
         List<LocalDateTime> listOfLocalDateTimes = new ArrayList<>();
 
         listOfLocalDateTimes.add(LocalDateTime.MIN);
@@ -43,6 +46,7 @@ public class SerializableTestClass {
     }
 
     public static HashMap<Integer, String> getHashMapTestValues() {
+
         HashMap<Integer, String> mapOfIntegerToString = new HashMap<>();
 
         mapOfIntegerToString.put(1, "One");
@@ -53,20 +57,25 @@ public class SerializableTestClass {
     }
 
     public void setTestValues() {
+
         name = getNameTestValue();
         listOfLocalDateTimes = getListTestValues();
         mapOfIntegerToString = getHashMapTestValues();
     }
 
     public String getName() {
+
         return name;
     }
 
     public List<LocalDateTime> getListOfLocalDateTimes() {
+
         return listOfLocalDateTimes;
     }
 
     public HashMap<Integer, String> getMapOfIntegerToString() {
+
         return mapOfIntegerToString;
     }
+
 }

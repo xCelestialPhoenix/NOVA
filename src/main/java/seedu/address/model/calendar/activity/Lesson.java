@@ -1,32 +1,37 @@
 package seedu.address.model.calendar.activity;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * The Lesson type activity.
  */
 public class Lesson extends Activity {
 
+    private final DayOfWeek day;
+
     /**
      * Instantiates a new Lesson.
      *
-     * @param date        the date
+     * @param day         the day
      * @param startTime   the start time
      * @param endTime     the end time
      * @param venue       the venue
      * @param description the description
      * @param notes       the notes
      */
-    public Lesson(LocalDate date, LocalTime startTime, LocalTime endTime, String venue, String description,
+    public Lesson(DayOfWeek day, LocalTime startTime, LocalTime endTime, String venue, String description,
                   String notes) {
 
-        this.date = date;
+        this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
         this.venue = venue;
         this.description = description;
         this.notes = notes;
+        date = null;
     }
 
     /**
@@ -38,11 +43,37 @@ public class Lesson extends Activity {
     public Lesson(Lesson lesson, LocalDate date) {
 
         this.date = date;
+        this.day = lesson.day;
         this.startTime = lesson.startTime;
         this.endTime = lesson.endTime;
         this.venue = lesson.venue;
         this.description = lesson.description;
         this.notes = lesson.notes;
+    }
+
+    public DayOfWeek getDay() {
+
+        return day;
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Description: " + description + "\n");
+        if (date == null) {
+            sb.append("Day: " + day + "\n");
+        } else {
+            sb.append("Date: " + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n");
+        }
+        sb.append("Time: " + startTime + " - " + endTime + "\n");
+        sb.append("Venue: " + venue + "\n");
+
+        if (!notes.equals("")) {
+            sb.append("Notes: " + notes + "\n");
+        }
+        return sb.toString();
+
     }
 
     @Override
@@ -58,30 +89,15 @@ public class Lesson extends Activity {
 
         Lesson act = (Lesson) obj;
 
-        return onSameDay(act.date)
+        return onSameDay(act.day)
                 && atSameTime(act.startTime, act.endTime)
                 && atSameVenue(act.venue)
                 && hasSameDescription(act.description);
     }
 
-    private boolean onSameDay(LocalDate date) {
+    private boolean onSameDay(DayOfWeek day) {
 
-        return this.date.getDayOfWeek().equals(date.getDayOfWeek());
-    }
-
-    private boolean atSameTime(LocalTime start, LocalTime end) {
-
-        return startTime.equals(start) && endTime.equals(end);
-    }
-
-    private boolean atSameVenue(String venue) {
-
-        return this.venue.equals(venue);
-    }
-
-    private boolean hasSameDescription(String description) {
-
-        return this.description.equals(description);
+        return this.day.equals(day);
     }
 
 }

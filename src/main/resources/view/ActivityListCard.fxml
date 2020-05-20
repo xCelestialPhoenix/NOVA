@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefWidth="200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+  <HBox HBox.hgrow="ALWAYS">
+       <Label fx:id="indexLabel" minWidth="20.0" prefWidth="20.0" text="#. " wrapText="true">
+          <padding>
+             <Insets left="5.0" top="5.0" />
+          </padding>
+       </Label>
+       <VBox fx:id="cardPane">
+          <Label fx:id="descriptionLabel" styleClass="label-header" text="Activity Description" wrapText="true" />
+          <Label fx:id="venueLabel" text="Venue" wrapText="true" />
+          <Label fx:id="timeLabel" text="Time" wrapText="true" />
+          <Label fx:id="noteLabel" text="Note" wrapText="true" />
+          <padding>
+             <Insets bottom="5.0" right="5.0" top="5.0" />
+          </padding>
+       </VBox>
+  </HBox>
+</HBox>

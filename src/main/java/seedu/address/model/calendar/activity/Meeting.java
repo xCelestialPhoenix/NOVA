@@ -62,25 +62,4 @@ public class Meeting extends Activity {
                 && atSameVenue(act.venue)
                 && hasSameDescription(act.description);
     }
-
-    private boolean onSameDate(LocalDate date) {
-
-        return this.date.equals(date);
-    }
-
-    private boolean atSameTime(LocalTime start, LocalTime end) {
-
-        return startTime.equals(start) && endTime.equals(end);
-    }
-
-    private boolean atSameVenue(String venue) {
-
-        return this.venue.equals(venue);
-    }
-
-    private boolean hasSameDescription(String description) {
-
-        return this.description.equals(description);
-    }
-
 }

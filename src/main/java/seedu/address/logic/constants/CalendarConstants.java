@@ -1,4 +1,4 @@
-package seedu.address.commons.contants;
+package seedu.address.logic.constants;
 
 /**
  * The class to hold all the constants of calendar.

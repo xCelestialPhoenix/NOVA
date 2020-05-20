@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class CollectionUtilTest {
+
     @Test
     public void requireAllNonNullVarargs() {
         // no arguments
@@ -75,6 +76,7 @@ public class CollectionUtilTest {
 
     @Test
     public void isAnyNonNull() {
+
         assertFalse(CollectionUtil.isAnyNonNull());
         assertFalse(CollectionUtil.isAnyNonNull((Object) null));
         assertFalse(CollectionUtil.isAnyNonNull((Object[]) null));
@@ -87,6 +89,7 @@ public class CollectionUtilTest {
      * if {@code objects} or any element of {@code objects} is null.
      */
     private void assertNullPointerExceptionThrown(Object... objects) {
+
         assertThrows(NullPointerException.class, () -> requireAllNonNull(objects));
     }
 
@@ -95,14 +98,18 @@ public class CollectionUtilTest {
      * if {@code collection} or any element of {@code collection} is null.
      */
     private void assertNullPointerExceptionThrown(Collection<?> collection) {
+
         assertThrows(NullPointerException.class, () -> requireAllNonNull(collection));
     }
 
     private void assertNullPointerExceptionNotThrown(Object... objects) {
+
         requireAllNonNull(objects);
     }
 
     private void assertNullPointerExceptionNotThrown(Collection<?> collection) {
+
         requireAllNonNull(collection);
     }
+
 }

@@ -19,32 +19,29 @@
             </stylesheets>
 
             <AnchorPane prefHeight="600.0" prefWidth="800.0">
-                <GridPane layoutX="7.0" layoutY="35.0" prefHeight="420.0" prefWidth="800.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <GridPane layoutX="7.0" layoutY="35.0" prefHeight="420.0" prefWidth="800.0" styleClass="pane-with-border" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="30" />
-                        <ColumnConstraints percentWidth="70" />
+                        <ColumnConstraints percentWidth="28" />
+                        <ColumnConstraints percentWidth="72" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                    <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="pane-with-border">
-                        <GridPane gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints percentHeight="50" />
-                                <RowConstraints percentHeight="50" />
-                            </rowConstraints>
-                            <StackPane fx:id="personListPanelPlaceholder" prefHeight="283.0" prefWidth="236.0">
-                                <opaqueInsets>
-                                    <Insets />
-                                </opaqueInsets>
-                            </StackPane>
-                        </GridPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="214.0" styleClass="pane-with-border">
+                         <StackPane fx:id="personListPanelPlaceholder" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                             <opaqueInsets>
+                                 <Insets />
+                             </opaqueInsets>
+                         </StackPane>
                         <opaqueInsets>
                             <Insets bottom="5.0" />
                         </opaqueInsets>
+                  <GridPane.margin>
+                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  </GridPane.margin>
+                  <padding>
+                     <Insets bottom="5.0" />
+                  </padding>
                     </AnchorPane>
                     <AnchorPane styleClass="pane-with-border" GridPane.columnIndex="1">
                         <GridPane gridLinesVisible="true" maxHeight="100.0" prefHeight="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -54,7 +51,7 @@
                                 <ColumnConstraints percentWidth="35" />
                             </columnConstraints>
                             <StackPane fx:id="weekNumberCardPlaceholder" />
-                            <StackPane fx:id="nextEventCardPlaceholder" GridPane.columnIndex="1" />
+                            <StackPane fx:id="nextActivityCardPlaceholder" GridPane.columnIndex="1" />
                             <StackPane fx:id="taskCompletionCardPlaceholder" GridPane.columnIndex="2" />
                      <rowConstraints>
                         <RowConstraints />

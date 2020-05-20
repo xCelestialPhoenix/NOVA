@@ -1,23 +1,24 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.contants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_DESCRIPTION;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_END_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_NOTES;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_START_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_TYPE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_VENUE;
 
-import java.util.Set;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.Lesson;
+import seedu.address.model.calendar.activity.Meeting;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -33,22 +34,40 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
 
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_ACTIVITY_TYPE, PREFIX_ACTIVITY_DESCRIPTION,
+                        PREFIX_ACTIVITY_VENUE, PREFIX_ACTIVITY_DATE, PREFIX_ACTIVITY_START_TIME,
+                        PREFIX_ACTIVITY_END_TIME, PREFIX_ACTIVITY_NOTES);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_ACTIVITY_TYPE, PREFIX_ACTIVITY_DESCRIPTION,
+                PREFIX_ACTIVITY_VENUE, PREFIX_ACTIVITY_DATE, PREFIX_ACTIVITY_START_TIME,
+                PREFIX_ACTIVITY_END_TIME) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        String type = argMultimap.getValue(PREFIX_ACTIVITY_TYPE).get();
+        String desc = argMultimap.getValue(PREFIX_ACTIVITY_DESCRIPTION).get();
+        String venue = argMultimap.getValue(PREFIX_ACTIVITY_VENUE).get();
+        LocalTime startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_ACTIVITY_START_TIME).get());
+        LocalTime endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_ACTIVITY_END_TIME).get());
+        String notes = argMultimap.getValue(PREFIX_ACTIVITY_NOTES).isEmpty()
+                ? ""
+                : argMultimap.getValue(PREFIX_ACTIVITY_NOTES).get();
 
-        Person person = new Person(name, phone, email, address, tagList);
+        Activity activity;
 
-        return new AddCommand(person);
+        switch (type) {
+        case "meeting":
+            LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_ACTIVITY_DATE).get());
+            activity = new Meeting(date, startTime, endTime, venue, desc, notes);
+            break;
+        case "lesson":
+            DayOfWeek day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_ACTIVITY_DATE).get().toUpperCase());
+            activity = new Lesson(day, startTime, endTime, venue, desc, notes);
+            break;
+        default:
+            throw new ParseException("Unknown type");
+        }
+        return new AddCommand(activity);
     }
 
     /**

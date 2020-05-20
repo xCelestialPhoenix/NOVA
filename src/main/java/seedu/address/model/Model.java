@@ -1,11 +1,15 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.person.Person;
 
 /**
@@ -19,14 +23,14 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /**
-     * Replaces user prefs data with the data in {@code userPrefs}.
-     */
-    void setUserPrefs(ReadOnlyUserPrefs userPrefs);
-
-    /**
      * Returns the user prefs.
      */
     ReadOnlyUserPrefs getUserPrefs();
+
+    /**
+     * Replaces user prefs data with the data in {@code userPrefs}.
+     */
+    void setUserPrefs(ReadOnlyUserPrefs userPrefs);
 
     /**
      * Returns the user prefs' GUI settings.
@@ -49,14 +53,14 @@ public interface Model {
     void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
-     */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
-
-    /**
      * Returns the AddressBook
      */
     ReadOnlyAddressBook getAddressBook();
+
+    /**
+     * Replaces address book data with the data in {@code addressBook}.
+     */
+    void setAddressBook(ReadOnlyAddressBook addressBook);
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
@@ -93,5 +97,23 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+
+    //=========== Calendar =============================================================
+    void addActivity(Activity activity);
+
+    ObservableList<Activity> viewActivityOnDate(LocalDate date);
+
+    ObservableList<Activity> getFilteredActivityList();
+
+    void updateFilteredActivityList(Predicate<Activity> predicate);
+
+    boolean hasActivity(Activity activity);
+
+    boolean isWithinCalendarTime(Activity activity);
+
+    boolean isAddable(Activity activity);
+
+    Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow);
 
 }

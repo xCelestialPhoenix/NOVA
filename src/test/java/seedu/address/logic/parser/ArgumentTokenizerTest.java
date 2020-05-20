@@ -16,6 +16,7 @@ public class ArgumentTokenizerTest {
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
+
         String argsString = "  ";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
 
@@ -24,10 +25,12 @@ public class ArgumentTokenizerTest {
     }
 
     private void assertPreamblePresent(ArgumentMultimap argMultimap, String expectedPreamble) {
+
         assertEquals(expectedPreamble, argMultimap.getPreamble());
     }
 
     private void assertPreambleEmpty(ArgumentMultimap argMultimap) {
+
         assertTrue(argMultimap.getPreamble().isEmpty());
     }
 
@@ -50,11 +53,13 @@ public class ArgumentTokenizerTest {
     }
 
     private void assertArgumentAbsent(ArgumentMultimap argMultimap, Prefix prefix) {
+
         assertFalse(argMultimap.getValue(prefix).isPresent());
     }
 
     @Test
     public void tokenize_noPrefixes_allTakenAsPreamble() {
+
         String argsString = "  some random string /t tag with leading and trailing spaces ";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString);
 
@@ -128,6 +133,7 @@ public class ArgumentTokenizerTest {
 
     @Test
     public void tokenize_multipleArgumentsJoined() {
+
         String argsString = "SomePreambleStringp/ pSlash joined-tjoined -t not joined^Qjoined";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT, hatQ);
         assertPreamblePresent(argMultimap, "SomePreambleStringp/ pSlash joined-tjoined");
@@ -138,6 +144,7 @@ public class ArgumentTokenizerTest {
 
     @Test
     public void equalsMethod() {
+
         Prefix aaa = new Prefix("aaa");
 
         assertEquals(aaa, aaa);
