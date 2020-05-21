@@ -30,6 +30,7 @@ public class Prefix {
 
     /**
      * Formats the prefix into string.
+     *
      * @return the string prefix
      */
     public String toString() {

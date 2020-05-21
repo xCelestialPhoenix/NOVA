@@ -18,6 +18,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.calendar.Calendar;
 import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.person.Person;
 
 /**
@@ -144,6 +145,12 @@ public class ModelManager implements Model {
     public void addActivity(Activity activity) {
 
         calendar.addActivity(activity);
+    }
+
+    @Override
+    public Optional<Activity> deleteActivity(ActivityReference activityReference) {
+
+        return calendar.deleteActivity(activityReference);
     }
 
     @Override

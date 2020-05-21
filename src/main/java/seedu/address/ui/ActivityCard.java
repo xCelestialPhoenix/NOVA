@@ -84,6 +84,7 @@ public class ActivityCard extends UiPart<Region> {
 
     /**
      * Formats the activity card
+     *
      * @param activity the activity to be referred by the statistic card
      */
     private void formatActivityCard(Activity activity) {

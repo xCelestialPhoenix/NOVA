@@ -7,6 +7,7 @@ import java.util.Optional;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.calendar.activity.Lesson;
 import seedu.address.model.calendar.activity.Meeting;
 import seedu.address.model.calendar.activity.UniqueActivityList;
@@ -43,6 +44,17 @@ public class Day {
             Lesson lesson = new Lesson((Lesson) activity, date);
             activities.add(lesson);
         }
+    }
+
+    /**
+     * Deletes an activity.
+     *
+     * @param activityReference the activity reference
+     * @return An optional that holds the deleted activity if it exists
+     */
+    public Optional<Activity> deleteActivity(ActivityReference activityReference) {
+
+        return activities.delete(activityReference);
     }
 
     /**

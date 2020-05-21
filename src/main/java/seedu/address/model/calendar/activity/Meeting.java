@@ -62,4 +62,5 @@ public class Meeting extends Activity {
                 && atSameVenue(act.venue)
                 && hasSameDescription(act.description);
     }
+
 }

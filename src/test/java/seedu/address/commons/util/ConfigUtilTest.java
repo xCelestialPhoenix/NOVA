@@ -166,6 +166,7 @@ public class ConfigUtilTest {
 
     /**
      * Adds test data folder if not null
+     *
      * @param configFileInTestDataFolder
      * @return
      */

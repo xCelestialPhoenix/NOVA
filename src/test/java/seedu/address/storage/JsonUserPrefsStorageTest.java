@@ -49,6 +49,7 @@ public class JsonUserPrefsStorageTest {
 
     /**
      * Adds test data folder of not null
+     *
      * @param userPrefsFileInTestDataFolder
      * @return
      */

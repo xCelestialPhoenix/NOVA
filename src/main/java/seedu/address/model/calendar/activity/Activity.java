@@ -10,6 +10,14 @@ import java.time.format.DateTimeFormatter;
 public abstract class Activity {
 
     /**
+     * The Description.
+     */
+    protected String description;
+    /**
+     * The Venue.
+     */
+    protected String venue;
+    /**
      * The Date.
      */
     protected LocalDate date;
@@ -21,14 +29,6 @@ public abstract class Activity {
      * The End time.
      */
     protected LocalTime endTime;
-    /**
-     * The Venue.
-     */
-    protected String venue;
-    /**
-     * The Description.
-     */
-    protected String description;
     /**
      * The Notes.
      */

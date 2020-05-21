@@ -90,6 +90,29 @@ public class UniqueActivityList implements Iterable<Activity> {
     }
 
     /**
+     * Deletes an activity.
+     *
+     * @param toDelete the activity reference
+     * @return An optional that holds the deleted activity if it exists
+     */
+    public Optional<Activity> delete(ActivityReference toDelete) {
+
+        requireNonNull(toDelete);
+
+        Optional<Activity> deletedActivity = Optional.empty();
+
+        for (Activity activity : internalList) {
+
+            if (toDelete.equals(activity)) {
+                deletedActivity = Optional.of(activity);
+                internalList.remove(activity);
+                break;
+            }
+        }
+        return deletedActivity;
+    }
+
+    /**
      * Gets first activity.
      *
      * @return the first activity

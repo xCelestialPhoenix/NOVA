@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 
 import seedu.address.commons.core.Config;
 import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.calendar.activity.Lesson;
 import seedu.address.model.calendar.activity.UniqueActivityList;
 
@@ -50,8 +51,20 @@ public class Calendar {
             return;
         }
 
-        int week = calculateWeek(activity.getDate());
-        weeks[week].addActivity(activity); // calculateWeek() returns zero-indexed week.
+        int week = calculateWeek(activity.getDate()); // calculateWeek() returns zero-indexed week.
+        weeks[week].addActivity(activity);
+    }
+
+    /**
+     * Deletes an activity.
+     *
+     * @param activityReference the activity reference
+     * @return An optional that holds the deleted activity if it exists
+     */
+    public Optional<Activity> deleteActivity(ActivityReference activityReference) {
+
+        int week = calculateWeek(activityReference.getDate()); // calculateWeek() returns zero-indexed week.
+        return weeks[week].deleteActivity(activityReference);
     }
 
     /**
@@ -62,7 +75,7 @@ public class Calendar {
      */
     public ObservableList<Activity> viewActivityOnDate(LocalDate date) {
 
-        int weekNum = calculateWeek(date);
+        int weekNum = calculateWeek(date); // calculateWeek() returns zero-indexed week.
 
         if (weekNum >= WEEKS_PER_SEMESTER) {
             return new UniqueActivityList().asUnmodifiableObservableList();
@@ -104,7 +117,7 @@ public class Calendar {
      */
     public Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow) {
 
-        int weekNumber = calculateWeek(today);
+        int weekNumber = calculateWeek(today); // calculateWeek() returns zero-indexed week.
         Optional<Activity> nextActivity = weeks[weekNumber].getNextActivity(today, timeNow);
         weekNumber += 1;
 
@@ -127,7 +140,7 @@ public class Calendar {
             return weeks[0].hasActivity(activity);
         }
 
-        int week = calculateWeek(activity.getDate());
+        int week = calculateWeek(activity.getDate()); // calculateWeek() returns zero-indexed week.
         return weeks[week].hasActivity(activity);
     }
 
@@ -191,7 +204,7 @@ public class Calendar {
             return canAdd;
         }
 
-        int week = calculateWeek(activity.getDate());
+        int week = calculateWeek(activity.getDate()); // calculateWeek() returns zero-indexed week.
         return weeks[week].isAddable(activity);
     }
 

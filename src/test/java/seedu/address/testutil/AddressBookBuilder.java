@@ -33,6 +33,7 @@ public class AddressBookBuilder {
 
     /**
      * Builds the address book
+     *
      * @return address book
      */
     public AddressBook build() {

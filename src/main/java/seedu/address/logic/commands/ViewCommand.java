@@ -1,13 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 
 import java.time.LocalDate;
 
 import javafx.collections.ObservableList;
 
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.calendar.activity.Activity;
 
@@ -25,9 +24,9 @@ public class ViewCommand extends Command {
      */
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": View the activities on a particular date.\n"
             + "Parameters: "
-            + PREFIX_ACTIVITY_DATE + "DATE \n"
+            + PREFIX_DATE + "DATE \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_ACTIVITY_DATE + "19/09/2020 ";
+            + PREFIX_DATE + "19/09/2020 ";
 
     /**
      * The constant MESSAGE_SUCCESS.
@@ -67,4 +66,5 @@ public class ViewCommand extends Command {
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, sb));
     }
+
 }

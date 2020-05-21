@@ -14,12 +14,12 @@ public class PrefixConstants {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
 
-    public static final Prefix PREFIX_ACTIVITY_TYPE = new Prefix("type/");
-    public static final Prefix PREFIX_ACTIVITY_DESCRIPTION = new Prefix("desc/");
-    public static final Prefix PREFIX_ACTIVITY_VENUE = new Prefix("venue/");
-    public static final Prefix PREFIX_ACTIVITY_DATE = new Prefix("date/");
-    public static final Prefix PREFIX_ACTIVITY_START_TIME = new Prefix("start/");
-    public static final Prefix PREFIX_ACTIVITY_END_TIME = new Prefix("end/");
-    public static final Prefix PREFIX_ACTIVITY_NOTES = new Prefix("note/");
+    public static final Prefix PREFIX_TYPE = new Prefix("t/");
+    public static final Prefix PREFIX_DESCRIPTION = new Prefix("desc/");
+    public static final Prefix PREFIX_VENUE = new Prefix("v/");
+    public static final Prefix PREFIX_DATE = new Prefix("d/");
+    public static final Prefix PREFIX_START_TIME = new Prefix("st/");
+    public static final Prefix PREFIX_END_TIME = new Prefix("et/");
+    public static final Prefix PREFIX_NOTES = new Prefix("n/");
 
 }

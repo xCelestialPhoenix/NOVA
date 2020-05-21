@@ -124,6 +124,7 @@ public class LogsCenter {
 
     /**
      * Instatiates a console handler
+     *
      * @return console handler
      */
 

@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 
 import java.time.LocalDate;
 import java.util.stream.Stream;
@@ -17,13 +17,13 @@ public class ViewCommandParser implements Parser<ViewCommand> {
     @Override
     public ViewCommand parse(String args) throws ParseException {
 
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ACTIVITY_DATE);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DATE);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_ACTIVITY_DATE) || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_DATE) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
         }
 
-        LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_ACTIVITY_DATE).get());
+        LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         return new ViewCommand(date);
     }
 

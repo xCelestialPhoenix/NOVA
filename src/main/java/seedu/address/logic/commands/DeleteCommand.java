@@ -1,14 +1,19 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_ACTIVITY;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.constants.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.ActivityReference;
 
 /**
  * Deletes a person identified using it's displayed index from the address book.
@@ -18,32 +23,41 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Deletes the activity identified by the date and time.\n"
+            + "Parameters: "
+            + "DATE (dd/mm/yyyy) "
+            + "START TIME (hh:mm) \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_DATE + "19/04/2020 "
+            + PREFIX_START_TIME + "10:00 \n";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_ACTIVITY_SUCCESS = "Deleted Activity: %1$s";
 
-    private final Index targetIndex;
+    private final LocalDate targetDate;
+    private final LocalTime targetTime;
 
-    public DeleteCommand(Index targetIndex) {
+    public DeleteCommand(LocalDate targetDate, LocalTime targetTime) {
 
-        this.targetIndex = targetIndex;
+        this.targetDate = targetDate;
+        this.targetTime = targetTime;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
 
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        ActivityReference activityReference = new ActivityReference(targetDate, targetTime);
+        if (!model.isWithinCalendarTime(activityReference)) {
+            throw new CommandException(MESSAGE_DATE_OUT_OF_BOUND);
         }
 
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        Optional<Activity> deletedActivity = model.deleteActivity(activityReference);
+
+        if (deletedActivity.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_SUCH_ACTIVITY);
+        }
+        return new CommandResult(String.format(MESSAGE_DELETE_ACTIVITY_SUCCESS, deletedActivity.get()));
     }
 
     @Override
@@ -51,7 +65,8 @@ public class DeleteCommand extends Command {
 
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+                && targetDate.equals(((DeleteCommand) other).targetDate) // state check
+                && targetTime.equals(((DeleteCommand) other).targetTime));
     }
 
 }

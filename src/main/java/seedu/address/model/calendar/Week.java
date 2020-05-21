@@ -9,6 +9,7 @@ import java.util.Optional;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.calendar.activity.Lesson;
 
 /**
@@ -40,8 +41,20 @@ public class Week {
      */
     public void addActivity(Activity activity) {
 
-        int dayNumber = getDayNumber(activity) - 1; // getDayNumber is one-indexed
+        int dayNumber = getDayNumber(activity) - 1; // getDayNumber() is one-indexed
         days[dayNumber].addActivity(activity);
+    }
+
+    /**
+     * Deletes an activity.
+     *
+     * @param activityReference the activity reference
+     * @return An optional that holds the deleted activity if it exists
+     */
+    public Optional<Activity> deleteActivity(ActivityReference activityReference) {
+
+        int dayNumber = getDayNumber(activityReference) - 1; // getDayNumber() is one-indexed
+        return days[dayNumber].deleteActivity(activityReference);
     }
 
     /**

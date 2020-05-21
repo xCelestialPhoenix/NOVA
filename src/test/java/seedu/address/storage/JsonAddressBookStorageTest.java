@@ -39,6 +39,7 @@ public class JsonAddressBookStorageTest {
 
     /**
      * Adds test data folder if not null
+     *
      * @param prefsFileInTestDataFolder
      * @return
      */

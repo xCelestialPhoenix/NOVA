@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.person.Person;
 
 /**
@@ -101,6 +102,8 @@ public interface Model {
 
     //=========== Calendar =============================================================
     void addActivity(Activity activity);
+
+    Optional<Activity> deleteActivity(ActivityReference activityReference);
 
     ObservableList<Activity> viewActivityOnDate(LocalDate date);
 

@@ -1,13 +1,13 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_DESCRIPTION;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_END_TIME;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_NOTES;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_START_TIME;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_TYPE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_ACTIVITY_VENUE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_END_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_TYPE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_VENUE;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -23,21 +23,21 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an activity to the calendar. \n"
             + "Parameters: "
-            + PREFIX_ACTIVITY_TYPE + "TYPE "
-            + PREFIX_ACTIVITY_DESCRIPTION + "DESC "
-            + PREFIX_ACTIVITY_VENUE + "VENUE "
-            + PREFIX_ACTIVITY_DATE + "DATE "
-            + PREFIX_ACTIVITY_START_TIME + "START "
-            + PREFIX_ACTIVITY_END_TIME + "END "
-            + PREFIX_ACTIVITY_NOTES + "NOTES \n"
+            + PREFIX_TYPE + "TYPE "
+            + PREFIX_DESCRIPTION + "DESC "
+            + PREFIX_VENUE + "VENUE "
+            + PREFIX_DATE + "DATE "
+            + PREFIX_START_TIME + "START "
+            + PREFIX_END_TIME + "END "
+            + PREFIX_NOTES + "NOTES \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_ACTIVITY_TYPE + "meeting "
-            + PREFIX_ACTIVITY_DESCRIPTION + "Project Meeting "
-            + PREFIX_ACTIVITY_VENUE + "School "
-            + PREFIX_ACTIVITY_DATE + "19/04/2020 "
-            + PREFIX_ACTIVITY_START_TIME + "10:00 "
-            + PREFIX_ACTIVITY_END_TIME + "11:00 "
-            + PREFIX_ACTIVITY_NOTES + "Prepare findings \n";
+            + PREFIX_TYPE + "meeting "
+            + PREFIX_DESCRIPTION + "Project Meeting "
+            + PREFIX_VENUE + "School "
+            + PREFIX_DATE + "19/04/2020 "
+            + PREFIX_START_TIME + "10:00 "
+            + PREFIX_END_TIME + "11:00 "
+            + PREFIX_NOTES + "Prepare findings \n";
 
     public static final String MESSAGE_SUCCESS = "New activity added: \n%1$s";
     public static final String MESSAGE_DUPLICATE_ACTIVITY = "This activity already exists in the calendar";
