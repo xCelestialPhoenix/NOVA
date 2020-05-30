@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
-import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.calendar.Calendar;
+import seedu.address.model.calendar.ReadOnlyCalendar;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.person.Person;
@@ -37,7 +37,7 @@ public class ModelManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs, Config config) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
 
         super();
         requireAllNonNull(addressBook, userPrefs);
@@ -46,15 +46,14 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        this.calendar = new Calendar(config);
+        this.calendar = new Calendar(userPrefs.getCalendarStartDate(), userPrefs.getCalendarEndDate());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        filteredActivities = new FilteredList<>(this.calendar.viewActivityOnDate(LocalDate.of(2020, 4, 19)));
-
+        filteredActivities = new FilteredList<>(this.calendar.viewActivityOnDate(LocalDate.now()));
     }
 
     public ModelManager() {
 
-        this(new AddressBook(), new UserPrefs(), new Config());
+        this(new AddressBook(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -141,6 +140,20 @@ public class ModelManager implements Model {
     }
 
     //=========== Calendar =============================================================
+
+    @Override
+    public ReadOnlyCalendar getCalendar() {
+
+        return calendar;
+    }
+
+    @Override
+    public void setCalendar(ReadOnlyCalendar calendar) {
+        this.calendar.resetCalendar(calendar);
+        userPrefs.setCalendarStartDate(calendar.getStartDate());
+        userPrefs.setCalendarEndDate(calendar.getEndDate());
+    }
+
     @Override
     public void addActivity(Activity activity) {
 
@@ -162,7 +175,7 @@ public class ModelManager implements Model {
     @Override
     public boolean isWithinCalendarTime(Activity activity) {
 
-        return calendar.isWithinCalendarTime(activity);
+        return calendar.isWithinCalendarRange(activity);
     }
 
     @Override
@@ -180,7 +193,7 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Activity> getFilteredActivityList() {
 
-        return filteredActivities;
+        return new FilteredList<>(this.calendar.viewActivityOnDate(LocalDate.now()));
     }
 
     @Override
@@ -190,10 +203,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateFilteredActivityList(Predicate<Activity> predicate) {
+    public int calculateWeekNumber(LocalDate refDate) {
 
-        requireNonNull(predicate);
-        filteredActivities.setPredicate(predicate);
+        return calendar.calculateWeek(refDate);
     }
 
     //=========== Filtered Person List Accessors =============================================================

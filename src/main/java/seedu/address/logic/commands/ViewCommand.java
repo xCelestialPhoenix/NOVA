@@ -11,7 +11,7 @@ import seedu.address.model.Model;
 import seedu.address.model.calendar.activity.Activity;
 
 /**
- * The type View command.
+ * Views all activities of a date.
  */
 public class ViewCommand extends Command {
 

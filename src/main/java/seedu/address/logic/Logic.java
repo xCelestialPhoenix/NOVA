@@ -48,6 +48,8 @@ public interface Logic {
 
     Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow);
 
+    int calculateWeekNumber(LocalDate refDate);
+
     /**
      * Returns the user prefs' address book file path.
      */

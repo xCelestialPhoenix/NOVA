@@ -11,6 +11,8 @@ public class CommandResult {
 
     private final String feedbackToUser;
 
+    private final boolean resetCalendar;
+
     /**
      * Help information should be shown to the user.
      */
@@ -24,9 +26,10 @@ public class CommandResult {
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, boolean resetCalendar, boolean showHelp, boolean exit) {
 
         this.feedbackToUser = requireNonNull(feedbackToUser);
+        this.resetCalendar = resetCalendar;
         this.showHelp = showHelp;
         this.exit = exit;
     }
@@ -37,12 +40,16 @@ public class CommandResult {
      */
     public CommandResult(String feedbackToUser) {
 
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, false, false, false);
     }
 
     public String getFeedbackToUser() {
 
         return feedbackToUser;
+    }
+
+    public boolean isResetCalendar() {
+        return resetCalendar;
     }
 
     public boolean isShowHelp() {
@@ -69,6 +76,7 @@ public class CommandResult {
 
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
+                && resetCalendar == otherCommandResult.resetCalendar
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit;
     }
@@ -76,7 +84,7 @@ public class CommandResult {
     @Override
     public int hashCode() {
 
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser,resetCalendar, showHelp, exit);
     }
 
 }

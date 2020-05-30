@@ -9,6 +9,8 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.calendar.Calendar;
+import seedu.address.model.calendar.ReadOnlyCalendar;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.person.Person;
@@ -101,6 +103,11 @@ public interface Model {
 
 
     //=========== Calendar =============================================================
+
+    ReadOnlyCalendar getCalendar();
+
+    void setCalendar(ReadOnlyCalendar calendar);
+
     void addActivity(Activity activity);
 
     Optional<Activity> deleteActivity(ActivityReference activityReference);
@@ -109,8 +116,6 @@ public interface Model {
 
     ObservableList<Activity> getFilteredActivityList();
 
-    void updateFilteredActivityList(Predicate<Activity> predicate);
-
     boolean hasActivity(Activity activity);
 
     boolean isWithinCalendarTime(Activity activity);
@@ -118,5 +123,7 @@ public interface Model {
     boolean isAddable(Activity activity);
 
     Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow);
+
+    int calculateWeekNumber(LocalDate refDate);
 
 }

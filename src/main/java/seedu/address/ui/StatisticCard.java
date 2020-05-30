@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import seedu.address.commons.core.Config;
+import seedu.address.logic.Logic;
 
 /**
  * The type Statistic card.
@@ -40,6 +41,10 @@ public class StatisticCard extends UiPart<Node> {
     private static final String DEFAULT_NEXT_ACTIVITY = "";
     private static final String DEFAULT_TASK_COMPLETION = "100";
 
+    // Default font size
+    private static final int DEFAULT_DATA_FONT_SIZE = 26;
+    private static final int NEXT_ACTIVITY_DATA_FONT_SIZE = 20;
+
     @FXML
     private AnchorPane statisticCardRoot;
 
@@ -50,23 +55,20 @@ public class StatisticCard extends UiPart<Node> {
     private Label cardTitleLabel;
 
     @FXML
-    private Label cardDataLabel;
-
-    @FXML
     private Label cardDateLabel;
 
     @FXML
-    private TextFlow textFlow;
+    private TextFlow dataTextFlow;
 
     /**
      * Instantiates a new Statistic card.
      *
      * @param title  the title
-     * @param config the config
+     * @param logic the logic
      */
-    public StatisticCard(String title, Config config) {
+    public StatisticCard(String title, Logic logic) {
 
-        this(title, getDefaultData(title, config));
+        this(title, getDefaultData(title, logic));
     }
 
     /**
@@ -88,28 +90,7 @@ public class StatisticCard extends UiPart<Node> {
 
             //Align week number with academic calendar
             int weekNumber = Integer.parseInt(data);
-
-            if (isRecessWeek(weekNumber)) {
-                data = "Recess";
-            } else if (isReadingWeek(weekNumber)) {
-                data = "Reading";
-            } else if (isExamWeek(weekNumber)) {
-                data = "Exam";
-            } else if (isAfterSemester(weekNumber)) {
-                data = "Break";
-            } else if (isAfterRecessWeek(weekNumber)) {
-                weekNumber -= 1; // Actual week number is one more than academic week
-                data = String.valueOf(weekNumber);
-            }
-        }
-
-        // Set up the display for data
-        Text text = new Text(data);
-        text.setFill(Color.WHITE);
-        if (title.equals(NEXT_ACTIVITY_TITLE)) {
-            text.setFont(Font.font("Segoe UI Bold", 20));
-        } else {
-            text.setFont(Font.font("Segoe UI Bold", 26));
+            data = getWeekString(weekNumber);
         }
 
         try {
@@ -117,17 +98,19 @@ public class StatisticCard extends UiPart<Node> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         cardTitleLabel.setText(title);
-        textFlow.getChildren().add(text);
+        writeToTextFlow(data);
     }
 
-    private static String getDefaultData(String title, Config config) {
+    private static String getDefaultData(String title, Logic logic) {
 
         String data;
 
         switch (title) {
         case WEEK_NUM_TITLE:
-            data = getWeekNumber(config);
+            int weekNumber = logic.calculateWeekNumber(LocalDate.now()) + 1; // calculateWeekNumber is zero-indexed
+            data = String.valueOf(weekNumber);
             break;
         case NEXT_ACTIVITY_TITLE:
             data = DEFAULT_NEXT_ACTIVITY;
@@ -142,43 +125,34 @@ public class StatisticCard extends UiPart<Node> {
         return data;
     }
 
-    /**
-     * Calculates the week number.
-     *
-     * @param config the config
-     * @return the week number
-     */
-    public static String getWeekNumber(Config config) {
-
-        LocalDate today = LocalDate.now();
-        LocalDate startDate = config.getStartDate();
-        int days = (int) DAYS.between(startDate, today);
-        return String.valueOf((days / DAYS_PER_WEEK) + 1);
-    }
-
-    private boolean isRecessWeek(int weekNumber) {
+    private static boolean isRecessWeek(int weekNumber) {
 
         return weekNumber == RECESS_WEEK;
     }
 
-    private boolean isAfterRecessWeek(int weekNumber) {
+    private static boolean isAfterRecessWeek(int weekNumber) {
 
         return weekNumber > RECESS_WEEK;
     }
 
-    private boolean isAfterSemester(int weekNumber) {
+    private static boolean isAfterSemester(int weekNumber) {
 
         return weekNumber > EXAM_WEEK_2;
     }
 
-    private boolean isExamWeek(int weekNumber) {
+    private static boolean isExamWeek(int weekNumber) {
 
         return weekNumber == EXAM_WEEK_1 || weekNumber == EXAM_WEEK_2;
     }
 
-    private boolean isReadingWeek(int weekNumber) {
+    private static boolean isReadingWeek(int weekNumber) {
 
         return weekNumber == READING_WEEK;
+    }
+
+    private static boolean isBeforeSemester(int weekNumber) {
+
+        return weekNumber < 1;
     }
 
     /**
@@ -188,7 +162,10 @@ public class StatisticCard extends UiPart<Node> {
      */
     public void updateData(String data) {
 
-        cardDataLabel.setText(data);
+        if(cardTitleLabel.getText().equals(WEEK_NUM_TITLE)) {
+            data = getWeekString(Integer.parseInt(data));
+        }
+        writeToTextFlow(data);
     }
 
     private void setLogo(String title) throws Exception {
@@ -211,4 +188,37 @@ public class StatisticCard extends UiPart<Node> {
         cardLogoImageView.setImage(img);
     }
 
+    private void writeToTextFlow(String data) {
+        Text text = new Text(data);
+        text.setFill(Color.WHITE);
+        if(cardTitleLabel.getText().equals(NEXT_ACTIVITY_TITLE)) {
+            text.setFont(Font.font("Segoe UI Bold", NEXT_ACTIVITY_DATA_FONT_SIZE));
+        } else {
+            text.setFont(Font.font("Segoe UI Bold", DEFAULT_DATA_FONT_SIZE));
+        }
+        dataTextFlow.getChildren().clear();
+        dataTextFlow.getChildren().add(text);
+    }
+
+    private static String getWeekString(int weekNumber) {
+
+        String week = "";
+
+        if (isRecessWeek(weekNumber)) {
+            week = "Recess";
+        } else if (isReadingWeek(weekNumber)) {
+            week = "Reading";
+        } else if (isExamWeek(weekNumber)) {
+            week = "Exam";
+        } else if (isAfterSemester(weekNumber)) {
+            week = "Break";
+        } else if (isAfterRecessWeek(weekNumber)) {
+            week = String.valueOf(weekNumber - 1); // Actual week number is one more than academic week
+        } else if (isBeforeSemester(weekNumber)) {
+            week = "Pre-sem";
+        } else {
+            week = String.valueOf(weekNumber);
+        }
+        return week;
+    }
 }

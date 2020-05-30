@@ -21,21 +21,28 @@ import seedu.address.model.calendar.activity.UniqueActivityList;
 /**
  * The type Calendar.
  */
-public class Calendar {
+public class Calendar implements ReadOnlyCalendar {
 
     private final Week[] weeks = new Week[WEEKS_PER_SEMESTER];
-    private final LocalDate startDate;
-    private final LocalDate endDate;
+    private LocalDate startDate = LocalDate.of(2020, 1, 13);
+    private LocalDate endDate = LocalDate.of(2020, 5, 10);
 
     /**
      * Instantiates a new Calendar.
-     *
-     * @param config the config
      */
-    public Calendar(Config config) {
 
-        startDate = config.getStartDate();
-        endDate = config.getEndDate();
+    public Calendar() {}
+
+    public Calendar(LocalDate startDate, LocalDate endDate) {
+
+        this.startDate = startDate;
+        this.endDate = endDate;
+        initWeeks();
+    }
+
+    public void resetCalendar(ReadOnlyCalendar calendar) {
+        startDate = calendar.getStartDate();
+        endDate = calendar.getEndDate();
         initWeeks();
     }
 
@@ -77,7 +84,7 @@ public class Calendar {
 
         int weekNum = calculateWeek(date); // calculateWeek() returns zero-indexed week.
 
-        if (weekNum >= WEEKS_PER_SEMESTER) {
+        if (weekNum >= WEEKS_PER_SEMESTER || weekNum < 0) {
             return new UniqueActivityList().asUnmodifiableObservableList();
         }
 
@@ -118,6 +125,11 @@ public class Calendar {
     public Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow) {
 
         int weekNumber = calculateWeek(today); // calculateWeek() returns zero-indexed week.
+
+        if (weekNumber >= WEEKS_PER_SEMESTER || weekNumber < 1) {
+            return Optional.empty();
+        }
+
         Optional<Activity> nextActivity = weeks[weekNumber].getNextActivity(today, timeNow);
         weekNumber += 1;
 
@@ -150,7 +162,7 @@ public class Calendar {
      * @param activity the activity
      * @return the boolean
      */
-    public boolean isWithinCalendarTime(Activity activity) {
+    public boolean isWithinCalendarRange(Activity activity) {
 
         return isValidDate(activity.getDate());
     }
@@ -161,11 +173,19 @@ public class Calendar {
      * @param date the date used the calculate the week number
      * @return the week number in zero indexing
      */
-    private int calculateWeek(LocalDate date) {
+    public int calculateWeek(LocalDate date) {
 
         int days = (int) DAYS.between(startDate, date);
         return days / DAYS_PER_WEEK;
 
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     private boolean isValidDate(LocalDate date) {

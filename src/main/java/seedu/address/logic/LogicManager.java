@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -84,6 +85,14 @@ public class LogicManager implements Logic {
 
         return model.getNextActivity(today, timeNow);
     }
+
+    @Override
+    public int calculateWeekNumber(LocalDate refDate) {
+
+        return model.calculateWeekNumber(refDate);
+    }
+
+    //=============================================================================================================
 
     @Override
     public Path getAddressBookFilePath() {

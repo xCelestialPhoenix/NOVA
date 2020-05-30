@@ -107,13 +107,13 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        weekNumberCard = new StatisticCard(StatisticCard.WEEK_NUM_TITLE, config);
+        weekNumberCard = new StatisticCard(StatisticCard.WEEK_NUM_TITLE, logic);
         weekNumberCardPlaceholder.getChildren().add(weekNumberCard.getRoot());
 
-        nextActivityCard = new StatisticCard(NEXT_ACTIVITY_TITLE, config);
+        nextActivityCard = new StatisticCard(NEXT_ACTIVITY_TITLE, logic);
         nextActivityCardPlaceholder.getChildren().add(nextActivityCard.getRoot());
 
-        taskCompletionCard = new StatisticCard(StatisticCard.TASK_COMPLETION_TITLE, config);
+        taskCompletionCard = new StatisticCard(StatisticCard.TASK_COMPLETION_TITLE, logic);
         taskCompletionCardPlaceholder.getChildren().add(taskCompletionCard.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -198,6 +198,12 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+            if (commandResult.isResetCalendar()) {
+                personListPanelPlaceholder.getChildren().clear();
+                activityListPanel = new ActivityListPanel(logic.getFilteredActivityList());
+                personListPanelPlaceholder.getChildren().add(activityListPanel.getRoot());
+            }
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("Invalid command: " + commandText);
@@ -212,15 +218,24 @@ public class MainWindow extends UiPart<Stage> {
     private void updateStatistic() {
 
         String newData = "";
-        nextActivityCardPlaceholder.getChildren().remove(nextActivityCard.getRoot());
-        // Optional<Activity> activity = logic.getNextActivity(LocalDate.now(), LocalTime.now());
-        Optional<Activity> activity = logic.getNextActivity(LocalDate.of(2020, 1, 15), LocalTime.now());
+
+        //Update week number
+        int newWeekNumber = logic.calculateWeekNumber(LocalDate.now()) + 1;
+        newData = String.valueOf(newWeekNumber);
+        logger.info("New week number: " + newWeekNumber);
+        weekNumberCard.updateData(newData);
+
+        //Update the next upcoming activity
+        newData = "";
+        Optional<Activity> activity = logic.getNextActivity(LocalDate.now(), LocalTime.now());
         if (activity.isPresent()) {
             newData = activity.get().getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n"
                     + activity.get().getStartTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
         }
-        nextActivityCard = new StatisticCard(NEXT_ACTIVITY_TITLE, newData);
-        nextActivityCardPlaceholder.getChildren().add(nextActivityCard.getRoot());
+        nextActivityCard.updateData(newData);
+
+        //Update task completion percentage
+        newData = "";
     }
 
 }

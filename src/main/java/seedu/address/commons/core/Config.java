@@ -16,8 +16,6 @@ public class Config {
     // Config values customizable through config file
     private Level logLevel = Level.INFO;
     private Path userPrefsFilePath = Paths.get("preferences.json");
-    private LocalDate startDate = LocalDate.of(2020, 1, 13);
-    private LocalDate endDate = LocalDate.of(2020, 5, 10);
 
     public Level getLogLevel() {
 
@@ -37,26 +35,6 @@ public class Config {
     public void setUserPrefsFilePath(Path userPrefsFilePath) {
 
         this.userPrefsFilePath = userPrefsFilePath;
-    }
-
-    public LocalDate getStartDate() {
-
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate date) {
-
-        startDate = date;
-    }
-
-    public LocalDate getEndDate() {
-
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate date) {
-
-        endDate = date;
     }
 
     @Override
