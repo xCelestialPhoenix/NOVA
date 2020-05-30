@@ -120,6 +120,8 @@ public interface Model {
 
     boolean isWithinCalendarTime(Activity activity);
 
+    boolean isWithinCalendarTime(LocalDate date);
+
     boolean isAddable(Activity activity);
 
     Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow);

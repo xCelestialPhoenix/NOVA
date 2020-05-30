@@ -171,6 +171,12 @@ public class Calendar implements ReadOnlyCalendar {
         return isValidDate(activity.getDate());
     }
 
+    @Override
+    public boolean isWithinCalendarRange(LocalDate date) {
+
+        return isValidDate(date);
+    }
+
     /**
      * Calculates the week number in the calendar of a date
      *

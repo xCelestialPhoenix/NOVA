@@ -179,6 +179,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean isWithinCalendarTime(LocalDate date) {
+
+        return calendar.isWithinCalendarRange(date);
+    }
+
+    @Override
     public boolean isAddable(Activity activity) {
 
         return calendar.checkAvailability(activity);

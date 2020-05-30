@@ -18,6 +18,8 @@ public interface ReadOnlyCalendar {
 
     boolean isWithinCalendarRange(Activity activity);
 
+    boolean isWithinCalendarRange(LocalDate date);
+
     int calculateWeek(LocalDate date);
 
     boolean checkAvailability(Activity activity);

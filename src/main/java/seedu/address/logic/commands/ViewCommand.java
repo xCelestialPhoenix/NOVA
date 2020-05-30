@@ -1,12 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 
 import java.time.LocalDate;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.calendar.activity.Activity;
 
@@ -51,9 +53,14 @@ public class ViewCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
 
         requireNonNull(model);
+
+        if (!model.isWithinCalendarTime(toView)) {
+            throw new CommandException(MESSAGE_DATE_OUT_OF_BOUND);
+        }
+
         ObservableList<Activity> activities = model.viewActivityOnDate(toView);
         if (activities.isEmpty()) {
             return new CommandResult(MESSAGE_NO_ACTIVITY);
