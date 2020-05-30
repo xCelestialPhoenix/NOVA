@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -121,6 +122,8 @@ public interface Model {
     boolean isWithinCalendarTime(Activity activity);
 
     boolean isWithinCalendarTime(LocalDate date);
+
+    boolean isValidStartDay(DayOfWeek day);
 
     boolean isAddable(Activity activity);
 

@@ -1,5 +1,6 @@
 package seedu.address.model.calendar;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -19,6 +20,8 @@ public interface ReadOnlyCalendar {
     boolean isWithinCalendarRange(Activity activity);
 
     boolean isWithinCalendarRange(LocalDate date);
+
+    boolean isValidStartDay(DayOfWeek day);
 
     int calculateWeek(LocalDate date);
 

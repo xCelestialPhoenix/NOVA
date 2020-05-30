@@ -11,6 +11,7 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
 
     public static final String MESSAGE_NO_SUCH_ACTIVITY = "The activity does not exists";
+    public static final String MESSAGE_INVALID_CALENDAR_START_DAY = "The start day has to be a Monday";
     public static final String MESSAGE_CALENDAR_RESET_SUCCESSFUL = "The calendar has been reset.\n"
             + "New start date: %1$s \n"
             + "New end date : %2$s";

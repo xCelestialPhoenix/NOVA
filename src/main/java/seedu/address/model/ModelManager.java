@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -182,6 +183,12 @@ public class ModelManager implements Model {
     public boolean isWithinCalendarTime(LocalDate date) {
 
         return calendar.isWithinCalendarRange(date);
+    }
+
+    @Override
+    public boolean isValidStartDay(DayOfWeek day) {
+
+        return calendar.isValidStartDay(day);
     }
 
     @Override

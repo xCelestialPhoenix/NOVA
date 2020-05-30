@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
 import static seedu.address.logic.constants.CalendarConstants.WEEKS_PER_SEMESTER;
 import static seedu.address.logic.constants.Messages.MESSAGE_CALENDAR_RESET_SUCCESSFUL;
+import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_CALENDAR_START_DAY;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 
 import java.time.LocalDate;
@@ -27,6 +28,10 @@ public class ResetCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+
+        if(!model.isValidStartDay(newCalendarStartDate.getDayOfWeek())) {
+            throw new CommandException(MESSAGE_INVALID_CALENDAR_START_DAY);
+        }
 
         LocalDate newCalendarEndDate = newCalendarStartDate.plusDays(DAYS_PER_WEEK * WEEKS_PER_SEMESTER);
         Calendar newCalendar = new Calendar(newCalendarStartDate, newCalendarEndDate);

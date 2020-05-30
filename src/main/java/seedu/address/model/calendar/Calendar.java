@@ -6,6 +6,7 @@ import static seedu.address.logic.constants.CalendarConstants.READING_WEEK;
 import static seedu.address.logic.constants.CalendarConstants.RECESS_WEEK;
 import static seedu.address.logic.constants.CalendarConstants.WEEKS_PER_SEMESTER;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -22,6 +23,8 @@ import seedu.address.model.calendar.activity.UniqueActivityList;
  * The type Calendar.
  */
 public class Calendar implements ReadOnlyCalendar {
+
+    public static final DayOfWeek FIRST_DAY_OF_WEEK = DayOfWeek.MONDAY;
 
     private final Week[] weeks = new Week[WEEKS_PER_SEMESTER];
     private LocalDate startDate = LocalDate.of(2020, 1, 13);
@@ -175,6 +178,12 @@ public class Calendar implements ReadOnlyCalendar {
     public boolean isWithinCalendarRange(LocalDate date) {
 
         return isValidDate(date);
+    }
+
+    @Override
+    public boolean isValidStartDay(DayOfWeek day) {
+
+        return day.equals(FIRST_DAY_OF_WEEK);
     }
 
     /**
