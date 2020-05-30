@@ -6,6 +6,13 @@
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #ffef00;
+    -fx-opacity: 0.9;
+}
+
+.label-dark {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: #555555;
     -fx-opacity: 0.9;
 }
