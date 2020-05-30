@@ -126,8 +126,12 @@ public class Calendar implements ReadOnlyCalendar {
 
         int weekNumber = calculateWeek(today); // calculateWeek() returns zero-indexed week.
 
-        if (weekNumber >= WEEKS_PER_SEMESTER || weekNumber < 1) {
+        if (weekNumber >= WEEKS_PER_SEMESTER) {
             return Optional.empty();
+        }
+
+        if (weekNumber < 0) {
+            weekNumber = 0;
         }
 
         Optional<Activity> nextActivity = weeks[weekNumber].getNextActivity(today, timeNow);
@@ -190,7 +194,7 @@ public class Calendar implements ReadOnlyCalendar {
 
     private boolean isValidDate(LocalDate date) {
 
-        return date.isAfter(startDate) && date.isBefore(endDate);
+        return !date.isBefore(startDate) && !date.isAfter(endDate);
     }
 
     /**
