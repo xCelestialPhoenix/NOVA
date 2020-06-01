@@ -1,7 +1,5 @@
 package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,15 +19,18 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
 
-    /**
-     * The constant MESSAGE_INVALID_INDEX.
-     */
+    public static final String MESSAGE_INVALID_DAY = "The day is recognized.";
+    public static final String MESSAGE_INVALID_DATE = "The date is invalid. Please enter in the form dd/mm/yyyy.";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_TIME = "The time is invalid. Please enter in the form hh:mm.";
+
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -170,7 +171,7 @@ public class ParserUtil {
         try {
             return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         } catch (DateTimeParseException dtpe) {
-            throw new ParseException("Invalid Date");
+            throw new ParseException(MESSAGE_INVALID_DATE);
         }
     }
 
@@ -189,7 +190,7 @@ public class ParserUtil {
         try {
             return LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
         } catch (DateTimeParseException dtpe) {
-            throw new ParseException("Invalid Time");
+            throw new ParseException(MESSAGE_INVALID_TIME);
         }
     }
 
@@ -208,7 +209,7 @@ public class ParserUtil {
         try {
             return DayOfWeek.valueOf(day);
         } catch (IllegalArgumentException | NullPointerException e) {
-            throw new ParseException("Invalid day");
+            throw new ParseException(MESSAGE_INVALID_DAY);
         }
     }
 
