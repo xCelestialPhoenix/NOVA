@@ -10,7 +10,7 @@ import seedu.address.model.calendar.activity.Lesson;
 import seedu.address.model.calendar.activity.Meeting;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of an {@code Activity}.
  */
 public class ActivityCard extends UiPart<Region> {
 
@@ -26,7 +26,7 @@ public class ActivityCard extends UiPart<Region> {
     public final Activity activity;
 
     @FXML
-    private VBox cardPane;
+    private VBox detailsPane;
     @FXML
     private Label indexLabel;
     @FXML
@@ -54,12 +54,12 @@ public class ActivityCard extends UiPart<Region> {
         descriptionLabel.setText(activity.getDescription());
         venueLabel.setText("Venue: " + activity.getVenue());
         timeLabel.setText("Time: " + activity.getStartTime() + " - " + activity.getEndTime());
-        indexLabel.setPrefHeight(descriptionLabel.getHeight());
+
         String notes = activity.getNotes();
         if (notes.equals("")) {
-            cardPane.getChildren().remove(noteLabel);
+            detailsPane.getChildren().remove(noteLabel);
         } else {
-            noteLabel.setText("Note: " + activity.getNotes());
+            noteLabel.setText("Note: " + notes);
         }
 
     }

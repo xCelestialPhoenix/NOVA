@@ -1,11 +1,8 @@
 package seedu.address.ui;
 
-import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
-
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -30,7 +27,6 @@ public class ActivityListPanel extends UiPart<Region> {
         super(FXML);
         activityListView.setItems(activityList);
         activityListView.setCellFactory(listView -> new ActivityListViewCell());
-        activityListView.addEventHandler(MOUSE_CLICKED, Event::consume);
     }
 
     /**

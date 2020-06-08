@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -20,6 +19,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.task.Task;
 import seedu.address.model.person.Person;
 import seedu.address.storage.Storage;
 
@@ -81,6 +81,12 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Task> getFilteredTaskList() {
+
+        return model.getFilteredTaskList();
+    }
+
+    @Override
     public Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow) {
 
         return model.getNextActivity(today, timeNow);
@@ -90,6 +96,12 @@ public class LogicManager implements Logic {
     public int calculateWeekNumber(LocalDate refDate) {
 
         return model.calculateWeekNumber(refDate);
+    }
+
+    @Override
+    public String getTaskCompletionStats() {
+
+        return model.getTaskCompletionStats();
     }
 
     //=============================================================================================================

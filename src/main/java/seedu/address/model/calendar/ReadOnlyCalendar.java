@@ -31,4 +31,6 @@ public interface ReadOnlyCalendar {
 
     LocalDate getEndDate();
 
+    String getTaskCompletionStats();
+
 }

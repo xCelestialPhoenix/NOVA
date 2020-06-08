@@ -1,5 +1,9 @@
 package seedu.address.logic.parser;
 
+import org.junit.jupiter.api.Test;
+import seedu.address.logic.commands.AddActivityCommand;
+import seedu.address.logic.commands.AddCommand;
+
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
@@ -10,10 +14,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-
-import org.junit.jupiter.api.Test;
-
-import seedu.address.logic.commands.AddCommand;
 
 public class AddCommandParserTest {
 

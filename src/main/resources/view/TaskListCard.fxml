@@ -12,8 +12,8 @@
             </padding>
         </Label>
         <VBox fx:id="detailsPane">
-            <Label fx:id="descriptionLabel" styleClass="label-header" text="Activity Description" wrapText="true" />
-            <Label fx:id="venueLabel" text="Venue" wrapText="true" />
+            <Label fx:id="descriptionLabel" styleClass="label-header" text="Task Description" wrapText="true" />
+            <Label fx:id="dateLabel" text="Date" wrapText="true" />
             <Label fx:id="timeLabel" text="Time" wrapText="true" />
             <Label fx:id="noteLabel" text="Note" wrapText="true" />
             <padding>

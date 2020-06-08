@@ -1,11 +1,5 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
-import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_ACTIVITY;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -14,6 +8,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.ActivityReference;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_ACTIVITY;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
 
 /**
  * Deletes a person identified using it's displayed index from the address book.
@@ -25,8 +25,8 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the activity identified by the date and time.\n"
             + "Parameters: "
-            + "DATE (dd/mm/yyyy) "
-            + "START TIME (hh:mm) \n"
+            + PREFIX_DATE + "DATE (dd/mm/yyyy) "
+            + PREFIX_START_TIME + "START TIME (hh:mm) \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DATE + "19/04/2020 "
             + PREFIX_START_TIME + "10:00 \n";

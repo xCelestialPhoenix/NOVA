@@ -1,5 +1,10 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.calendar.activity.Activity;
+import seedu.address.model.calendar.activity.Lesson;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
@@ -8,11 +13,6 @@ import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_TYPE;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_VENUE;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.calendar.activity.Activity;
-import seedu.address.model.calendar.activity.Lesson;
 
 /**
  * Adds a person to the address book.

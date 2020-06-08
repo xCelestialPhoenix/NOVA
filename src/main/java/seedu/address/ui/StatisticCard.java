@@ -1,12 +1,5 @@
 package seedu.address.ui;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
-import static seedu.address.logic.constants.CalendarConstants.EXAM_WEEK_1;
-import static seedu.address.logic.constants.CalendarConstants.EXAM_WEEK_2;
-import static seedu.address.logic.constants.CalendarConstants.READING_WEEK;
-import static seedu.address.logic.constants.CalendarConstants.RECESS_WEEK;
-
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
@@ -20,8 +13,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-import seedu.address.commons.core.Config;
 import seedu.address.logic.Logic;
+
+import static seedu.address.logic.constants.CalendarConstants.EXAM_WEEK_1;
+import static seedu.address.logic.constants.CalendarConstants.EXAM_WEEK_2;
+import static seedu.address.logic.constants.CalendarConstants.READING_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.RECESS_WEEK;
 
 /**
  * The type Statistic card.
@@ -39,7 +36,7 @@ public class StatisticCard extends UiPart<Node> {
 
     // Default data to display
     private static final String DEFAULT_NEXT_ACTIVITY = "";
-    private static final String DEFAULT_TASK_COMPLETION = "100";
+    private static final String DEFAULT_TASK_COMPLETION = "0/0";
 
     // Default font size
     private static final int DEFAULT_DATA_FONT_SIZE = 26;
@@ -116,7 +113,7 @@ public class StatisticCard extends UiPart<Node> {
             data = DEFAULT_NEXT_ACTIVITY;
             break;
         case TASK_COMPLETION_TITLE:
-            data = DEFAULT_TASK_COMPLETION + "%";
+            data = DEFAULT_TASK_COMPLETION;
             break;
         default:
             data = "";

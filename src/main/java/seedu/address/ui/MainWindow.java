@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import static seedu.address.ui.StatisticCard.NEXT_ACTIVITY_TITLE;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +19,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.activity.Activity;
 
+import static seedu.address.ui.StatisticCard.NEXT_ACTIVITY_TITLE;
+
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
@@ -37,6 +37,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private ActivityListPanel activityListPanel;
+    private TaskListPanel taskListPanel;
     private ResultDisplay resultDisplay;
     private StatisticCard weekNumberCard;
     private StatisticCard nextActivityCard;
@@ -50,13 +51,13 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane nextActivityCardPlaceholder;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane activityListPanelPlaceholder;
+
+    @FXML
+    private StackPane taskListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
-
-    @FXML
-    private StackPane statusbarPlaceholder;
 
     @FXML
     private StackPane taskCompletionCardPlaceholder;
@@ -102,7 +103,10 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
 
         activityListPanel = new ActivityListPanel(logic.getFilteredActivityList());
-        personListPanelPlaceholder.getChildren().add(activityListPanel.getRoot());
+        activityListPanelPlaceholder.getChildren().add(activityListPanel.getRoot());
+
+        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
+        taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -199,9 +203,9 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             if (commandResult.isResetCalendar()) {
-                personListPanelPlaceholder.getChildren().clear();
+                activityListPanelPlaceholder.getChildren().clear();
                 activityListPanel = new ActivityListPanel(logic.getFilteredActivityList());
-                personListPanelPlaceholder.getChildren().add(activityListPanel.getRoot());
+                activityListPanelPlaceholder.getChildren().add(activityListPanel.getRoot());
             }
 
             return commandResult;
@@ -235,7 +239,8 @@ public class MainWindow extends UiPart<Stage> {
         nextActivityCard.updateData(newData);
 
         //Update task completion percentage
-        newData = "";
+        newData = logic.getTaskCompletionStats();
+        taskCompletionCard.updateData(newData);
     }
 
 }

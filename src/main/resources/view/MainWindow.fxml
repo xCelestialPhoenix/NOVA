@@ -1,87 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.Scene?>
-<?import javafx.stage.Stage?>
-<fx:root minHeight="600.0" minWidth="800.0" onCloseRequest="#handleExit" title="NOVA" type="javafx.stage.Stage"
-         xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+
+<fx:root minHeight="600.0" minWidth="800.0" onCloseRequest="#handleExit" title="NOVA" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
     <icons>
-        <Image url="@/images/NOVA.png"/>
+        <Image url="@/images/NOVA.png" />
     </icons>
     <scene>
         <Scene>
             <stylesheets>
-                <URL value="@DarkTheme.css"/>
-                <URL value="@Extensions.css"/>
+                <URL value="@DarkTheme.css" />
+                <URL value="@Extensions.css" />
             </stylesheets>
 
             <AnchorPane prefHeight="600.0" prefWidth="800.0">
-                <GridPane layoutX="7.0" layoutY="35.0" prefHeight="420.0" prefWidth="800.0"
-                          styleClass="pane-with-border" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0"
-                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <GridPane layoutX="7.0" layoutY="35.0" prefHeight="420.0" prefWidth="800.0" styleClass="pane-with-border" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="28"/>
-                        <ColumnConstraints percentWidth="72"/>
+                        <ColumnConstraints percentWidth="28" />
+                        <ColumnConstraints percentWidth="72" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                    <AnchorPane prefHeight="200.0" prefWidth="214.0" styleClass="pane-with-border">
-                        <StackPane fx:id="personListPanelPlaceholder" AnchorPane.bottomAnchor="0.0"
-                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                        </StackPane>
-                        <opaqueInsets>
-                            <Insets bottom="5.0"/>
-                        </opaqueInsets>
-                        <GridPane.margin>
-                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                        </GridPane.margin>
-                        <padding>
-                            <Insets bottom="5.0"/>
-                        </padding>
-                    </AnchorPane>
+               <GridPane prefHeight="309.0" prefWidth="213.0">
+                  <GridPane.margin>
+                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  </GridPane.margin>
+                  <columnConstraints>
+                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints percentHeight="50" />
+                      <RowConstraints percentHeight="50" />
+                  </rowConstraints>
+                      <StackPane fx:id="activityListPanelPlaceholder" prefWidth="213.0" styleClass="pane-with-border">
+                          <opaqueInsets>
+                              <Insets />
+                          </opaqueInsets>
+                      </StackPane>
+                  <StackPane fx:id="taskListPanelPlaceholder" layoutX="10.0" layoutY="10.0" prefWidth="213.0" styleClass="pane-with-border" GridPane.rowIndex="1">
+                      <opaqueInsets>
+                      <Insets />
+                      </opaqueInsets>
+                  </StackPane>
+
+               </GridPane>
                     <AnchorPane styleClass="pane-with-border" GridPane.columnIndex="1">
-                        <GridPane gridLinesVisible="true" maxHeight="100.0" prefHeight="100.0"
-                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <GridPane gridLinesVisible="true" maxHeight="100.0" prefHeight="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columnConstraints>
-                                <ColumnConstraints percentWidth="31.5"/>
-                                <ColumnConstraints percentWidth="33.5"/>
-                                <ColumnConstraints percentWidth="35"/>
+                                <ColumnConstraints percentWidth="31.5" />
+                                <ColumnConstraints percentWidth="33.5" />
+                                <ColumnConstraints percentWidth="35" />
                             </columnConstraints>
-                            <StackPane fx:id="weekNumberCardPlaceholder"/>
-                            <StackPane fx:id="nextActivityCardPlaceholder" GridPane.columnIndex="1"/>
-                            <StackPane fx:id="taskCompletionCardPlaceholder" GridPane.columnIndex="2"/>
+                            <StackPane fx:id="weekNumberCardPlaceholder" />
+                            <StackPane fx:id="nextActivityCardPlaceholder" GridPane.columnIndex="1" />
+                            <StackPane fx:id="taskCompletionCardPlaceholder" GridPane.columnIndex="2" />
                             <rowConstraints>
-                                <RowConstraints/>
+                                <RowConstraints />
                             </rowConstraints>
                         </GridPane>
 
-                        <StackPane fx:id="resultDisplayPlaceholder" layoutX="18.0" layoutY="137.0"
-                                   AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0"
-                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0"/>
+                        <StackPane fx:id="resultDisplayPlaceholder" layoutX="18.0" layoutY="137.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0" />
                         <padding>
-                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </padding>
                         <opaqueInsets>
-                            <Insets/>
+                            <Insets />
                         </opaqueInsets>
                     </AnchorPane>
                 </GridPane>
 
-                <StackPane fx:id="commandBoxPlaceholder" layoutY="554.0" prefHeight="40.0" styleClass="pane-with-border"
-                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <StackPane fx:id="commandBoxPlaceholder" layoutY="554.0" prefHeight="40.0" styleClass="pane-with-border" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <padding>
-                        <Insets bottom="5" left="10" right="10" top="5"/>
+                        <Insets bottom="5" left="10" right="10" top="5" />
                     </padding>
                 </StackPane>
             </AnchorPane>

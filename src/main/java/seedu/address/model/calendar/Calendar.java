@@ -1,11 +1,5 @@
 package seedu.address.model.calendar;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
-import static seedu.address.logic.constants.CalendarConstants.READING_WEEK;
-import static seedu.address.logic.constants.CalendarConstants.RECESS_WEEK;
-import static seedu.address.logic.constants.CalendarConstants.WEEKS_PER_SEMESTER;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,11 +7,19 @@ import java.util.Optional;
 
 import javafx.collections.ObservableList;
 
-import seedu.address.commons.core.Config;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.calendar.activity.Lesson;
 import seedu.address.model.calendar.activity.UniqueActivityList;
+import seedu.address.model.calendar.task.Task;
+import seedu.address.model.calendar.task.TaskReference;
+import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.READING_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.RECESS_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.WEEKS_PER_SEMESTER;
 
 /**
  * The type Calendar.
@@ -44,6 +46,7 @@ public class Calendar implements ReadOnlyCalendar {
     }
 
     public void resetCalendar(ReadOnlyCalendar calendar) {
+
         startDate = calendar.getStartDate();
         endDate = calendar.getEndDate();
         initWeeks();
@@ -75,6 +78,12 @@ public class Calendar implements ReadOnlyCalendar {
 
         int week = calculateWeek(activityReference.getDate()); // calculateWeek() returns zero-indexed week.
         return weeks[week].deleteActivity(activityReference);
+    }
+
+    public Optional<Task> deleteTask(TaskReference taskReference) {
+
+        int week = calculateWeek(taskReference.getDeadlineDate()); // calculateWeek() returns zero-indexed week.
+        return weeks[week].deleteTask(taskReference);
     }
 
     /**
@@ -116,6 +125,21 @@ public class Calendar implements ReadOnlyCalendar {
             week.addActivity(lesson);
         }
         return true;
+    }
+
+    public boolean addTask(Task task) {
+
+        int week = calculateWeek(task.getDeadlineDate());
+        weeks[week].addTask(task);
+
+        return true;
+
+    }
+
+    public Optional<Task> completeTask(TaskReference taskReference) throws RepeatedCompleteException {
+
+        int week = calculateWeek((taskReference.getDeadlineDate()));
+        return weeks[week].completeTask(taskReference);
     }
 
     /**
@@ -163,6 +187,12 @@ public class Calendar implements ReadOnlyCalendar {
         return weeks[week].hasActivity(activity);
     }
 
+    public boolean hasTask(Task task) {
+
+        int week = calculateWeek(task.getDeadlineDate());
+        return weeks[week].hasTask(task);
+    }
+
     /**
      * Is within calendar time boolean.
      *
@@ -200,10 +230,12 @@ public class Calendar implements ReadOnlyCalendar {
     }
 
     public LocalDate getStartDate() {
+
         return startDate;
     }
 
     public LocalDate getEndDate() {
+
         return endDate;
     }
 
@@ -245,6 +277,20 @@ public class Calendar implements ReadOnlyCalendar {
 
         int week = calculateWeek(activity.getDate()); // calculateWeek() returns zero-indexed week.
         return weeks[week].isAddable(activity);
+    }
+
+    public ObservableList<Task> getFilteredTaskList() {
+
+        int weekNumber = calculateWeek(LocalDate.now());
+
+        return weeks[weekNumber].getFilteredTaskList();
+    }
+
+    public String getTaskCompletionStats() {
+
+        int weekNumber = calculateWeek(LocalDate.now());
+
+        return weeks[weekNumber].getTaskCompletionStats();
     }
 
     /**

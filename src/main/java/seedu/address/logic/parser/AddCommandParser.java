@@ -1,14 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_END_TIME;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_TYPE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_VENUE;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,6 +9,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.Lesson;
 import seedu.address.model.calendar.activity.Meeting;
+
+import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_END_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_TYPE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_VENUE;
 
 /**
  * Parses input arguments and creates a new AddCommand object

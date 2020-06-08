@@ -1,8 +1,5 @@
 package seedu.address.model.calendar.activity;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +11,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.calendar.activity.execeptions.ActivityNotFoundException;
 import seedu.address.model.calendar.activity.execeptions.DuplicateActivityException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * The type Unique activity list.
@@ -100,15 +100,12 @@ public class UniqueActivityList implements Iterable<Activity> {
         requireNonNull(toDelete);
 
         Optional<Activity> deletedActivity = Optional.empty();
+        int index = internalList.indexOf(toDelete);
 
-        for (Activity activity : internalList) {
-
-            if (toDelete.equals(activity)) {
-                deletedActivity = Optional.of(activity);
-                internalList.remove(activity);
-                break;
-            }
+        if (index != -1) { //If activity is present
+            deletedActivity = Optional.of(internalList.remove(index));
         }
+
         return deletedActivity;
     }
 
@@ -166,20 +163,6 @@ public class UniqueActivityList implements Iterable<Activity> {
         }
 
         internalList.set(index, editedActivity);
-    }
-
-    /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
-     *
-     * @param toRemove the to remove
-     */
-    public void remove(Activity toRemove) {
-
-        requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
-            throw new ActivityNotFoundException();
-        }
     }
 
     /**

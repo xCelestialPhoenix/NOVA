@@ -1,8 +1,5 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -20,7 +17,13 @@ import seedu.address.model.calendar.Calendar;
 import seedu.address.model.calendar.ReadOnlyCalendar;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.ActivityReference;
+import seedu.address.model.calendar.task.Task;
+import seedu.address.model.calendar.task.TaskReference;
+import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
 import seedu.address.model.person.Person;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -33,7 +36,6 @@ public class ModelManager implements Model {
     private final Calendar calendar;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
-    private final FilteredList<Activity> filteredActivities;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -49,7 +51,6 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         this.calendar = new Calendar(userPrefs.getCalendarStartDate(), userPrefs.getCalendarEndDate());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        filteredActivities = new FilteredList<>(this.calendar.viewActivityOnDate(LocalDate.now()));
     }
 
     public ModelManager() {
@@ -162,15 +163,38 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void addTask(Task task) {
+        calendar.addTask(task);
+    }
+
+    @Override
+    public Optional<Task> completeTask(TaskReference taskReference) throws RepeatedCompleteException {
+
+        return calendar.completeTask(taskReference);
+    }
+
+    @Override
     public Optional<Activity> deleteActivity(ActivityReference activityReference) {
 
         return calendar.deleteActivity(activityReference);
     }
 
     @Override
+    public Optional<Task> deleteTask(TaskReference taskReference) {
+
+        return calendar.deleteTask(taskReference);
+    }
+
+    @Override
     public boolean hasActivity(Activity activity) {
 
         return calendar.hasActivity(activity);
+    }
+
+    @Override
+    public boolean hasTask(Task task) {
+
+        return calendar.hasTask(task);
     }
 
     @Override
@@ -206,7 +230,13 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Activity> getFilteredActivityList() {
 
-        return new FilteredList<>(this.calendar.viewActivityOnDate(LocalDate.now()));
+        return new FilteredList<>(calendar.viewActivityOnDate(LocalDate.now()));
+    }
+
+    @Override
+    public ObservableList<Task> getFilteredTaskList() {
+
+        return calendar.getFilteredTaskList();
     }
 
     @Override
@@ -219,6 +249,12 @@ public class ModelManager implements Model {
     public int calculateWeekNumber(LocalDate refDate) {
 
         return calendar.calculateWeek(refDate);
+    }
+
+    @Override
+    public String getTaskCompletionStats() {
+
+        return calendar.getTaskCompletionStats();
     }
 
     //=========== Filtered Person List Accessors =============================================================

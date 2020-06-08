@@ -10,10 +10,12 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.calendar.Calendar;
 import seedu.address.model.calendar.ReadOnlyCalendar;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.ActivityReference;
+import seedu.address.model.calendar.task.Task;
+import seedu.address.model.calendar.task.TaskReference;
+import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
 import seedu.address.model.person.Person;
 
 /**
@@ -111,13 +113,23 @@ public interface Model {
 
     void addActivity(Activity activity);
 
+    void addTask(Task task);
+
+    Optional<Task> completeTask(TaskReference taskReference) throws RepeatedCompleteException;
+
     Optional<Activity> deleteActivity(ActivityReference activityReference);
+
+    Optional<Task> deleteTask(TaskReference taskReference);
 
     ObservableList<Activity> viewActivityOnDate(LocalDate date);
 
     ObservableList<Activity> getFilteredActivityList();
 
+    ObservableList<Task> getFilteredTaskList();
+
     boolean hasActivity(Activity activity);
+
+    boolean hasTask(Task task);
 
     boolean isWithinCalendarTime(Activity activity);
 
@@ -130,5 +142,7 @@ public interface Model {
     Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow);
 
     int calculateWeekNumber(LocalDate refDate);
+
+    String getTaskCompletionStats();
 
 }

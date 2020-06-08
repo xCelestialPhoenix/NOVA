@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+    <Label prefWidth="248.0" style="-fx-background-color: #515658;" text="Tasks for this week:">
+        <padding>
+            <Insets bottom="5.0" left="5.0" top="5.0" />
+        </padding></Label>
+    <ListView fx:id="taskListView" VBox.vgrow="ALWAYS" />
+</VBox>
