@@ -20,6 +20,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.task.Task;
+import seedu.address.model.calendar.task.TaskCompletionStatistics;
 import seedu.address.model.person.Person;
 import seedu.address.storage.Storage;
 
@@ -87,9 +88,9 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow) {
+    public Optional<Activity> getNextActivity() {
 
-        return model.getNextActivity(today, timeNow);
+        return model.getNextActivity();
     }
 
     @Override
@@ -99,7 +100,7 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public String getTaskCompletionStats() {
+    public TaskCompletionStatistics getTaskCompletionStats() {
 
         return model.getTaskCompletionStats();
     }

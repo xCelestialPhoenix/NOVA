@@ -38,8 +38,8 @@ public class TaskCard extends UiPart<Region> {
 
         indexLabel.setText(displayedIndex + ". ");
         descriptionLabel.setText(task.getDescription());
-        dateLabel.setText("Date: " + task.getDeadlineDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        timeLabel.setText("Time: " + task.getDeadlineTime().format(DateTimeFormatter.ofPattern("hh:mm a")));
+        dateLabel.setText("Date: " + task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        timeLabel.setText("Time: " + task.getDueTime().format(DateTimeFormatter.ofPattern("hh:mm a")));
 
         String notes = task.getNote();
         if (notes.equals("")) {

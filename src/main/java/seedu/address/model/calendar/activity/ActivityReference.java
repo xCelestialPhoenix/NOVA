@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * The type used to reference to an activity given only the date and start time.
+ * The entity used to reference to an activity using only the date and start time.
  */
 public class ActivityReference extends Activity {
 
@@ -38,13 +38,8 @@ public class ActivityReference extends Activity {
 
         Activity act = (Activity) obj;
 
-        return onSameDate(act.date) && hasSameStartTime(act.startTime);
+        return onSameDate(act) && startsWith(act);
 
-    }
-
-    private boolean hasSameStartTime(LocalTime startTime) {
-
-        return this.startTime.equals(startTime);
     }
 
 }

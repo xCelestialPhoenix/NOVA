@@ -5,39 +5,71 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * The type Activity.
+ * The Activity representation in the calendar of NOVA.
  */
 public abstract class Activity {
 
     /**
-     * The Description.
+     * The description of the activity.
      */
     protected String description;
     /**
-     * The Venue.
+     * The venue where the activity is at.
      */
     protected String venue;
     /**
-     * The Date.
+     * The date when the activity happens.
      */
     protected LocalDate date;
     /**
-     * The Start time.
+     * The start time of the activity.
      */
     protected LocalTime startTime;
     /**
-     * The End time.
+     * The end time of the activity.
      */
     protected LocalTime endTime;
     /**
-     * The Notes.
+     * Additional side notes of the activity.
      */
     protected String notes;
+
+    //============================= Getters ==============================
+
+    /**
+     * Gets the activity description.
+     *
+     * @return the activity description
+     */
+    public String getDescription() {
+
+        return description;
+    }
+
+    /**
+     * Gets the activity venue.
+     *
+     * @return the activity venue
+     */
+    public String getVenue() {
+
+        return venue;
+    }
+
+    /**
+     * Gets the activity date.
+     *
+     * @return the activity date
+     */
+    public LocalDate getDate() {
+
+        return date;
+    }
 
     /**
      * Gets the activity start time.
      *
-     * @return the start time
+     * @return the activity start time
      */
     public LocalTime getStartTime() {
 
@@ -47,7 +79,7 @@ public abstract class Activity {
     /**
      * Gets the activity end time.
      *
-     * @return the end time
+     * @return the activity end time
      */
     public LocalTime getEndTime() {
 
@@ -55,49 +87,21 @@ public abstract class Activity {
     }
 
     /**
-     * Gets venue.
+     * Gets the activity notes.
      *
-     * @return the venue
-     */
-    public String getVenue() {
-
-        return venue;
-    }
-
-    /**
-     * Gets description.
-     *
-     * @return the description
-     */
-    public String getDescription() {
-
-        return description;
-    }
-
-    /**
-     * Gets notes.
-     *
-     * @return the notes
+     * @return the activity notes
      */
     public String getNotes() {
 
         return notes;
     }
 
-    /**
-     * Gets date.
-     *
-     * @return the date
-     */
-    public LocalDate getDate() {
-
-        return date;
-    }
+    //============================= Utilities ==============================
 
     /**
-     * Is valid boolean.
+     * Returns true if the activity is valid.
      *
-     * @return the boolean
+     * @return true if the activity is valid
      */
     public boolean isValid() {
 
@@ -105,92 +109,102 @@ public abstract class Activity {
     }
 
     /**
-     * Start before boolean.
+     * Returns true if the calling activity has the same description with the other activity.
      *
-     * @param activity the activity
-     * @return the boolean
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity has the same description with the other activity
      */
-    public boolean startBefore(Activity activity) {
+    public boolean hasSameDescription(Activity otherActivity) {
 
-        return startTime.isBefore(activity.startTime);
+        return description.equals(otherActivity.description);
     }
 
     /**
-     * Start during boolean.
+     * Returns true if the calling activity happens at the same venue with the other activity.
      *
-     * @param activity the activity
-     * @return the boolean
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity happens at the same venue with the other activity
      */
-    public boolean startDuring(Activity activity) {
+    public boolean atSameVenue(Activity otherActivity) {
 
-        return startTime.isAfter(activity.startTime) && startTime.isBefore(activity.endTime);
+        return venue.equals(otherActivity.venue);
     }
 
     /**
-     * Ends before boolean.
+     * Returns true if the calling activity happens on the same date with the other activity.
      *
-     * @param activity the activity
-     * @return the boolean
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity happens on the same date with the other activity
      */
-    public boolean endsBefore(Activity activity) {
+    public boolean onSameDate(Activity otherActivity) {
 
-        return !endTime.isAfter(activity.startTime);
+        return date.equals(otherActivity.date);
     }
 
     /**
-     * Ends with boolean.
+     * Returns true if the calling activity happens at the same time with the other activity.
      *
-     * @param activity the activity
-     * @return the boolean
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity happens at the same time with the other activity
      */
-    public boolean endsWith(Activity activity) {
+    public boolean atSameTime(Activity otherActivity) {
 
-        return endTime.equals(activity.endTime);
+        return startTime.equals(otherActivity.startTime) && endTime.equals(otherActivity.endTime);
     }
 
     /**
-     * On same date boolean.
+     * Returns true if the calling activity starts before the other activity.
      *
-     * @param date the date
-     * @return the boolean
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity starts before the other activity
      */
-    public boolean onSameDate(LocalDate date) {
+    public boolean startBefore(Activity otherActivity) {
 
-        return this.date.equals(date);
+        return startTime.isBefore(otherActivity.startTime);
     }
 
     /**
-     * At same time boolean.
+     * Returns true if the calling activity starts together with the other activity.
      *
-     * @param start the start
-     * @param end   the end
-     * @return the boolean
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity starts together with the other activity
      */
-    public boolean atSameTime(LocalTime start, LocalTime end) {
+    public boolean startsWith(Activity otherActivity) {
 
-        return startTime.equals(start) && endTime.equals(end);
+        return startTime.equals(otherActivity.startTime);
     }
 
     /**
-     * At same venue boolean.
+     * Returns true if the calling activity starts during the other activity.
      *
-     * @param venue the venue
-     * @return the boolean
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity starts during the other activity
      */
-    public boolean atSameVenue(String venue) {
+    public boolean startDuring(Activity otherActivity) {
 
-        return this.venue.equals(venue);
+        return startTime.isAfter(otherActivity.startTime) && startTime.isBefore(otherActivity.endTime);
     }
 
     /**
-     * Has same description boolean.
+     * Returns true if the calling activity ends before the other activity.
      *
-     * @param description the description
-     * @return the boolean
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity ends before the other activity
      */
-    public boolean hasSameDescription(String description) {
+    public boolean endsBefore(Activity otherActivity) {
 
-        return this.description.equals(description);
+        return !endTime.isAfter(otherActivity.startTime);
+    }
+
+    /**
+     * Returns true if the calling activity ends together with the other activity.
+     *
+     * @param otherActivity the activity to compare with
+     * @return true if the calling activity ends together with the other activity
+     */
+    public boolean endsWith(Activity otherActivity) {
+
+        return endTime.equals(otherActivity.endTime);
     }
 
     @Override

@@ -1,8 +1,13 @@
 package seedu.address.model.calendar;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.READING_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.RECESS_WEEK;
+import static seedu.address.logic.constants.CalendarConstants.WEEKS_PER_SEMESTER;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Optional;
 
 import javafx.collections.ObservableList;
@@ -12,50 +17,52 @@ import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.calendar.activity.Lesson;
 import seedu.address.model.calendar.activity.UniqueActivityList;
 import seedu.address.model.calendar.task.Task;
+import seedu.address.model.calendar.task.TaskCompletionStatistics;
 import seedu.address.model.calendar.task.TaskReference;
 import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
-import static seedu.address.logic.constants.CalendarConstants.READING_WEEK;
-import static seedu.address.logic.constants.CalendarConstants.RECESS_WEEK;
-import static seedu.address.logic.constants.CalendarConstants.WEEKS_PER_SEMESTER;
-
 /**
- * The type Calendar.
+ * The Calendar feature within NOVA.
  */
 public class Calendar implements ReadOnlyCalendar {
 
-    public static final DayOfWeek FIRST_DAY_OF_WEEK = DayOfWeek.MONDAY;
+    private static final DayOfWeek FIRST_DAY_OF_WEEK = DayOfWeek.MONDAY;
 
-    private final Week[] weeks = new Week[WEEKS_PER_SEMESTER];
-    private LocalDate startDate = LocalDate.of(2020, 1, 13);
-    private LocalDate endDate = LocalDate.of(2020, 5, 10);
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private Week[] weeks = new Week[WEEKS_PER_SEMESTER];
 
     /**
-     * Instantiates a new Calendar.
+     * Instantiates a new calendar starting from the start date.
+     *
+     * @param startDate the start date of the new calendar
      */
-
-    public Calendar() {}
-
-    public Calendar(LocalDate startDate, LocalDate endDate) {
+    public Calendar(LocalDate startDate) {
 
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.endDate = calculateEndDate(startDate);
         initWeeks();
     }
 
+    /**
+     * Resets the current calendar to another, overwriting the dates and activities within.
+     *
+     * @param calendar the calendar to reset to
+     */
     public void resetCalendar(ReadOnlyCalendar calendar) {
 
         startDate = calendar.getStartDate();
         endDate = calendar.getEndDate();
-        initWeeks();
+        weeks = calendar.getWeeks();
     }
 
+    //============================= Modifications ==============================
+    //=================== Activities ====================
+
     /**
-     * Add activity boolean.
+     * Adds an activity into the calendar.
      *
-     * @param activity the activity
+     * @param activity the activity to be added
      */
     public void addActivity(Activity activity) {
 
@@ -69,48 +76,13 @@ public class Calendar implements ReadOnlyCalendar {
     }
 
     /**
-     * Deletes an activity.
+     * Adds lessons into the calendar.
      *
-     * @param activityReference the activity reference
-     * @return An optional that holds the deleted activity if it exists
+     * @param lesson the lesson to be added
      */
-    public Optional<Activity> deleteActivity(ActivityReference activityReference) {
+    public void addLesson(Lesson lesson) {
 
-        int week = calculateWeek(activityReference.getDate()); // calculateWeek() returns zero-indexed week.
-        return weeks[week].deleteActivity(activityReference);
-    }
-
-    public Optional<Task> deleteTask(TaskReference taskReference) {
-
-        int week = calculateWeek(taskReference.getDeadlineDate()); // calculateWeek() returns zero-indexed week.
-        return weeks[week].deleteTask(taskReference);
-    }
-
-    /**
-     * View activity on date observable list.
-     *
-     * @param date the date
-     * @return the observable list
-     */
-    public ObservableList<Activity> viewActivityOnDate(LocalDate date) {
-
-        int weekNum = calculateWeek(date); // calculateWeek() returns zero-indexed week.
-
-        if (weekNum >= WEEKS_PER_SEMESTER || weekNum < 0) {
-            return new UniqueActivityList().asUnmodifiableObservableList();
-        }
-
-        return weeks[weekNum].viewActivityOnDate(date);
-    }
-
-    /**
-     * Add lesson boolean.
-     *
-     * @param lesson the lesson
-     * @return the boolean
-     */
-    public boolean addLesson(Lesson lesson) {
-
+        // A simple loop across school weeks and adds an activity into each week to represent lesson
         for (Week week : weeks) {
 
             if (week.getWeekNum() == RECESS_WEEK) {
@@ -124,34 +96,100 @@ public class Calendar implements ReadOnlyCalendar {
             }
             week.addActivity(lesson);
         }
-        return true;
-    }
-
-    public boolean addTask(Task task) {
-
-        int week = calculateWeek(task.getDeadlineDate());
-        weeks[week].addTask(task);
-
-        return true;
-
-    }
-
-    public Optional<Task> completeTask(TaskReference taskReference) throws RepeatedCompleteException {
-
-        int week = calculateWeek((taskReference.getDeadlineDate()));
-        return weeks[week].completeTask(taskReference);
     }
 
     /**
-     * Gets next activity.
+     * Deletes an activity from the calendar.
      *
-     * @param today   the today
-     * @param timeNow the time now
-     * @return the next activity
+     * @param activityReference the scaled-down version of an activity used to identify the actual activity
+     * @return an optional that holds the deleted activity if it exists
      */
-    public Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow) {
+    public Optional<Activity> deleteActivity(ActivityReference activityReference) {
 
-        int weekNumber = calculateWeek(today); // calculateWeek() returns zero-indexed week.
+        int week = calculateWeek(activityReference.getDate()); // calculateWeek() returns zero-indexed week.
+        return weeks[week].deleteActivity(activityReference);
+    }
+
+    // TODO: Possible enhancement - Delete Lesson
+
+    //=================== Task ====================
+
+    /**
+     * Adds a task into the calendar.
+     *
+     * @param task the task to be added into the calendar
+     */
+    public void addTask(Task task) {
+
+        int week = calculateWeek(task.getDueDate());
+        weeks[week].addTask(task);
+
+    }
+
+    /**
+     * Deletes a task from the calendar.
+     *
+     * @param taskReference the scaled-down version of a task used to identify the actual task
+     * @return an optional that holds the deleted task if it exists
+     */
+    public Optional<Task> deleteTask(TaskReference taskReference) {
+
+        int week = calculateWeek(taskReference.getDueDate()); // calculateWeek() returns zero-indexed week.
+        return weeks[week].deleteTask(taskReference);
+    }
+
+    /**
+     * Completes a task in the calendar.
+     *
+     * @param taskReference the scaled-down version of a task used to identify the actual task
+     * @return the optional that holds the completed task if it exists
+     * @throws RepeatedCompleteException If the task has already been completed before
+     */
+    public Optional<Task> completeTask(TaskReference taskReference) throws RepeatedCompleteException {
+
+        int week = calculateWeek((taskReference.getDueDate()));
+        return weeks[week].completeTask(taskReference);
+    }
+
+    //======================================= Getters ========================================
+    //==================== Calendar ==================
+
+    @Override
+    public LocalDate getStartDate() {
+
+        return startDate;
+    }
+
+    @Override
+    public LocalDate getEndDate() {
+
+        return endDate;
+    }
+
+    @Override
+    public Week[] getWeeks() {
+
+        return weeks;
+    }
+
+    //==================== Activities ==================
+
+    @Override
+    public ObservableList<Activity> viewActivityOnDate(LocalDate date) {
+
+        int weekNum = calculateWeek(date); // calculateWeek() returns zero-indexed week.
+
+        if (weekNum >= WEEKS_PER_SEMESTER || weekNum < 0) {
+            return new UniqueActivityList().asUnmodifiableObservableList();
+        }
+
+        return weeks[weekNum].viewActivityOnDate(date);
+    }
+
+    @Override
+    public Optional<Activity> getNextActivity() {
+
+        int weekNumber = calculateWeek(LocalDate.now()); // calculateWeek() returns zero-indexed week.
 
         if (weekNumber >= WEEKS_PER_SEMESTER) {
             return Optional.empty();
@@ -161,7 +199,7 @@ public class Calendar implements ReadOnlyCalendar {
             weekNumber = 0;
         }
 
-        Optional<Activity> nextActivity = weeks[weekNumber].getNextActivity(today, timeNow);
+        Optional<Activity> nextActivity = weeks[weekNumber].getNextActivity();
         weekNumber += 1;
 
         while (nextActivity.isEmpty() && weekNumber < WEEKS_PER_SEMESTER) {
@@ -171,12 +209,35 @@ public class Calendar implements ReadOnlyCalendar {
         return nextActivity;
     }
 
-    /**
-     * Has activity boolean.
-     *
-     * @param activity the activity
-     * @return the boolean
-     */
+    //==================== Tasks ==================
+
+    @Override
+    public ObservableList<Task> getWeekTaskList() {
+
+        int weekNumber = calculateWeek(LocalDate.now());
+
+        return weeks[weekNumber].getFilteredTaskList();
+    }
+
+    @Override
+    public TaskCompletionStatistics getTaskCompletionStats() {
+
+        int weekNumber = calculateWeek(LocalDate.now());
+
+        return weeks[weekNumber].getTaskCompletionStats();
+    }
+
+    //======================================= Utilities ========================================
+
+    @Override
+    public int calculateWeek(LocalDate date) {
+
+        int days = (int) DAYS.between(startDate, date);
+        return days / DAYS_PER_WEEK;
+
+    }
+
+    @Override
     public boolean hasActivity(Activity activity) {
 
         if (activity instanceof Lesson) {
@@ -187,18 +248,14 @@ public class Calendar implements ReadOnlyCalendar {
         return weeks[week].hasActivity(activity);
     }
 
+    @Override
     public boolean hasTask(Task task) {
 
-        int week = calculateWeek(task.getDeadlineDate());
+        int week = calculateWeek(task.getDueDate());
         return weeks[week].hasTask(task);
     }
 
-    /**
-     * Is within calendar time boolean.
-     *
-     * @param activity the activity
-     * @return the boolean
-     */
+    @Override
     public boolean isWithinCalendarRange(Activity activity) {
 
         return isValidDate(activity.getDate());
@@ -216,41 +273,8 @@ public class Calendar implements ReadOnlyCalendar {
         return day.equals(FIRST_DAY_OF_WEEK);
     }
 
-    /**
-     * Calculates the week number in the calendar of a date
-     *
-     * @param date the date used the calculate the week number
-     * @return the week number in zero indexing
-     */
-    public int calculateWeek(LocalDate date) {
-
-        int days = (int) DAYS.between(startDate, date);
-        return days / DAYS_PER_WEEK;
-
-    }
-
-    public LocalDate getStartDate() {
-
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-
-        return endDate;
-    }
-
-    private boolean isValidDate(LocalDate date) {
-
-        return !date.isBefore(startDate) && !date.isAfter(endDate);
-    }
-
-    /**
-     * Checks if the lesson can be added across all the weeks.
-     *
-     * @param activity the activity to check if it can be added into the calendar
-     * @return the addability of the lesson
-     */
-    public boolean checkAvailability(Activity activity) {
+    @Override
+    public boolean isAddable(Activity activity) {
 
         if (activity instanceof Lesson) {
             boolean canAdd = true;
@@ -279,22 +303,8 @@ public class Calendar implements ReadOnlyCalendar {
         return weeks[week].isAddable(activity);
     }
 
-    public ObservableList<Task> getFilteredTaskList() {
-
-        int weekNumber = calculateWeek(LocalDate.now());
-
-        return weeks[weekNumber].getFilteredTaskList();
-    }
-
-    public String getTaskCompletionStats() {
-
-        int weekNumber = calculateWeek(LocalDate.now());
-
-        return weeks[weekNumber].getTaskCompletionStats();
-    }
-
     /**
-     * Initialize all the weeks
+     * Initializes the week array
      */
 
     private void initWeeks() {
@@ -302,6 +312,28 @@ public class Calendar implements ReadOnlyCalendar {
         for (int index = 0; index < weeks.length; index++) {
             weeks[index] = new Week(index + 1, startDate.plusWeeks(index));
         }
+    }
+
+    /**
+     * Returns true if the date lies within the calendar's range
+     *
+     * @param date the date to be tested
+     * @return true if the date lies within the calendar's rnage
+     */
+    private boolean isValidDate(LocalDate date) {
+
+        return !date.isBefore(startDate) && !date.isAfter(endDate);
+    }
+
+    /**
+     * Calculates the end date of the calendar given the start date.
+     *
+     * @param startDate the start date of the calendar
+     * @return the calculated end date of the calendar
+     */
+    private LocalDate calculateEndDate(LocalDate startDate) {
+
+        return startDate.plusDays(DAYS_PER_WEEK * WEEKS_PER_SEMESTER);
     }
 
 }

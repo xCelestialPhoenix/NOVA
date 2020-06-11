@@ -1,8 +1,6 @@
 package seedu.address.ui;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -18,8 +16,11 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.activity.Activity;
-
-import static seedu.address.ui.StatisticCard.NEXT_ACTIVITY_TITLE;
+import seedu.address.model.calendar.task.TaskCompletionStatistics;
+import seedu.address.ui.statisticcard.NextActivityCard;
+import seedu.address.ui.statisticcard.StatisticCard;
+import seedu.address.ui.statisticcard.TaskCompletionCard;
+import seedu.address.ui.statisticcard.WeekNumberCard;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -111,13 +112,13 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        weekNumberCard = new StatisticCard(StatisticCard.WEEK_NUM_TITLE, logic);
+        weekNumberCard = new WeekNumberCard(logic);
         weekNumberCardPlaceholder.getChildren().add(weekNumberCard.getRoot());
 
-        nextActivityCard = new StatisticCard(NEXT_ACTIVITY_TITLE, logic);
+        nextActivityCard = new NextActivityCard();
         nextActivityCardPlaceholder.getChildren().add(nextActivityCard.getRoot());
 
-        taskCompletionCard = new StatisticCard(StatisticCard.TASK_COMPLETION_TITLE, logic);
+        taskCompletionCard = new TaskCompletionCard();
         taskCompletionCardPlaceholder.getChildren().add(taskCompletionCard.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -221,26 +222,17 @@ public class MainWindow extends UiPart<Stage> {
      */
     private void updateStatistic() {
 
-        String newData = "";
-
         //Update week number
         int newWeekNumber = logic.calculateWeekNumber(LocalDate.now()) + 1;
-        newData = String.valueOf(newWeekNumber);
-        logger.info("New week number: " + newWeekNumber);
-        weekNumberCard.updateData(newData);
+        ((WeekNumberCard) weekNumberCard).updateData(newWeekNumber);
 
         //Update the next upcoming activity
-        newData = "";
-        Optional<Activity> activity = logic.getNextActivity(LocalDate.now(), LocalTime.now());
-        if (activity.isPresent()) {
-            newData = activity.get().getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n"
-                    + activity.get().getStartTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
-        }
-        nextActivityCard.updateData(newData);
+        Optional<Activity> activity = logic.getNextActivity();
+        ((NextActivityCard) nextActivityCard).updateData(activity);
 
-        //Update task completion percentage
-        newData = logic.getTaskCompletionStats();
-        taskCompletionCard.updateData(newData);
+        //Update task completion status
+        TaskCompletionStatistics stats = logic.getTaskCompletionStats();
+        ((TaskCompletionCard) taskCompletionCard).updateData(stats);
     }
 
 }

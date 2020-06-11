@@ -2,7 +2,6 @@ package seedu.address.logic;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Optional;
 
 import javafx.collections.ObservableList;
@@ -14,6 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.task.Task;
+import seedu.address.model.calendar.task.TaskCompletionStatistics;
 import seedu.address.model.person.Person;
 
 /**
@@ -49,11 +49,11 @@ public interface Logic {
 
     ObservableList<Task> getFilteredTaskList();
 
-    Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow);
+    Optional<Activity> getNextActivity();
 
     int calculateWeekNumber(LocalDate refDate);
 
-    String getTaskCompletionStats();
+    TaskCompletionStatistics getTaskCompletionStats();
     //===================================================================================
     /**
      * Returns the user prefs' address book file path.

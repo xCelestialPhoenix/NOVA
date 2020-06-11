@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * The Lesson type activity.
+ * The Lesson type activity representation to mark school lessons in the calendar of NOVA.
  */
 public class Lesson extends Activity {
 
@@ -15,14 +15,14 @@ public class Lesson extends Activity {
     /**
      * Instantiates a new Lesson.
      *
-     * @param day         the day
+     * @param description the description
+     * @param venue       the venue
+     * @param day         the lesson day
      * @param startTime   the start time
      * @param endTime     the end time
-     * @param venue       the venue
-     * @param description the description
      * @param notes       the notes
      */
-    public Lesson(DayOfWeek day, LocalTime startTime, LocalTime endTime, String venue, String description,
+    public Lesson(String description, String venue, DayOfWeek day, LocalTime startTime, LocalTime endTime,
                   String notes) {
 
         this.day = day;
@@ -31,6 +31,8 @@ public class Lesson extends Activity {
         this.venue = venue;
         this.description = description;
         this.notes = notes;
+
+        // The first creation of a lesson does not have a date because it will be repeated across the academic semester
         date = null;
     }
 
@@ -51,6 +53,13 @@ public class Lesson extends Activity {
         this.notes = lesson.notes;
     }
 
+    //============================= Getters ==============================
+
+    /**
+     * Gets the day of the week when the lesson happens.
+     *
+     * @return the day
+     */
     public DayOfWeek getDay() {
 
         return day;
@@ -60,14 +69,15 @@ public class Lesson extends Activity {
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Description: " + description + "\n");
+        sb.append("Description: " + description + "\n")
+                .append("Time: " + startTime + " - " + endTime + "\n")
+                .append("Venue: " + venue + "\n");
+
         if (date == null) {
             sb.append("Day: " + day + "\n");
         } else {
             sb.append("Date: " + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n");
         }
-        sb.append("Time: " + startTime + " - " + endTime + "\n");
-        sb.append("Venue: " + venue + "\n");
 
         if (!notes.equals("")) {
             sb.append("Notes: " + notes + "\n");
@@ -89,15 +99,21 @@ public class Lesson extends Activity {
 
         Lesson act = (Lesson) obj;
 
-        return onSameDay(act.day)
-                && atSameTime(act.startTime, act.endTime)
-                && atSameVenue(act.venue)
-                && hasSameDescription(act.description);
+        return hasSameDescription(act)
+                && atSameVenue(act)
+                && onSameDay(act)
+                && atSameTime(act);
     }
 
-    private boolean onSameDay(DayOfWeek day) {
+    /**
+     * Returns true if this lesson and the other lesson falls on the same day of the week.
+     *
+     * @param otherLesson the lesson to be checked
+     * @return true if this lesson and the other lesson falls on the same day of the week
+     */
+    private boolean onSameDay(Lesson otherLesson) {
 
-        return this.day.equals(day);
+        return day.equals(otherLesson.day);
     }
 
 }

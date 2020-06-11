@@ -1,9 +1,11 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -18,12 +20,10 @@ import seedu.address.model.calendar.ReadOnlyCalendar;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.ActivityReference;
 import seedu.address.model.calendar.task.Task;
+import seedu.address.model.calendar.task.TaskCompletionStatistics;
 import seedu.address.model.calendar.task.TaskReference;
 import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
 import seedu.address.model.person.Person;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -49,7 +49,7 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        this.calendar = new Calendar(userPrefs.getCalendarStartDate(), userPrefs.getCalendarEndDate());
+        this.calendar = new Calendar(userPrefs.getCalendarStartDate());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -218,7 +218,7 @@ public class ModelManager implements Model {
     @Override
     public boolean isAddable(Activity activity) {
 
-        return calendar.checkAvailability(activity);
+        return calendar.isAddable(activity);
     }
 
     @Override
@@ -236,13 +236,13 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Task> getFilteredTaskList() {
 
-        return calendar.getFilteredTaskList();
+        return calendar.getWeekTaskList();
     }
 
     @Override
-    public Optional<Activity> getNextActivity(LocalDate today, LocalTime timeNow) {
+    public Optional<Activity> getNextActivity() {
 
-        return calendar.getNextActivity(today, timeNow);
+        return calendar.getNextActivity();
     }
 
     @Override
@@ -252,7 +252,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public String getTaskCompletionStats() {
+    public TaskCompletionStatistics getTaskCompletionStats() {
 
         return calendar.getTaskCompletionStats();
     }

@@ -1,22 +1,22 @@
 package seedu.address.model.calendar.activity;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.LocalTime;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import seedu.address.model.calendar.activity.execeptions.ActivityNotFoundException;
 import seedu.address.model.calendar.activity.execeptions.DuplicateActivityException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
- * The type Unique activity list.
+ * A list of activities that enforces uniqueness between its elements and does not allow nulls.
+ * As such, adding and updating of activities ensure that the person being added or updated is unique in terms of
+ * identity in the UniqueActivityList.
+ * <p>
+ * Supports a minimal set of list operations.
  */
 public class UniqueActivityList implements Iterable<Activity> {
 
@@ -24,44 +24,7 @@ public class UniqueActivityList implements Iterable<Activity> {
     private final ObservableList<Activity> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
-    /**
-     * Returns true if the list contains an equivalent person as the given argument.
-     *
-     * @param toCheck the to check
-     * @return the boolean
-     */
-    public boolean contains(Activity toCheck) {
-
-        requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::equals);
-    }
-
-    /**
-     * Is addable boolean.
-     *
-     * @param toCheck the to check
-     * @return the boolean
-     */
-    public boolean isAddable(Activity toCheck) {
-
-        boolean isAddable = true;
-
-        for (Activity pointer : internalList) {
-
-            if (toCheck.startBefore(pointer)) {
-                if (!toCheck.endsBefore(pointer)) {
-                    isAddable = false;
-                }
-                break;
-            }
-
-            if (toCheck.startDuring(pointer) || toCheck.endsBefore(pointer) || toCheck.endsWith(pointer)) {
-                isAddable = false;
-                break;
-            }
-        }
-        return isAddable;
-    }
+    //======================================= Modification =====================================
 
     /**
      * Adds a person to the list.
@@ -90,10 +53,10 @@ public class UniqueActivityList implements Iterable<Activity> {
     }
 
     /**
-     * Deletes an activity.
+     * Deletes an activity from the list.
      *
-     * @param toDelete the activity reference
-     * @return An optional that holds the deleted activity if it exists
+     * @param toDelete the scaled-down version of an activity used to identify the actual activity
+     * @return an optional that holds the deleted activity if it exists
      */
     public Optional<Activity> delete(ActivityReference toDelete) {
 
@@ -109,10 +72,12 @@ public class UniqueActivityList implements Iterable<Activity> {
         return deletedActivity;
     }
 
+    //======================================= Getters =====================================
+
     /**
-     * Gets first activity.
+     * Gets the first activity in the list.
      *
-     * @return the first activity
+     * @return an optional holding the first activity if it exists
      */
     public Optional<Activity> getFirstActivity() {
 
@@ -123,14 +88,14 @@ public class UniqueActivityList implements Iterable<Activity> {
     }
 
     /**
-     * Gets next activity.
+     * Gets the next upcoming activity from now.
      *
-     * @param timeNow the time now
-     * @return the next activity
+     * @return an optional holding the next activity from now if it exists
      */
-    public Optional<Activity> getNextActivity(LocalTime timeNow) {
+    public Optional<Activity> getNextActivity() {
 
         Optional<Activity> nextActivity = Optional.empty();
+        LocalTime timeNow = LocalTime.now();
 
         for (Activity activity : internalList) {
             if (activity.getStartTime().isAfter(timeNow)) {
@@ -142,64 +107,54 @@ public class UniqueActivityList implements Iterable<Activity> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
-     * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
-     *
-     * @param target         the target
-     * @param editedActivity the edited activity
-     */
-    public void setActivity(Activity target, Activity editedActivity) {
-
-        requireAllNonNull(target, editedActivity);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new ActivityNotFoundException();
-        }
-
-        if (!target.equals(editedActivity) && contains(editedActivity)) {
-            throw new DuplicateActivityException();
-        }
-
-        internalList.set(index, editedActivity);
-    }
-
-    /**
-     * Sets activities.
-     *
-     * @param replacement the replacement
-     */
-    public void setActivities(UniqueActivityList replacement) {
-
-        requireNonNull(replacement);
-        internalList.setAll(replacement.internalList);
-    }
-
-    /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
-     *
-     * @param activities the activities
-     */
-    public void setActivities(List<Activity> activities) {
-
-        requireAllNonNull(activities);
-        if (!activitiesAreUnique(activities)) {
-            throw new DuplicatePersonException();
-        }
-
-        internalList.setAll(activities);
-    }
-
-    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      *
-     * @return the observable list
+     * @return the backing list
      */
     public ObservableList<Activity> asUnmodifiableObservableList() {
 
         return internalUnmodifiableList;
+    }
+
+    //======================================= Utilities =====================================
+
+    /**
+     * Returns true if the list contains an equivalent activity as the given argument.
+     *
+     * @param toCheck the activity to check
+     * @return true if the list contains an equivalent activity as the given argument
+     */
+    public boolean contains(Activity toCheck) {
+
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::equals);
+    }
+
+    /**
+     * Returns true if the activity can be added into the activity list.
+     *
+     * @param toCheck the activity to be tested
+     * @return true if the activity can be added into the calendar
+     */
+    public boolean isAddable(Activity toCheck) {
+
+        boolean isAddable = true;
+
+        for (Activity pointer : internalList) {
+
+            if (toCheck.startBefore(pointer)) {
+                if (!toCheck.endsBefore(pointer)) {
+                    isAddable = false;
+                }
+                break;
+            }
+
+            if (toCheck.startDuring(pointer) || toCheck.endsBefore(pointer) || toCheck.endsWith(pointer)) {
+                isAddable = false;
+                break;
+            }
+        }
+        return isAddable;
     }
 
     @Override
@@ -220,21 +175,6 @@ public class UniqueActivityList implements Iterable<Activity> {
     public int hashCode() {
 
         return internalList.hashCode();
-    }
-
-    /**
-     * Returns true if {@code persons} contains only unique persons.
-     */
-    private boolean activitiesAreUnique(List<Activity> activities) {
-
-        for (int i = 0; i < activities.size() - 1; i++) {
-            for (int j = i + 1; j < activities.size(); j++) {
-                if (activities.get(i).equals(activities.get(j))) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
 }

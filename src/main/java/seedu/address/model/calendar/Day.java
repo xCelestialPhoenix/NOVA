@@ -1,7 +1,6 @@
 package seedu.address.model.calendar;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Optional;
 
 import javafx.collections.ObservableList;
@@ -13,7 +12,8 @@ import seedu.address.model.calendar.activity.Meeting;
 import seedu.address.model.calendar.activity.UniqueActivityList;
 
 /**
- * The type Day.
+ * The day representation within the calendar of NOVA. Also contains an activity list to record all the activities
+ * happening on the day.
  */
 public class Day {
 
@@ -23,17 +23,19 @@ public class Day {
     /**
      * Instantiates a new Day.
      *
-     * @param date the date
+     * @param date the date of the day
      */
     public Day(LocalDate date) {
 
         this.date = date;
     }
 
+    //============================= Modifications to the day ==============================
+
     /**
-     * Add activity boolean.
+     * Adds an activity into the activity list.
      *
-     * @param activity the activity
+     * @param activity the activity to be added
      */
     public void addActivity(Activity activity) {
 
@@ -47,9 +49,9 @@ public class Day {
     }
 
     /**
-     * Deletes an activity.
+     * Deletes an activity from the day.
      *
-     * @param activityReference the activity reference
+     * @param activityReference the scaled-down version of an activity used to identify the actual activity
      * @return An optional that holds the deleted activity if it exists
      */
     public Optional<Activity> deleteActivity(ActivityReference activityReference) {
@@ -57,10 +59,12 @@ public class Day {
         return activities.delete(activityReference);
     }
 
+    //======================================= Getters ========================================
+
     /**
-     * Gets activities.
+     * Gets the activities happening on a specific date.
      *
-     * @return the activities
+     * @return the list of activities happening on that date
      */
     public ObservableList<Activity> getActivities() {
 
@@ -68,31 +72,9 @@ public class Day {
     }
 
     /**
-     * Check availability boolean.
+     * Gets the first activity of the week.
      *
-     * @param activity the activity
-     * @return the boolean
-     */
-    public boolean isAddable(Activity activity) {
-
-        return activities.isAddable(activity);
-    }
-
-    /**
-     * Has activity boolean.
-     *
-     * @param activity the activity
-     * @return the boolean
-     */
-    public boolean hasActivity(Activity activity) {
-
-        return activities.contains(activity);
-    }
-
-    /**
-     * Gets first activity.
-     *
-     * @return the first activity
+     * @return an optional that holds the first activity of the day if it exists
      */
     public Optional<Activity> getFirstActivity() {
 
@@ -100,14 +82,37 @@ public class Day {
     }
 
     /**
-     * Gets next activity.
+     * Gets the next upcoming activity from now.
      *
-     * @param timeNow the time now
-     * @return the next activity
+     * @return an optional that holds the next activity if it exists
      */
-    public Optional<Activity> getNextActivity(LocalTime timeNow) {
+    public Optional<Activity> getNextActivity() {
 
-        return activities.getNextActivity(timeNow);
+        return activities.getNextActivity();
+    }
+
+    //======================================= Utilities ========================================
+
+    /**
+     * Returns true if the activity can be added into the week.
+     *
+     * @param activity the activity to be tested
+     * @return true if the activity can be added into the week
+     */
+    public boolean isAddable(Activity activity) {
+
+        return activities.isAddable(activity);
+    }
+
+    /**
+     * Returns true if the activity of interest is already in the calendar.
+     *
+     * @param activity the activity to be tested
+     * @return true if the activity is already in the calendar
+     */
+    public boolean hasActivity(Activity activity) {
+
+        return activities.contains(activity);
     }
 
 }

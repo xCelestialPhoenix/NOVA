@@ -4,21 +4,21 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * The Meeting type activity.
+ * The Meeting type activity representation to mark important meetings in the calendar of NOVA.
  */
 public class Meeting extends Activity {
 
     /**
      * Instantiates a new Meeting.
      *
-     * @param date        the date
+     * @param date        the meeting date
      * @param startTime   the start time
      * @param endTime     the end time
      * @param venue       the venue
      * @param description the description
-     * @param notes       the notes
+     * @param notes       additional side notes
      */
-    public Meeting(LocalDate date, LocalTime startTime, LocalTime endTime, String venue, String description,
+    public Meeting(String description, String venue, LocalDate date, LocalTime startTime, LocalTime endTime,
                    String notes) {
 
         this.date = date;
@@ -32,16 +32,16 @@ public class Meeting extends Activity {
     /**
      * Clones a new Meeting.
      *
-     * @param meeting the meeting
+     * @param toClone the meeting to be clone
      */
-    public Meeting(Meeting meeting) {
+    public Meeting(Meeting toClone) {
 
-        this.date = meeting.date;
-        this.startTime = meeting.startTime;
-        this.endTime = meeting.endTime;
-        this.venue = meeting.venue;
-        this.description = meeting.description;
-        this.notes = meeting.notes;
+        this.date = toClone.date;
+        this.startTime = toClone.startTime;
+        this.endTime = toClone.endTime;
+        this.venue = toClone.venue;
+        this.description = toClone.description;
+        this.notes = toClone.notes;
     }
 
     @Override
@@ -57,10 +57,10 @@ public class Meeting extends Activity {
 
         Meeting act = (Meeting) obj;
 
-        return onSameDate(act.date)
-                && atSameTime(act.startTime, act.endTime)
-                && atSameVenue(act.venue)
-                && hasSameDescription(act.description);
+        return hasSameDescription(act)
+                && atSameVenue(act)
+                && onSameDate(act)
+                && atSameTime(act);
     }
 
 }

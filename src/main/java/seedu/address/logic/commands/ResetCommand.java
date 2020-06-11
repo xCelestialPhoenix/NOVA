@@ -34,7 +34,7 @@ public class ResetCommand extends Command {
         }
 
         LocalDate newCalendarEndDate = newCalendarStartDate.plusDays(DAYS_PER_WEEK * WEEKS_PER_SEMESTER);
-        Calendar newCalendar = new Calendar(newCalendarStartDate, newCalendarEndDate);
+        Calendar newCalendar = new Calendar(newCalendarStartDate);
         model.setCalendar(newCalendar);
         return new CommandResult(String.format(MESSAGE_CALENDAR_RESET_SUCCESSFUL, newCalendarStartDate,
                 newCalendarEndDate), true, false, false);

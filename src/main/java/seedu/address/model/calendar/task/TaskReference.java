@@ -3,8 +3,17 @@ package seedu.address.model.calendar.task;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * The entity used to reference to a task using only the date and start time.
+ */
 public class TaskReference extends Task {
 
+    /**
+     * Instantiates a new Task reference.
+     *
+     * @param date the reference date
+     * @param time the reference time
+     */
     public TaskReference(LocalDate date, LocalTime time) {
 
         super(null, date, time, null);

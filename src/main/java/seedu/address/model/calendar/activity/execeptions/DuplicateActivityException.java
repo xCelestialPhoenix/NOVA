@@ -1,13 +1,11 @@
 package seedu.address.model.calendar.activity.execeptions;
 
 /**
- * The type Duplicate activity exception.
+ * Signals that the operation will result in duplicated Activities (Activities are considered not found if the
+ * date and time are the same).
  */
 public class DuplicateActivityException extends RuntimeException {
 
-    /**
-     * Instantiates a new Duplicate activity exception.
-     */
     public DuplicateActivityException() {
 
         super("Operation would result in duplicate activities");

@@ -2,23 +2,24 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+
 import seedu.address.model.calendar.Calendar;
 
-public class NOVA implements ReadOnlyNOVA {
+public class Nova implements ReadOnlyNova {
 
-    private Calendar calendar = new Calendar();
+    private Calendar calendar;
 
-    public NOVA() {
-
+    public Nova(LocalDate calendarStartDate) {
+        calendar = new Calendar(calendarStartDate);
     }
 
-    public NOVA(ReadOnlyNOVA toBeCopied) {
+    public Nova(ReadOnlyNova toBeCopied) {
 
-        this();
         resetData(toBeCopied);
     }
 
-    public void resetData(ReadOnlyNOVA newData) {
+    public void resetData(ReadOnlyNova newData) {
 
         requireNonNull(newData);
 

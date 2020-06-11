@@ -42,7 +42,7 @@ public class AddTaskCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if(!model.isWithinCalendarTime(toAdd.getDeadlineDate())) {
+        if(!model.isWithinCalendarTime(toAdd.getDueDate())) {
             throw new CommandException(MESSAGE_DATE_OUT_OF_BOUND);
         }
 

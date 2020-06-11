@@ -1,5 +1,14 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_END_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_TYPE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_VENUE;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -9,15 +18,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.Lesson;
 import seedu.address.model.calendar.activity.Meeting;
-
-import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_END_TIME;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_TYPE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_VENUE;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -57,11 +57,11 @@ public class AddCommandParser implements Parser<AddCommand> {
         switch (type) {
         case "meeting":
             LocalDate date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
-            activity = new Meeting(date, startTime, endTime, venue, desc, notes);
+            activity = new Meeting(desc, venue, date, startTime, endTime, notes);
             break;
         case "lesson":
             DayOfWeek day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DATE).get().toUpperCase());
-            activity = new Lesson(day, startTime, endTime, venue, desc, notes);
+            activity = new Lesson(desc, venue, day, startTime, endTime, notes);
             break;
         default:
             throw new ParseException("Unknown type");
