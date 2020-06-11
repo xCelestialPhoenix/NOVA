@@ -1,7 +1,6 @@
 package seedu.address.ui.statisticcard;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 import javafx.scene.image.Image;
 
@@ -12,7 +11,7 @@ public class NextActivityCard extends StatisticCard {
     private static final String CARD_TITLE = "Next activity at:";
     private static final String LOGO_FILEPATH = "/images/clock.png";
     private static final String DEFAULT_NEXT_ACTIVITY = "";
-    private static final int DATA_TEXT_FONT_SIZE = 20;
+    public static final int DATA_TEXT_FONT_SIZE = 20;
 
     public NextActivityCard() {
         this(DEFAULT_NEXT_ACTIVITY);
@@ -26,14 +25,10 @@ public class NextActivityCard extends StatisticCard {
         setLogo(logo);
     }
 
-    public void updateData(Optional<Activity> nextActivity) {
+    public void updateData(Activity nextActivity) {
 
-        String data = "";
-
-        if (nextActivity.isPresent()) {
-            data = nextActivity.get().getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n"
-                    + nextActivity.get().getStartTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
-        }
+        String data = nextActivity.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n"
+                    + nextActivity.getStartTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
 
         super.updateData(data, DATA_TEXT_FONT_SIZE);
     }

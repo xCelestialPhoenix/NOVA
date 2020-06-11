@@ -228,7 +228,12 @@ public class MainWindow extends UiPart<Stage> {
 
         //Update the next upcoming activity
         Optional<Activity> activity = logic.getNextActivity();
-        ((NextActivityCard) nextActivityCard).updateData(activity);
+
+        if (activity.isEmpty()) {
+            nextActivityCard.updateData("", NextActivityCard.DATA_TEXT_FONT_SIZE);
+        } else {
+            ((NextActivityCard) nextActivityCard).updateData(activity.get());
+        }
 
         //Update task completion status
         TaskCompletionStatistics stats = logic.getTaskCompletionStats();
