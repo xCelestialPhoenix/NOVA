@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,7 +14,7 @@ import seedu.address.model.calendar.activity.Meeting;
 
 public class JsonAdaptedActivity {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Task's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Acitivity's %s field is missing!";
 
     private final String description;
     private final String venue;
@@ -41,6 +43,8 @@ public class JsonAdaptedActivity {
     }
 
     public JsonAdaptedActivity(Activity source) {
+
+        requireNonNull(source);
 
         description = source.getDescription();
         venue = source.getVenue();

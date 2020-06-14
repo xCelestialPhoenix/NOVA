@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_DUPLICATE_TASK;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
@@ -30,7 +31,6 @@ public class AddTaskCommand extends Command {
             + PREFIX_NOTES + "Let project lead look through \n";
 
     public static final String MESSAGE_SUCCESS = "New task added: \n%1$s";
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the calendar";
 
     private final Task toAdd;
 

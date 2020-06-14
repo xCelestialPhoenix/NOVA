@@ -50,17 +50,13 @@ public class UniqueTaskList implements Iterable<Task> {
 
             if (toAdd.dueBefore(here)) {
                 internalList.add(index, toAdd);
-                stats.incrementTotalTasks();
-
-                if (toAdd.isCompleted()) {
-                    stats.incrementCompletedTask();
-                }
+                incrementStatsCount(toAdd);
                 return;
             }
         }
         // Traversed the entire list with no escape. Activity is added to the end.
         internalList.add(internalList.size(), toAdd);
-        stats.incrementTotalTasks();
+        incrementStatsCount(toAdd);
     }
 
     /**
@@ -78,11 +74,7 @@ public class UniqueTaskList implements Iterable<Task> {
 
         if (index != -1) { //If task is present
             deletedTask = Optional.of(internalList.remove(index));
-
-            if (deletedTask.get().isCompleted()) {
-                stats.decrementCompletedTasks();
-            }
-            stats.decrementTotalTasks();
+            decrementStatsCount(deletedTask.get());
         }
         return deletedTask;
     }
@@ -174,6 +166,25 @@ public class UniqueTaskList implements Iterable<Task> {
         return this == other
                 || (other instanceof UniqueTaskList
                 && internalList.equals(((UniqueTaskList) other).internalList));
+    }
+
+    private void incrementStatsCount(Task task) {
+
+        stats.incrementTotalTasks();
+
+        if (task.isCompleted()) {
+            stats.incrementCompletedTask();
+        }
+    }
+
+    private void decrementStatsCount(Task task) {
+
+        if (task.isCompleted()) {
+            stats.decrementCompletedTasks();
+        }
+
+        stats.decrementTotalTasks();
+
     }
 
 }

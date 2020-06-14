@@ -184,6 +184,17 @@ public class Calendar implements ReadOnlyCalendar {
     //==================== Activities ==================
 
     @Override
+    public ObservableList<Activity> getActivities() {
+
+        ObservableList<Activity> activities = FXCollections.observableArrayList();
+
+        for (Week week : weeks) {
+            activities.addAll(week.getActivities());
+        }
+        return activities;
+    }
+
+    @Override
     public ObservableList<Activity> viewActivityOnDate(LocalDate date) {
 
         int weekNum = calculateWeek(date); // calculateWeek() returns zero-indexed week.
@@ -193,17 +204,6 @@ public class Calendar implements ReadOnlyCalendar {
         }
 
         return weeks[weekNum].viewActivityOnDate(date);
-    }
-
-    @Override
-    public ObservableList<Activity> getActivities() {
-
-        ObservableList<Activity> activities = FXCollections.observableArrayList();
-
-        for (Week week : weeks) {
-            activities.addAll(week.getActivities());
-        }
-        return activities;
     }
 
     @Override
@@ -230,6 +230,18 @@ public class Calendar implements ReadOnlyCalendar {
     }
 
     //==================== Tasks ==================
+
+
+    @Override
+    public ObservableList<Task> getTasks() {
+
+        ObservableList<Task> tasks = FXCollections.observableArrayList();
+
+        for (Week week : weeks) {
+            tasks.addAll(week.getFilteredTaskList());
+        }
+        return tasks;
+    }
 
     @Override
     public ObservableList<Task> getWeekTaskList() {

@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+
+import static seedu.address.logic.constants.Messages.MESSAGE_DATE_OUT_OF_BOUND;
 import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_TASK;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
@@ -30,7 +31,7 @@ public class DeleteTaskCommand extends Command {
             + PREFIX_DATE + "19/04/2020 "
             + PREFIX_TIME + "10:00 \n";
 
-    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: \n%1$s";
+    public static final String MESSAGE_SUCCESS = "Removed Task: \n%1$s";
 
     private final LocalDate targetDate;
     private final LocalTime targetTime;
@@ -56,7 +57,7 @@ public class DeleteTaskCommand extends Command {
         if (deletedTask.isEmpty()) {
             throw new CommandException(MESSAGE_NO_SUCH_TASK);
         }
-        return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, deletedTask.get()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, deletedTask.get()));
     }
 
     @Override

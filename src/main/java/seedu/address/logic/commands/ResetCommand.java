@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
 import static seedu.address.logic.constants.CalendarConstants.WEEKS_PER_SEMESTER;
-import static seedu.address.logic.constants.Messages.MESSAGE_CALENDAR_RESET_SUCCESSFUL;
 import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_CALENDAR_START_DAY;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 
@@ -23,6 +22,10 @@ public class ResetCommand extends Command {
             + "Parameters: " + PREFIX_DATE + "DATE\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_DATE + "01/01/2021";
 
+    public static final String MESSAGE_SUCCESSFUL = "The calendar has been reset.\n"
+            + "New start date: %1$s \n"
+            + "New end date : %2$s";
+
     private final LocalDate newCalendarStartDate;
 
     public ResetCommand(LocalDate newCalendarStartDate) {
@@ -40,7 +43,7 @@ public class ResetCommand extends Command {
         LocalDate newCalendarEndDate = newCalendarStartDate.plusDays(DAYS_PER_WEEK * WEEKS_PER_SEMESTER);
         Calendar newCalendar = new Calendar(newCalendarStartDate);
         model.setCalendar(newCalendar);
-        return new CommandResult(String.format(MESSAGE_CALENDAR_RESET_SUCCESSFUL, newCalendarStartDate,
+        return new CommandResult(String.format(MESSAGE_SUCCESSFUL, newCalendarStartDate,
                 newCalendarEndDate), true, false, false);
     }
 

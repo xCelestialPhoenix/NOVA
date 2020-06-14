@@ -28,7 +28,7 @@ public class Task {
     /**
      * The completion status of the task.
      */
-    protected boolean isComplete;
+    protected boolean isCompleted;
 
     /**
      * Instantiates a new Task.
@@ -44,7 +44,7 @@ public class Task {
         this.dueDate = dueDate;
         this.dueTime = dueTime;
         this.note = note;
-        isComplete = false;
+        isCompleted = false;
     }
 
     //============================= Getters ==============================
@@ -120,7 +120,7 @@ public class Task {
      */
     public boolean isCompleted() {
 
-        return isComplete;
+        return isCompleted;
     }
 
     /**
@@ -128,7 +128,7 @@ public class Task {
      */
     public void complete() {
 
-        isComplete = true;
+        isCompleted = true;
     }
 
     @Override

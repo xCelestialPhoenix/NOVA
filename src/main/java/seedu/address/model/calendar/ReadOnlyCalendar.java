@@ -42,6 +42,8 @@ public interface ReadOnlyCalendar {
 
     //==================== Activities ==================
 
+    ObservableList<Activity> getActivities();
+
     /**
      * Gets the activities happening on a specific date.
      *
@@ -49,8 +51,6 @@ public interface ReadOnlyCalendar {
      * @return the list of activities happening on that date
      */
     ObservableList<Activity> viewActivityOnDate(LocalDate date);
-
-    ObservableList<Activity> getActivities();
 
     /**
      * Gets the next activity from now.
@@ -60,6 +60,8 @@ public interface ReadOnlyCalendar {
     Optional<Activity> getNextActivity();
 
     //==================== Tasks ==================
+
+    ObservableList<Task> getTasks();
 
     /**
      * Gets this week's task list.

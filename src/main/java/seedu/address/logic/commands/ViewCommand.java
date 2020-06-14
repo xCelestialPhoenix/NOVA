@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_NO_ACTIVITY;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 
 import java.time.LocalDate;
@@ -25,7 +26,6 @@ public class ViewCommand extends Command {
             + PREFIX_DATE + "19/09/2020 ";
 
     public static final String MESSAGE_SUCCESS = "Activities on that date: \n%1$s";
-    public static final String MESSAGE_NO_ACTIVITY = "There is no activity on that date.";
 
     private final LocalDate toView;
 

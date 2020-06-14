@@ -1,6 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.constants.Messages.MESSAGE_ACTIVITY_OVERLAP;
+import static seedu.address.logic.constants.Messages.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_DUPLICATE_ACTIVITY;
+import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_ACTIVITY;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_END_TIME;
@@ -41,10 +45,6 @@ public class AddCommand extends Command {
             + PREFIX_NOTES + "Prepare findings \n";
 
     public static final String MESSAGE_SUCCESS = "New activity added: \n%1$s";
-    public static final String MESSAGE_DUPLICATE_ACTIVITY = "This activity already exists in the calendar";
-    public static final String MESSAGE_DATE_OUT_OF_BOUND = "The date is outside of the range of the calendar";
-    public static final String MESSAGE_ACTIVITY_OVERLAP = "This activity overlaps with another activity";
-    public static final String MESSAGE_INVALID_ACTIVITY = "This activity is not valid";
 
     private final Activity toAdd;
 

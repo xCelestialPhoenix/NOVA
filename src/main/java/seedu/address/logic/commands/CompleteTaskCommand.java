@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_DATE_OUT_OF_BOUND;
 import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_TASK;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
