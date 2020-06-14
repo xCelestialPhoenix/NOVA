@@ -1,5 +1,12 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_TASK;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
+import static seedu.address.model.calendar.task.UniqueTaskList.MESSAGE_REPEATED_COMPLETE;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -10,13 +17,9 @@ import seedu.address.model.calendar.task.Task;
 import seedu.address.model.calendar.task.TaskReference;
 import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
-import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_TASK;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
-import static seedu.address.model.calendar.task.UniqueTaskList.MESSAGE_REPEATED_COMPLETE;
-
+/**
+ * Represents the command to mark a specified task as completed.
+ */
 public class CompleteTaskCommand extends Command {
 
     public static final String COMMAND_WORD = "complete";
@@ -62,4 +65,5 @@ public class CompleteTaskCommand extends Command {
             throw new CommandException(MESSAGE_REPEATED_COMPLETE);
         }
     }
+
 }

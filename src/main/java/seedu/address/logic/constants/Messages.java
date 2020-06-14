@@ -16,4 +16,5 @@ public class Messages {
     public static final String MESSAGE_CALENDAR_RESET_SUCCESSFUL = "The calendar has been reset.\n"
             + "New start date: %1$s \n"
             + "New end date : %2$s";
+
 }

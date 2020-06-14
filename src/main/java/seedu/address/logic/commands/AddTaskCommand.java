@@ -1,9 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.calendar.task.Task;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
@@ -11,10 +7,16 @@ import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
 import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.calendar.task.Task;
+
+/**
+ * Represents the command to add a task into the calendar of NOVA.
+ */
 public class AddTaskCommand extends Command {
 
     public static final String COMMAND_WORD = "task";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task. \n"
             + "Parameters: "
             + PREFIX_DESCRIPTION + "DESC "
@@ -40,9 +42,10 @@ public class AddTaskCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+
         requireNonNull(model);
 
-        if(!model.isWithinCalendarTime(toAdd.getDueDate())) {
+        if (!model.isWithinCalendarTime(toAdd.getDueDate())) {
             throw new CommandException(MESSAGE_DATE_OUT_OF_BOUND);
         }
 

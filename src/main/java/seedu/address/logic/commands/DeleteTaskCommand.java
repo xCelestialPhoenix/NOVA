@@ -1,5 +1,11 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_TASK;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -9,12 +15,9 @@ import seedu.address.model.Model;
 import seedu.address.model.calendar.task.Task;
 import seedu.address.model.calendar.task.TaskReference;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
-import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_TASK;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
-
+/**
+ * Represents the command to delete a task from the calendar of NOVA.
+ */
 public class DeleteTaskCommand extends Command {
 
     public static final String COMMAND_WORD = "remove";

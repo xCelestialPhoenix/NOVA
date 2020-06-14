@@ -10,6 +10,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.calendar.activity.Activity;
@@ -19,6 +20,7 @@ import seedu.address.model.calendar.activity.UniqueActivityList;
 import seedu.address.model.calendar.task.Task;
 import seedu.address.model.calendar.task.TaskCompletionStatistics;
 import seedu.address.model.calendar.task.TaskReference;
+import seedu.address.model.calendar.task.UniqueTaskList;
 import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
 
 /**
@@ -42,6 +44,13 @@ public class Calendar implements ReadOnlyCalendar {
         this.startDate = startDate;
         this.endDate = calculateEndDate(startDate);
         initWeeks();
+    }
+
+    public Calendar(ReadOnlyCalendar calendar) {
+
+        startDate = calendar.getStartDate();
+        endDate = calendar.getEndDate();
+        weeks = calendar.getWeeks();
     }
 
     /**
@@ -187,6 +196,17 @@ public class Calendar implements ReadOnlyCalendar {
     }
 
     @Override
+    public ObservableList<Activity> getActivities() {
+
+        ObservableList<Activity> activities = FXCollections.observableArrayList();
+
+        for (Week week : weeks) {
+            activities.addAll(week.getActivities());
+        }
+        return activities;
+    }
+
+    @Override
     public Optional<Activity> getNextActivity() {
 
         int weekNumber = calculateWeek(LocalDate.now()); // calculateWeek() returns zero-indexed week.
@@ -216,6 +236,11 @@ public class Calendar implements ReadOnlyCalendar {
 
         int weekNumber = calculateWeek(LocalDate.now());
 
+        if (weekNumber >= WEEKS_PER_SEMESTER) {
+
+            return new UniqueTaskList().asUnmodifiableObservableList();
+        }
+
         return weeks[weekNumber].getFilteredTaskList();
     }
 
@@ -224,10 +249,26 @@ public class Calendar implements ReadOnlyCalendar {
 
         int weekNumber = calculateWeek(LocalDate.now());
 
+        if (weekNumber >= WEEKS_PER_SEMESTER) {
+
+            return new TaskCompletionStatistics();
+        }
+
         return weeks[weekNumber].getTaskCompletionStats();
     }
 
     //======================================= Utilities ========================================
+
+    /**
+     * Calculates the end date of the calendar given the start date.
+     *
+     * @param startDate the start date of the calendar
+     * @return the calculated end date of the calendar
+     */
+    public static LocalDate calculateEndDate(LocalDate startDate) {
+
+        return startDate.plusDays(DAYS_PER_WEEK * WEEKS_PER_SEMESTER);
+    }
 
     @Override
     public int calculateWeek(LocalDate date) {
@@ -323,17 +364,6 @@ public class Calendar implements ReadOnlyCalendar {
     private boolean isValidDate(LocalDate date) {
 
         return !date.isBefore(startDate) && !date.isAfter(endDate);
-    }
-
-    /**
-     * Calculates the end date of the calendar given the start date.
-     *
-     * @param startDate the start date of the calendar
-     * @return the calculated end date of the calendar
-     */
-    private LocalDate calculateEndDate(LocalDate startDate) {
-
-        return startDate.plusDays(DAYS_PER_WEEK * WEEKS_PER_SEMESTER);
     }
 
 }

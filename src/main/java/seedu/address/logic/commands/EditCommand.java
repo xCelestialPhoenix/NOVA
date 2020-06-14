@@ -27,6 +27,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
+ * TODO: Delete class
  * Edits the details of an existing person in the address book.
  */
 public class EditCommand extends Command {

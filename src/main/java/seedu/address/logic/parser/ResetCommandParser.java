@@ -16,7 +16,7 @@ public class ResetCommandParser implements Parser<ResetCommand> {
 
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DATE);
-        if(argMultimap.getValue(PREFIX_DATE).isEmpty()) {
+        if (argMultimap.getValue(PREFIX_DATE).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ResetCommand.MESSAGE_USAGE));
         }
         LocalDate newStartDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());

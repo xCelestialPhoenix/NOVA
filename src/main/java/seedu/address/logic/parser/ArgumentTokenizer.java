@@ -134,7 +134,7 @@ public class ArgumentTokenizer {
      */
     private static class PrefixPosition {
 
-        private int startPosition;
+        private final int startPosition;
         private final Prefix prefix;
 
         PrefixPosition(Prefix prefix, int startPosition) {

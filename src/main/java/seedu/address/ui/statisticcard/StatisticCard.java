@@ -14,7 +14,7 @@ import javafx.scene.text.TextFlow;
 import seedu.address.ui.UiPart;
 
 /**
- * The type Statistic card.
+ * Represents the display cards for statistics in NOVA.
  */
 public class StatisticCard extends UiPart<Node> {
 
@@ -50,9 +50,9 @@ public class StatisticCard extends UiPart<Node> {
     }
 
     /**
-     * Updates data.
+     * Updates the data displayed.
      *
-     * @param data the data
+     * @param data the new data to replace the current one
      */
     public void updateData(String data, int fontSize) {
 
@@ -64,6 +64,12 @@ public class StatisticCard extends UiPart<Node> {
         cardLogoImageView.setImage(image);
     }
 
+    /**
+     * Formats the data and displays it onto the statistic card.
+     *
+     * @param data
+     * @param fontSize
+     */
     private void writeToDataTextFlow(String data, int fontSize) {
 
         Text text = new Text(data);
@@ -72,4 +78,5 @@ public class StatisticCard extends UiPart<Node> {
         dataTextFlow.getChildren().clear();
         dataTextFlow.getChildren().add(text);
     }
+
 }

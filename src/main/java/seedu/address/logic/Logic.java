@@ -55,6 +55,7 @@ public interface Logic {
 
     TaskCompletionStatistics getTaskCompletionStats();
     //===================================================================================
+
     /**
      * Returns the user prefs' address book file path.
      */

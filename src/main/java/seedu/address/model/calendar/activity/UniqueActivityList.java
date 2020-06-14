@@ -35,6 +35,7 @@ public class UniqueActivityList implements Iterable<Activity> {
     public void add(Activity toAdd) {
 
         requireNonNull(toAdd);
+
         if (contains(toAdd)) {
             throw new DuplicateActivityException();
         }

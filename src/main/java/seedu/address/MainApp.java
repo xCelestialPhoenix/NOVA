@@ -22,9 +22,13 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.calendar.Calendar;
+import seedu.address.model.calendar.ReadOnlyCalendar;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.CalendarStorage;
 import seedu.address.storage.JsonAddressBookStorage;
+import seedu.address.storage.JsonCalendarStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -58,12 +62,14 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
+
         AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        CalendarStorage calendarStorage = new JsonCalendarStorage(userPrefs.getCalendarFilePath());
+        storage = new StorageManager(addressBookStorage, calendarStorage, userPrefsStorage);
 
         initLogging(config);
 
-        model = initModelManager(storage, userPrefs, config);
+        model = initModelManager(storage, userPrefs);
 
         logic = new LogicManager(model, storage);
 
@@ -75,25 +81,33 @@ public class MainApp extends Application {
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
-    private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs, Config config) {
+    private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
 
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyCalendar> calendarOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyCalendar initialCalendar;
+
         try {
             addressBookOptional = storage.readAddressBook();
-            if (addressBookOptional.isEmpty()) {
+            calendarOptional = storage.readCalendar();
+
+            if (addressBookOptional.isEmpty() || calendarOptional.isEmpty()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialCalendar = calendarOptional.orElse(new Calendar(userPrefs.getCalendarStartDate()));
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialCalendar = new Calendar(userPrefs.getCalendarStartDate());
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialCalendar = new Calendar(userPrefs.getCalendarStartDate());
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, initialCalendar, userPrefs);
     }
 
     private void initLogging(Config config) {

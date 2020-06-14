@@ -33,10 +33,10 @@ public class Task {
     /**
      * Instantiates a new Task.
      *
-     * @param description  the task description
-     * @param dueDate the deadline date
-     * @param dueTime the deadline time
-     * @param note         the additional side notes
+     * @param description the task description
+     * @param dueDate     the deadline date
+     * @param dueTime     the deadline time
+     * @param note        the additional side notes
      */
     public Task(String description, LocalDate dueDate, LocalTime dueTime, String note) {
 
@@ -162,4 +162,5 @@ public class Task {
         }
         return sb.toString();
     }
+
 }

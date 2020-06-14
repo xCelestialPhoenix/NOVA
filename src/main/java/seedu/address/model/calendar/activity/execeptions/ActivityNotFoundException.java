@@ -7,6 +7,7 @@ package seedu.address.model.calendar.activity.execeptions;
 public class ActivityNotFoundException extends RuntimeException {
 
     public ActivityNotFoundException() {
+
         super("Operation is unable to find the specified activity");
     }
 

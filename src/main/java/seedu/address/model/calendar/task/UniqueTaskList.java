@@ -29,9 +29,10 @@ public class UniqueTaskList implements Iterable<Task> {
     private final ObservableList<Task> internalList = FXCollections.observableArrayList();
     private final ObservableList<Task> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
-    private TaskCompletionStatistics stats = new TaskCompletionStatistics();
+    private final TaskCompletionStatistics stats = new TaskCompletionStatistics();
 
     //======================================= Modification =====================================
+
     /**
      * Adds a task into the task list.
      *
@@ -174,4 +175,5 @@ public class UniqueTaskList implements Iterable<Task> {
                 || (other instanceof UniqueTaskList
                 && internalList.equals(((UniqueTaskList) other).internalList));
     }
+
 }

@@ -12,6 +12,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.calendar.Calendar;
 
+/**
+ * Represents the command to reset the calendar to a clean slate and adjust the period of the calendar to start on the
+ * user specified start date.
+ */
 public class ResetCommand extends Command {
 
     public static final String COMMAND_WORD = "reset";
@@ -19,17 +23,17 @@ public class ResetCommand extends Command {
             + "Parameters: " + PREFIX_DATE + "DATE\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_DATE + "01/01/2021";
 
-    LocalDate newCalendarStartDate;
+    private final LocalDate newCalendarStartDate;
 
     public ResetCommand(LocalDate newCalendarStartDate) {
+
         this.newCalendarStartDate = newCalendarStartDate;
     }
-
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
 
-        if(!model.isValidStartDay(newCalendarStartDate.getDayOfWeek())) {
+        if (!model.isValidStartDay(newCalendarStartDate.getDayOfWeek())) {
             throw new CommandException(MESSAGE_INVALID_CALENDAR_START_DAY);
         }
 

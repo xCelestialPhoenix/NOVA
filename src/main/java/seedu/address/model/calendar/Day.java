@@ -17,8 +17,8 @@ import seedu.address.model.calendar.activity.UniqueActivityList;
  */
 public class Day {
 
-    private UniqueActivityList activities = new UniqueActivityList();
-    private LocalDate date;
+    private final UniqueActivityList activities = new UniqueActivityList();
+    private final LocalDate date;
 
     /**
      * Instantiates a new Day.

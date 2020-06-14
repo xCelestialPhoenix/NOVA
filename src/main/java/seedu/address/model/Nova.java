@@ -11,6 +11,7 @@ public class Nova implements ReadOnlyNova {
     private Calendar calendar;
 
     public Nova(LocalDate calendarStartDate) {
+
         calendar = new Calendar(calendarStartDate);
     }
 

@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,14 +21,12 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_INVALID_DAY = "The day is recognized.";
+    public static final String MESSAGE_INVALID_DAY = "The day is not recognized.";
     public static final String MESSAGE_INVALID_DATE = "The date is invalid. Please enter in the form dd/mm/yyyy.";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_TIME = "The time is invalid. Please enter in the form hh:mm.";

@@ -10,6 +10,9 @@ import javafx.scene.layout.VBox;
 
 import seedu.address.model.calendar.task.Task;
 
+/**
+ *
+ */
 public class TaskCard extends UiPart<Region> {
 
     private static final String FXML = "TaskListCard.fxml";

@@ -24,8 +24,8 @@ public class UiManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/NOVA.png";
 
-    private Logic logic;
-    private Config config;
+    private final Logic logic;
+    private final Config config;
     private MainWindow mainWindow;
 
     public UiManager(Logic logic, Config config) {

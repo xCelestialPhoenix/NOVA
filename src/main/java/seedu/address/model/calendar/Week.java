@@ -5,6 +5,7 @@ import static seedu.address.logic.constants.CalendarConstants.DAYS_PER_WEEK;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.calendar.activity.Activity;
@@ -97,6 +98,7 @@ public class Week {
      * @throws RepeatedCompleteException If the task has already been completed before
      */
     public Optional<Task> completeTask(TaskReference taskReference) throws RepeatedCompleteException {
+
         return tasks.complete(taskReference);
     }
 
@@ -125,6 +127,16 @@ public class Week {
 
         int day = date.getDayOfWeek().getValue() - 1;
         return days[day].getActivities();
+    }
+
+    public ObservableList<Activity> getActivities() {
+
+        ObservableList<Activity> activities = FXCollections.observableArrayList();
+
+        for (Day day : days) {
+            activities.addAll(day.getActivities());
+        }
+        return activities;
     }
 
     /**
@@ -171,6 +183,7 @@ public class Week {
      * @return the week's task list
      */
     public ObservableList<Task> getFilteredTaskList() {
+
         return tasks.asUnmodifiableObservableList();
     }
 
@@ -235,7 +248,7 @@ public class Week {
      * Gets the day number from the activity
      *
      * @param activity the activity to check
-     * @return  the day number in accordance to DayOfWeek
+     * @return the day number in accordance to DayOfWeek
      * @see java.time.DayOfWeek
      */
 

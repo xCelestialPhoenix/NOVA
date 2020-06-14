@@ -35,4 +35,5 @@ public class TaskReference extends Task {
         return !(dueBefore(task) || dueAfter(task));
 
     }
+
 }

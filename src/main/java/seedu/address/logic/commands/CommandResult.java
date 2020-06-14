@@ -49,6 +49,7 @@ public class CommandResult {
     }
 
     public boolean isResetCalendar() {
+
         return resetCalendar;
     }
 
@@ -84,7 +85,7 @@ public class CommandResult {
     @Override
     public int hashCode() {
 
-        return Objects.hash(feedbackToUser,resetCalendar, showHelp, exit);
+        return Objects.hash(feedbackToUser, resetCalendar, showHelp, exit);
     }
 
 }

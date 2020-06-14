@@ -13,30 +13,18 @@ import seedu.address.model.Model;
 import seedu.address.model.calendar.activity.Activity;
 
 /**
- * Views all activities of a date.
+ * Represents the command to Views all activities of a date.
  */
 public class ViewCommand extends Command {
 
-    /**
-     * The constant COMMAND_WORD.
-     */
     public static final String COMMAND_WORD = "view";
-    /**
-     * The constant MESSAGE_USAGE.
-     */
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": View the activities on a particular date.\n"
             + "Parameters: "
             + PREFIX_DATE + "DATE \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DATE + "19/09/2020 ";
 
-    /**
-     * The constant MESSAGE_SUCCESS.
-     */
     public static final String MESSAGE_SUCCESS = "Activities on that date: \n%1$s";
-    /**
-     * The constant MESSAGE_NO_ACTIVITY.
-     */
     public static final String MESSAGE_NO_ACTIVITY = "There is no activity on that date.";
 
     private final LocalDate toView;

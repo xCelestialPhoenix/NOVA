@@ -8,4 +8,5 @@ import seedu.address.model.calendar.Calendar;
 public interface ReadOnlyNova {
 
     Calendar getCalendar();
+
 }

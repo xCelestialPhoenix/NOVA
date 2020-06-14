@@ -1,5 +1,11 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
+import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_ACTIVITY;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -9,14 +15,8 @@ import seedu.address.model.Model;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.activity.ActivityReference;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DATE_OUT_OF_BOUND;
-import static seedu.address.logic.constants.Messages.MESSAGE_NO_SUCH_ACTIVITY;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_START_TIME;
-
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Represents the command to delete an activity from the calendar in NOVA.
  */
 public class DeleteCommand extends Command {
 

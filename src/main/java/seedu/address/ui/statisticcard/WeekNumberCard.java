@@ -11,17 +11,30 @@ import javafx.scene.image.Image;
 
 import seedu.address.logic.Logic;
 
+/**
+ * An UI component that displays information of the current week in accordance to the semester.
+ */
 public class WeekNumberCard extends StatisticCard {
 
     private static final String CARD_TITLE = "Week:";
     private static final String LOGO_FILEPATH = "/images/calendar.png";
     private static final int DATA_TEXT_FONT_SIZE = 26;
 
+    /**
+     * Instantiates a new Week number card with default data values.
+     *
+     * @param logic the logic handler of NOVA
+     */
     public WeekNumberCard(Logic logic) {
 
         this(weekNumberToString(logic.calculateWeekNumber(LocalDate.now()) + 1));
     }
 
+    /**
+     * Instantiates a new Week number card with the specified data value.
+     *
+     * @param data the data to display
+     */
     public WeekNumberCard(String data) {
 
         super(CARD_TITLE, data, DATA_TEXT_FONT_SIZE);
@@ -35,11 +48,25 @@ public class WeekNumberCard extends StatisticCard {
         cardDateLabel.setText(String.valueOf(LocalDate.now().getDayOfMonth()));
     }
 
+    /**
+     * Updates the current displayed week. The week number is converted into their respective description is they
+     * happen to be on special weeks like recess week or exam week.
+     *
+     * @param newWeekNumber the new week to update to
+     */
     public void updateData(int newWeekNumber) {
+
         String week = weekNumberToString(newWeekNumber);
         super.updateData(week, DATA_TEXT_FONT_SIZE);
     }
 
+    /**
+     * Converts the week number to string. Also eplaces week number with special descriptions on special weeks like
+     * recess week or exam week.
+     *
+     * @param weekNumber the week number to be converted
+     * @return the respective week number or description string
+     */
     private static String weekNumberToString(int weekNumber) {
 
         String week = "";
@@ -91,4 +118,5 @@ public class WeekNumberCard extends StatisticCard {
 
         return weekNumber < 1;
     }
+
 }

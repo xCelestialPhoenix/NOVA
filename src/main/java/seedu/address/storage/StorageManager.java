@@ -10,6 +10,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.calendar.ReadOnlyCalendar;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -17,14 +18,17 @@ import seedu.address.model.UserPrefs;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
-    private UserPrefsStorage userPrefsStorage;
+    private final AddressBookStorage addressBookStorage;
+    private final UserPrefsStorage userPrefsStorage;
+    private final CalendarStorage calendarStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage,
+                          CalendarStorage calendarStorage, UserPrefsStorage userPrefsStorage) {
 
         super();
         this.addressBookStorage = addressBookStorage;
+        this.calendarStorage = calendarStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -81,6 +85,41 @@ public class StorageManager implements Storage {
 
         logger.fine("Attempting to write to data file: " + filePath);
         addressBookStorage.saveAddressBook(addressBook, filePath);
+    }
+
+    // ==================== Calendar methods ===================
+
+
+    @Override
+    public Path getCalendarFilePath() {
+
+        return calendarStorage.getCalendarFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyCalendar> readCalendar() throws DataConversionException, IOException {
+
+        return readCalendar(calendarStorage.getCalendarFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyCalendar> readCalendar(Path filePath) throws DataConversionException, IOException {
+
+        logger.fine("Attempting to read data from file: " + filePath);
+        return calendarStorage.readCalendar(filePath);
+    }
+
+    @Override
+    public void saveCalendar(ReadOnlyCalendar calendar) throws IOException {
+
+        saveCalendar(calendar, calendarStorage.getCalendarFilePath());
+    }
+
+    @Override
+    public void saveCalendar(ReadOnlyCalendar calendar, Path filePath) throws IOException {
+
+        logger.fine("Attempting to write to data file: " + filePath);
+        calendarStorage.saveCalendar(calendar, filePath);
     }
 
 }

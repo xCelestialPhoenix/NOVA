@@ -74,7 +74,7 @@ public class Lesson extends Activity {
                 .append("Venue: " + venue + "\n");
 
         if (date == null) {
-            sb.append("Day: " + day + "\n");
+            sb.append("Day: " + day.toString().toLowerCase() + "\n");
         } else {
             sb.append("Date: " + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n");
         }

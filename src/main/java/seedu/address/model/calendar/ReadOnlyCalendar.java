@@ -50,6 +50,8 @@ public interface ReadOnlyCalendar {
      */
     ObservableList<Activity> viewActivityOnDate(LocalDate date);
 
+    ObservableList<Activity> getActivities();
+
     /**
      * Gets the next activity from now.
      *

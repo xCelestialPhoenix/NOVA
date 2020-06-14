@@ -4,6 +4,9 @@ import javafx.scene.image.Image;
 
 import seedu.address.model.calendar.task.TaskCompletionStatistics;
 
+/**
+ * An UI component that displays information of the completion status of the tasks in the calendar.
+ */
 public class TaskCompletionCard extends StatisticCard {
 
     public static final String CARD_TITLE = "Task completed:";
@@ -12,6 +15,7 @@ public class TaskCompletionCard extends StatisticCard {
     private static final int DATA_TEXT_FONT_SIZE = 26;
 
     public TaskCompletionCard() {
+
         this(DEFAULT_TASK_COMPLETION_STATS);
     }
 
@@ -23,8 +27,14 @@ public class TaskCompletionCard extends StatisticCard {
         setLogo(logo);
     }
 
+    /**
+     * Updates the current displayed statistics. There is no change if the completion status remains the same.
+     *
+     * @param newStatistics the new statistics to update to
+     */
     public void updateData(TaskCompletionStatistics newStatistics) {
 
         super.updateData(newStatistics.asFraction(), DATA_TEXT_FONT_SIZE);
     }
+
 }

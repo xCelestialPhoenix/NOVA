@@ -32,9 +32,8 @@ public class MainWindow extends UiPart<Stage> {
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
-    private Stage primaryStage;
-    private Logic logic;
-    private Config config;
+    private final Stage primaryStage;
+    private final Logic logic;
 
     // Independent Ui parts residing in this Ui container
     private ActivityListPanel activityListPanel;
@@ -43,7 +42,7 @@ public class MainWindow extends UiPart<Stage> {
     private StatisticCard weekNumberCard;
     private StatisticCard nextActivityCard;
     private StatisticCard taskCompletionCard;
-    private HelpWindow helpWindow;
+    private final HelpWindow helpWindow;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -80,7 +79,6 @@ public class MainWindow extends UiPart<Stage> {
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
-        this.config = config;
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -120,6 +118,8 @@ public class MainWindow extends UiPart<Stage> {
 
         taskCompletionCard = new TaskCompletionCard();
         taskCompletionCardPlaceholder.getChildren().add(taskCompletionCard.getRoot());
+
+        updateStatistic();
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
@@ -173,16 +173,6 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Gets activity list panel.
-     *
-     * @return the activity list panel
-     */
-    public ActivityListPanel getActivityListPanel() {
-
-        return activityListPanel;
-    }
-
-    /**
      * Executes the command and returns the result.
      *
      * @see seedu.address.logic.Logic#execute(String)
@@ -224,7 +214,8 @@ public class MainWindow extends UiPart<Stage> {
 
         //Update week number
         int newWeekNumber = logic.calculateWeekNumber(LocalDate.now()) + 1;
-        ((WeekNumberCard) weekNumberCard).updateData(newWeekNumber);
+        (
+                (WeekNumberCard) weekNumberCard).updateData(newWeekNumber);
 
         //Update the next upcoming activity
         Optional<Activity> activity = logic.getNextActivity();
@@ -232,12 +223,14 @@ public class MainWindow extends UiPart<Stage> {
         if (activity.isEmpty()) {
             nextActivityCard.updateData("", NextActivityCard.DATA_TEXT_FONT_SIZE);
         } else {
-            ((NextActivityCard) nextActivityCard).updateData(activity.get());
+            (
+                    (NextActivityCard) nextActivityCard).updateData(activity.get());
         }
 
         //Update task completion status
         TaskCompletionStatistics stats = logic.getTaskCompletionStats();
-        ((TaskCompletionCard) taskCompletionCard).updateData(stats);
+        (
+                (TaskCompletionCard) taskCompletionCard).updateData(stats);
     }
 
 }

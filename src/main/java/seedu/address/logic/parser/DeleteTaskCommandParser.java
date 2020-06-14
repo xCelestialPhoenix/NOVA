@@ -1,16 +1,16 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
-
-public class DeleteTaskCommandParser implements Parser<DeleteTaskCommand>{
+public class DeleteTaskCommandParser implements Parser<DeleteTaskCommand> {
 
     @Override
     public DeleteTaskCommand parse(String args) throws ParseException {

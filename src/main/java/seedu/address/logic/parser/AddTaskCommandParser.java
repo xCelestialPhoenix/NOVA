@@ -1,17 +1,17 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
+import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.task.Task;
-
-import static seedu.address.logic.constants.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DATE;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_DESCRIPTION;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_NOTES;
-import static seedu.address.logic.constants.PrefixConstants.PREFIX_TIME;
 
 public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 

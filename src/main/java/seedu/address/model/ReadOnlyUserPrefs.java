@@ -16,6 +16,4 @@ public interface ReadOnlyUserPrefs {
 
     LocalDate getCalendarStartDate();
 
-    LocalDate getCalendarEndDate();
-
 }
