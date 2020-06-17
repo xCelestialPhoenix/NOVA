@@ -2,12 +2,11 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.calendar.Calendar.CALENDAR_DEFAULT_START_DATE;
 
-import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -23,7 +22,6 @@ import seedu.address.model.calendar.task.Task;
 import seedu.address.model.calendar.task.TaskCompletionStatistics;
 import seedu.address.model.calendar.task.TaskReference;
 import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
-import seedu.address.model.person.Person;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -31,32 +29,27 @@ import seedu.address.model.person.Person;
 public class ModelManager implements Model {
 
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    private static final LocalDate DEFAULT_START_DATE = LocalDate.of(2020, 01, 13);
 
-    private final AddressBook addressBook;
     private final Calendar calendar;
     private final UserPrefs userPrefs;
-    private final FilteredList<Person> filteredPersons;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given calendar and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyCalendar calendar, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlyCalendar calendar, ReadOnlyUserPrefs userPrefs) {
 
         super();
-        requireAllNonNull(addressBook, calendar, userPrefs);
+        requireAllNonNull(calendar, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with calendar: " + calendar + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         this.calendar = new Calendar(calendar);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
     public ModelManager() {
 
-        this(new AddressBook(), new Calendar(DEFAULT_START_DATE), new UserPrefs());
+        this(new Calendar(CALENDAR_DEFAULT_START_DATE), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -85,61 +78,6 @@ public class ModelManager implements Model {
 
         requireNonNull(guiSettings);
         userPrefs.setGuiSettings(guiSettings);
-    }
-
-    @Override
-    public Path getAddressBookFilePath() {
-
-        return userPrefs.getAddressBookFilePath();
-    }
-
-    @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
-    }
-
-    //=========== AddressBook ================================================================================
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-
-        return addressBook;
-    }
-
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-
-        this.addressBook.resetData(addressBook);
-    }
-
-    @Override
-    public boolean hasPerson(Person person) {
-
-        requireNonNull(person);
-        return addressBook.hasPerson(person);
-    }
-
-    @Override
-    public void deletePerson(Person target) {
-
-        addressBook.removePerson(target);
-    }
-
-    @Override
-    public void addPerson(Person person) {
-
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
-
-    @Override
-    public void setPerson(Person target, Person editedPerson) {
-
-        requireAllNonNull(target, editedPerson);
-
-        addressBook.setPerson(target, editedPerson);
     }
 
     //=========== Calendar =============================================================
@@ -259,25 +197,6 @@ public class ModelManager implements Model {
         return calendar.getTaskCompletionStats();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
-    @Override
-    public ObservableList<Person> getFilteredPersonList() {
-
-        return filteredPersons;
-    }
-
-    @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
-
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
-    }
-
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -292,9 +211,9 @@ public class ModelManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && userPrefs.equals(other.userPrefs)
-                && filteredPersons.equals(other.filteredPersons);
+
+        return calendar.equals(other.calendar)
+                && userPrefs.equals(other.userPrefs);
     }
 
 

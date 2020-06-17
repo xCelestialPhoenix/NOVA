@@ -28,6 +28,8 @@ import seedu.address.model.calendar.task.exceptions.RepeatedCompleteException;
  */
 public class Calendar implements ReadOnlyCalendar {
 
+    public static final LocalDate CALENDAR_DEFAULT_START_DATE = LocalDate.of(2020, 1, 13);
+
     private static final DayOfWeek FIRST_DAY_OF_WEEK = DayOfWeek.MONDAY;
 
     private LocalDate startDate;

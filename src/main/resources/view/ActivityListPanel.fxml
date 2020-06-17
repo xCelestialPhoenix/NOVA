@@ -4,10 +4,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+
 <VBox xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
-   <Label prefWidth="248.0" style="-fx-background-color: #515658;" text="Activities for today:" VBox.vgrow="ALWAYS">
-      <padding>
-         <Insets bottom="5.0" left="5.0" top="5.0" />
-      </padding></Label>
-    <ListView fx:id="activityListView" VBox.vgrow="ALWAYS" />
+   <children>
+      <Label maxWidth="1.7976931348623157E308" prefWidth="238.0" style="-fx-background-color: #515658;" text="Activities for today:">
+         <padding>
+            <Insets bottom="5.0" left="5.0" top="5.0" />
+         </padding>
+      </Label>
+       <ListView fx:id="activityListView" VBox.vgrow="ALWAYS" />
+   </children>
 </VBox>

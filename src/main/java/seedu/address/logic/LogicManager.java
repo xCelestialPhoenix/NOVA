@@ -1,7 +1,6 @@
 package seedu.address.logic;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -13,14 +12,12 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.logic.parser.NovaParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.calendar.activity.Activity;
 import seedu.address.model.calendar.task.Task;
 import seedu.address.model.calendar.task.TaskCompletionStatistics;
-import seedu.address.model.person.Person;
 import seedu.address.storage.Storage;
 
 /**
@@ -33,13 +30,13 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    private final AddressBookParser addressBookParser;
+    private final NovaParser novaParser;
 
     public LogicManager(Model model, Storage storage) {
 
         this.model = model;
         this.storage = storage;
-        addressBookParser = new AddressBookParser();
+        novaParser = new NovaParser();
     }
 
     @Override
@@ -48,29 +45,16 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;
-        Command command = addressBookParser.parseCommand(commandText);
+        Command command = novaParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
         try {
-            storage.saveAddressBook(model.getAddressBook());
             storage.saveCalendar(model.getCalendar());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
 
         return commandResult;
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-
-        return model.getAddressBook();
-    }
-
-    @Override
-    public ObservableList<Person> getFilteredPersonList() {
-
-        return model.getFilteredPersonList();
     }
 
     //=========== Calendar =============================================================
@@ -106,12 +90,6 @@ public class LogicManager implements Logic {
     }
 
     //=============================================================================================================
-
-    @Override
-    public Path getAddressBookFilePath() {
-
-        return model.getAddressBookFilePath();
-    }
 
     @Override
     public GuiSettings getGuiSettings() {

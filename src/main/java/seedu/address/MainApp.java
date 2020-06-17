@@ -16,18 +16,14 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.calendar.Calendar;
 import seedu.address.model.calendar.ReadOnlyCalendar;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.CalendarStorage;
-import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonCalendarStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
@@ -54,7 +50,7 @@ public class MainApp extends Application {
     @Override
     public void init() throws Exception {
 
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing NOVA ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -63,9 +59,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
 
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
         CalendarStorage calendarStorage = new JsonCalendarStorage(userPrefs.getCalendarFilePath());
-        storage = new StorageManager(addressBookStorage, calendarStorage, userPrefsStorage);
+        storage = new StorageManager(calendarStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -83,31 +78,27 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
 
-        Optional<ReadOnlyAddressBook> addressBookOptional;
         Optional<ReadOnlyCalendar> calendarOptional;
-        ReadOnlyAddressBook initialData;
         ReadOnlyCalendar initialCalendar;
 
         try {
-            addressBookOptional = storage.readAddressBook();
+
             calendarOptional = storage.readCalendar();
 
-            if (addressBookOptional.isEmpty() || calendarOptional.isEmpty()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            if (calendarOptional.isEmpty()) {
+                logger.info("Data file not found. Will be starting with a sample calendar");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
-            initialCalendar = calendarOptional.orElse(new Calendar(userPrefs.getCalendarStartDate()));
+
+            initialCalendar = calendarOptional.orElse(SampleDataUtil.getSampleCalendar());
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty calendar");
             initialCalendar = new Calendar(userPrefs.getCalendarStartDate());
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty calendar");
             initialCalendar = new Calendar(userPrefs.getCalendarStartDate());
         }
 
-        return new ModelManager(initialData, initialCalendar, userPrefs);
+        return new ModelManager(initialCalendar, userPrefs);
     }
 
     private void initLogging(Config config) {
@@ -171,7 +162,7 @@ public class MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty calendar");
             initializedPrefs = new UserPrefs();
         }
 
@@ -188,14 +179,14 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting NOVA " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
 
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping NOVA ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {
